@@ -1,23 +1,22 @@
 <div class="card-deck col-12">
   <div class="card col-3">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
+   <h5 class="card-title">Card title</h5>
+
+   <div
+    id="even"
+    cdkDropList
+    [cdkDropListData]="even"
+    cdkDropListConnectedTo="all"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListEnterPredicate]="evenPredicate">
+    <div
+      class="example-box"
+      *ngFor="let number of even"
+      cdkDrag
+      [cdkDragData]="number">{{number}}</div>
   </div>
-  <div class="card col-3">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-  <div class="card col-3">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-  <div class="card col-3">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
+
   </div>
 </div>
 
@@ -37,24 +36,5 @@
       *ngFor="let number of all"
       [cdkDragData]="number"
       cdkDrag>{{number}}</div>
-  </div>
-</div>
-
-<div class="example-container">
-  <h2>Even numbers</h2>
-
-  <div
-    id="even"
-    cdkDropList
-    [cdkDropListData]="even"
-    cdkDropListConnectedTo="all"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListEnterPredicate]="evenPredicate">
-    <div
-      class="example-box"
-      *ngFor="let number of even"
-      cdkDrag
-      [cdkDragData]="number">{{number}}</div>
   </div>
 </div>
