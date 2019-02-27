@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { FilazeroModule } from './modules';
-
+import { ChartsModule } from 'ng2-charts';
 import { FILAZERO_ROUTES } from './modules/filazero.router';
 
 @NgModule({
@@ -15,6 +15,7 @@ import { FILAZERO_ROUTES } from './modules/filazero.router';
   imports: [
     BrowserModule,
     FilazeroModule,
+    ChartsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(FILAZERO_ROUTES, { scrollPositionRestoration: 'top' }),
   ],

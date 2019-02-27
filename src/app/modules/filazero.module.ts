@@ -2,15 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
+import { ChartsModule } from 'ng2-charts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [
     CommonModule,
   DragDropModule,
-    NgbModule
+    NgbModule,
+    ChartsModule,
+    FontAwesomeModule
   ],
   declarations: [HomeComponent],
   exports: []

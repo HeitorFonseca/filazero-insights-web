@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
+import { ChartService } from '../../shared/services/chart.service';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { ChartData } from '../../chartdata';
+import { METRICASDIM } from '../../mock-met-dim';
+import { randomDataset } from '../../mock-charts';
+import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +14,38 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular
 })
 export class HomeComponent implements OnInit {
 
-  all = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  even = [10];
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  
+  public chartData: ChartData[];
+  public aggregator;
+  metricasOut: string[];
+  dimensoesOut: string[];
+  metricasIn = [];
+  dimensoesIn = [];
+  //ícones font awesome
+  faChartBar = faChartBar;
+  faChartLine = faChartLine;
+  faChartArea = faChartArea;
 
-  constructor() { }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit() {
+    this.getAggregatorChart();
+    this.getChartData();
+    this.metricasOut = METRICASDIM.metricas;
+    this.dimensoesOut = METRICASDIM.dimensoes;
+   // this.chartData = [];
+    //document.getElementById('trigger-charts').style.display="none";
+  }
+
+  getAggregatorChart(): void{
+    this.chartService.getAggregatorChart()
+    .subscribe(aggregator => this.aggregator = aggregator);
+  }
+
+  getChartData(): void{
+    this.chartService.getChartData()
+    .subscribe(chartData => this.chartData = chartData);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -25,6 +57,52 @@ export class HomeComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
+    //mudanças na tabela mockada
+    var destino = event.container.element.nativeElement.className;
+    if(destino.indexOf("metricasIn")!=-1){
+      this.metricasIn = event.container.data;
+      var filtraLine = this.chartData.find(cd => cd.type!=null && cd.type=="line");
+      console.log(filtraLine);
+      if(this.metricasIn.includes("média")){
+        if(filtraLine!=undefined){
+          this.chartData.splice(
+            this.chartData.indexOf(
+              this.chartData.find(cd => cd.type!=null && cd.type=="line"))
+            ,1);  
+        }
+        //atualizando gráfico apenas com o filtro, depois integrar com
+        //queries para que funcione corretamente
+      }else{
+        if(filtraLine!=undefined){
+          this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset();
+        }else{
+          
+          var novo : ChartData;
+          novo = {
+            data: randomDataset(),
+            label: 'teste',
+            type: "line",
+            fill: false,
+            backgroundColor: 'rgba(77,116,234,0.2)',
+            borderColor: 'rgba(77,110,240,0.2)'
+          };
+          this.chartData.push(novo);
+        }
+      }
+    }else if(destino.indexOf("dimensoesIn")!=-1){
+      this.dimensoesIn = event.container.data;
+      for(let cd of this.chartData){
+        cd.data = randomDataset();
+      }
+    }
+    /*não é preciso mostrar os gráficos se não há filtros
+    if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
+      document.getElementById('trigger-charts').style.display="none";
+    }else{
+      document.getElementById('trigger-charts').style.display="block";
+    }*/
+    this.chart.chart.config.data.datasets = this.chartData;
+    this.chart.chart.update();
   }
 
   /** Predicate function that only allows even numbers to be dropped into a list. */

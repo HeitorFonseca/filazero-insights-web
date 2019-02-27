@@ -1,40 +1,96 @@
 <div class="card-deck col-12">
-  <div class="card col-3">
-   <h5 class="card-title">Card title</h5>
-
-   <div
-    id="even"
-    cdkDropList
-    [cdkDropListData]="even"
-    cdkDropListConnectedTo="all"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListEnterPredicate]="evenPredicate">
+  <div class="card col-3 example-container">
+    <h5 class="card-title">Linhas</h5>
     <div
-      class="example-box"
-      *ngFor="let number of even"
-      cdkDrag
-      [cdkDragData]="number">{{number}}</div>
+      id="dimensoesIn"
+      cdkDropList
+      [cdkDropListData]="dimensoesIn"
+      cdkDropListConnectedTo="dimensoesOut"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+        <div
+          class="example-box"
+          *ngFor="let dim of dimensoesIn"
+          cdkDrag
+          [cdkDragData]="dim">{{dim}}</div>
+    </div>
   </div>
-
+  <div class="card col-3 example-container">
+      <h5 class="card-title">Colunas</h5>
+  </div> 
+  <div class="card col-3 example-container">
+    <h5 class="card-title">Métricas</h5>
+    <div
+      id="metricasin"
+      cdkDropList
+      [cdkDropListData]="metricasIn"
+      cdkDropListConnectedTo="metricasout"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div
+        class="example-box"
+        *ngFor="let metrica of metricasIn"
+        cdkDrag
+        [cdkDragData]="metrica">{{metrica}}</div>
+    </div>
+  </div>
+  <div class="card col-3 example-container">
+      <h5 class="card-title">Filtros</h5>
   </div>
 </div>
-
-<div class="example-container">
-  <h2>Available numbers</h2>
-
-  <div
-    id="all"
-    cdkDropList
-    [cdkDropListData]="all"
-    cdkDropListConnectedTo="even"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListEnterPredicate]="noReturnPredicate">
-    <div
-      class="example-box"
-      *ngFor="let number of all"
-      [cdkDragData]="number"
-      cdkDrag>{{number}}</div>
+<div class="row">
+<div class="col-9">
+  <!-- tabela -->
+</div>
+<div class="col-3">
+    <div class="example-container row">
+      <h2>Métricas</h2>
+      <div 
+        id="metricasout"
+        cdkDropList
+        [cdkDropListData]="metricasOut"
+        cdkDropListConnectedTo="metricasin"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+      <div
+        class="example-box"
+        *ngFor="let metrica of metricasOut"
+        [cdkDragData]="metrica"
+        cdkDrag>{{metrica}}</div>
+      </div>
+   </div>
+    <div class="example-container row">
+      <h2>Dimensões</h2>
+      <div
+        id="dimensoesOut"
+        cdkDropList
+        [cdkDropListData]="dimensoesOut"
+        cdkDropListConnectedTo="dimensoesIn"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+          <div
+            class="example-box"
+            *ngFor="let dim of dimensoesOut"
+            [cdkDragData]="dim"
+            cdkDrag>{{dim}}</div>
+        </div>
+    </div> 
   </div>
+</div>
+<div id="trigger-charts" class="col-9">
+    <div id="charts">
+        <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+            [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+    </div>   
+    <div id="available-charts">
+      <div>
+        <fa-icon [icon]="faChartBar"></fa-icon>
+      </div>
+      <div>
+        <fa-icon [icon]="faChartLine"></fa-icon>
+      </div>
+      <div>
+        <fa-icon [icon]="faChartArea"></fa-icon>
+      </div>
+    </div> 
 </div>
