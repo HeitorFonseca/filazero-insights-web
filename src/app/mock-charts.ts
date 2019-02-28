@@ -9,7 +9,7 @@ export const CHARTDATA: ChartData[] = [
 
 export const BARCHARTTYPE = 'horizontalBar';
 export const BARCHARTLEGEND = true;
-export const BARCHARTLABELS = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+export const BARCHARTLABELS = ['2006', '2007', '2008'];
 export const BARCHARTOPTIONS = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -36,7 +36,37 @@ export const BARCHARTCOLORS = [
 export function randomDataset(): number[]{
     var numb = [];
     for(let i=0 ; i < 7; i++){
-        numb.push(Math.random() * 50);
+        numb.push(Math.ceil(Math.random() * 50));
     }
     return numb;
 }
+
+export const BARCHARTTESTDATA: ChartData[] = [
+    {data: [14,13,27], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.2)',
+     borderColor: 'rgba(77,116,234,0.2)'},
+    {data: [11,20,12], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.2)',
+     borderColor: 'rgba(200,20,24,0.2)'}
+];
+
+export const BARCHARTTESTOPTIONS = {
+    responsive: true,
+    scales: {
+        xAxes: [
+            {
+                stacked: true,
+                ticks: {
+                    min: 0,
+                    max: 100,
+                    callback: function(value){return value+ "%"},
+                    stepSize: 50                                                                                                                                                                          
+                }
+                /*
+                scaleLabel: {
+                    display: true,
+                    labelString: "Percentage"
+                } */
+            }
+        ],
+        yAxes: [{stacked: true}]
+    }
+};

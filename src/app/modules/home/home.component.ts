@@ -26,6 +26,9 @@ export class HomeComponent implements OnInit {
   faChartBar = faChartBar;
   faChartLine = faChartLine;
   faChartArea = faChartArea;
+  //arrays auxiliares para gráficos de desempenho (barras estacadas)
+  tempomedio1 = [];
+  tempomedio2 = [];
 
   constructor(private chartService: ChartService) { }
 
@@ -35,17 +38,22 @@ export class HomeComponent implements OnInit {
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
     //this.chartData = [];
+    
     document.getElementById('trigger-charts').style.display="none";
   }
 
   getAggregatorChart(): void{
-    this.chartService.getAggregatorChart()
+    this.chartService.getAnotherAggregator()
     .subscribe(aggregator => this.aggregator = aggregator);
+    /*this.chartService.getAggregatorChart()
+    .subscribe(aggregator => this.aggregator = aggregator);*/
   }
 
   getChartData(): void{
-    this.chartService.getChartData()
+    this.chartService.getAnotherData()
     .subscribe(chartData => this.chartData = chartData);
+    /*this.chartService.getChartData()
+    .subscribe(chartData => this.chartData = chartData);*/
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -100,18 +108,39 @@ export class HomeComponent implements OnInit {
     }else{
       document.getElementById('trigger-charts').style.display="block";
     }
+    this.calculatePercentage();
+
+    console.log(this.chart.chart.config.options);
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
 
-  /** Predicate function that only allows even numbers to be dropped into a list. */
-  evenPredicate(item: CdkDrag<number>) {
-    return item.data % 2 === 0;
+  calculatePercentage(): void{
+    //guardando valores para customizar o tooltip
+    this.tempomedio1 = this.chartData[0].data;
+    this.tempomedio2 = this.chartData[1].data;
+    
+    var tempomedio1 = this.chartData[0].data;
+    var tempomedio2 = this.chartData[1].data;
+    var total = 0;
+    var temp = 0;
+    for(var i=0 ; i < tempomedio1.length && i< tempomedio2.length ; i++){
+      total = tempomedio1[i] + this.tempomedio2[i];
+      temp = Math.ceil((tempomedio1[i]*100)/total);
+      tempomedio1[i] = temp;
+      tempomedio2[i] = 100-temp;
+    }
+    this.chartData[0].data = tempomedio1;
+    this.chartData[1].data = tempomedio2;
   }
 
-  /** Predicate function that doesn't allow items to be dropped into a list. */
-  noReturnPredicate() {
-    return false;
+  customTooltip(){
+    var tooltips = {
+      callbacks:{
+          label: function(tooltipItem,data){
+              
+          }
+      }
+    }
   }
-
 }

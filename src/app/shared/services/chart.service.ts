@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ChartData } from '../../chartdata';
 import { CHARTDATA, BARCHARTCOLORS } from '../../mock-charts';
-import { BARCHARTTYPE } from '../../mock-charts';
+import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
 import { BARCHARTLEGEND } from '../../mock-charts';
 import { BARCHARTLABELS } from '../../mock-charts';
 import { BARCHARTOPTIONS } from '../../mock-charts';
@@ -20,6 +20,14 @@ export class ChartService {
     barChartColors: BARCHARTCOLORS
   }
 
+  aggre2 = {
+    barChartType: BARCHARTTYPE,
+    barChartLegend: BARCHARTLEGEND,
+    barChartLabels: BARCHARTLABELS,
+    barChartOptions: BARCHARTTESTOPTIONS,
+    barChartColors: BARCHARTCOLORS
+  }
+
   constructor() { }
 
   getChartData(): Observable<ChartData[]>{
@@ -30,4 +38,11 @@ export class ChartService {
     return of(this.aggregator);
   }
 
+  getAnotherAggregator(): Observable<any>{
+    return of(this.aggre2);
+  }
+
+  getAnotherData(): Observable<ChartData[]>{
+    return of(BARCHARTTESTDATA);
+  }
 }
