@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit {
     this.getChartData();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
-   // this.chartData = [];
-    //document.getElementById('trigger-charts').style.display="none";
+    //this.chartData = [];
+    document.getElementById('trigger-charts').style.display="none";
   }
 
   getAggregatorChart(): void{
@@ -58,11 +58,11 @@ export class HomeComponent implements OnInit {
                         event.currentIndex);
     }
     //mudanças na tabela mockada
-    var destino = event.container.element.nativeElement.className;
-    if(destino.indexOf("metricasIn")!=-1){
+    var destino = event.container.element.nativeElement.id;
+    
+    if(destino.indexOf("metricasin")!=-1){
       this.metricasIn = event.container.data;
       var filtraLine = this.chartData.find(cd => cd.type!=null && cd.type=="line");
-      console.log(filtraLine);
       if(this.metricasIn.includes("média")){
         if(filtraLine!=undefined){
           this.chartData.splice(
@@ -76,7 +76,6 @@ export class HomeComponent implements OnInit {
         if(filtraLine!=undefined){
           this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset();
         }else{
-          
           var novo : ChartData;
           novo = {
             data: randomDataset(),
@@ -91,16 +90,16 @@ export class HomeComponent implements OnInit {
       }
     }else if(destino.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.container.data;
-      for(let cd of this.chartData){
-        cd.data = randomDataset();
-      }
     }
-    /*não é preciso mostrar os gráficos se não há filtros
+    for(let cd of this.chartData){
+      cd.data = randomDataset();
+    }
+    //não é preciso mostrar os gráficos se não há filtros
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
       document.getElementById('trigger-charts').style.display="none";
     }else{
       document.getElementById('trigger-charts').style.display="block";
-    }*/
+    }
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
