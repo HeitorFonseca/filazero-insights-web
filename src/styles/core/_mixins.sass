@@ -1,0 +1,116 @@
+// Media Query
+=screen($value, $property: max-width)
+  @media ($property: $value)
+    @content
+
+// Animation
+=keyframes($name, $duraction)
+  animation: $name $duraction
+  animation-timing-function: ease-in-out
+  @-webkit-keyframes $name
+    @content
+
+  @-moz-keyframes $name
+    @content
+
+  @-moz-keyframes $name
+    @content
+
+  @keyframes $name
+    @content
+
+// Placeholder
+=placeholder
+  ::-webkit-input-placeholder
+    @content
+
+  ::-moz-placeholder
+    @content
+
+  ::-ms-input-placeholder
+    @content
+
+=spinner($size: 50px, $top: 50%)
+  @keyframes spinner
+    to
+      transform: rotate(360deg)
+
+  .spinner:before
+    @extend %spinner
+    top: $top
+    width: $size
+    height: $size
+
+=spinner-button($size: 20px, $color: #ffffff)
+  @keyframes spinner-button
+    to
+      transform: rotate(360deg)
+
+  .spinner-button:before
+    @extend %spinner-small
+    width: $size
+    height: $size
+    border-top: 2px dotted $color
+    border-left: 2px dotted $color
+    top: 50%
+    left: 30px
+
+=spinner-search($size: 20px)
+  @keyframes spinner-button
+    to
+      transform: rotate(360deg)
+
+  .spinner-search:before
+    @extend %spinner-small
+    width: $size
+    height: $size
+    border-top: 2px dotted $fz-color
+    border-left: 2px dotted $fz-color
+    top: 50%
+    right: 30px
+
+=cards-container($width)
+  width: $width
+  @extend %cards-container
+  @content
+
+=card($width, $height: auto)
+  width: $width
+  height: $height
+  @extend %card
+
+=flex-filter
+  .flex-filter
+    display: flex
+    flex-flow: row wrap
+
+    .flex-filter-item
+      &:first-of-type
+        width: 25%
+
+      &:last-child
+        border-left: 1px solid #ddd
+        width: 75%
+        padding: 1em
+
+  +screen(map-get($screen, small))
+    .flex-filter
+      .flex-filter-item
+        &:first-of-type
+          width: 0
+
+        &:last-child
+          width: 100%
+          padding: 1em
+
+// Fonts
+=font-family($key)
+  @if not map-has-key($fonts, $key)
+    @error 'Font `#{$key}` does not exist'
+
+  $font: map-get($fonts, $key)
+
+  @if not map-has-key($font, family)
+    @error 'Font `#{$key}` does not define a family'
+
+  font-family: map-get($font, family)

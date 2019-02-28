@@ -1,0 +1,5 @@
+@import 'base'
+
+@each $_, $font in $fonts
+  @if map-has-key($font, src)
+    @import url(map-get($font, src))

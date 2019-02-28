@@ -1,0 +1,466 @@
+{
+  "messages": {
+    "success": {
+      "1028": "Sua senha foi alterada com sucesso.",
+      "1005": "Bilhete confirmado",
+      "1004": "Bilhete cancelado",
+      "1040": "Sua avaliação foi enviada",
+      "1046": "Email enviado com sucesso. Verifique sua caixa de entrada.",
+      "confirm-email-title": "Sua conta foi confirmada!",
+      "confirm-email-successful": "Agora você pode aproveitar todas as vantagens de um usuário Filazero",
+      "scheduling-confirmed": "Tudo certo ! Agendamento realizado com sucesso...",
+      "success": "Sucesso",
+      "contact-confirmed": "Tudo certo! Formulário enviado com sucesso...",
+      "received-email": "Recebemos seu email e em breve entraremos em contato.",
+      "load-version": "Nova versão disponível. Carregar nova versão ?",
+      "payment-finalized": "Pagamento finalizado com sucesso!"
+    },
+    "error": {
+      "2005": "O telefone é obrigatório.",
+      "2004": "O e-mail é inválido.",
+      "2053": "Não foi possível validar sua conta. Por favor tente novamente ou contate-nos.",
+      "2054": "Usuário inválido. Verifique o link enviado para seu email.",
+      "2055": "Token de confirmação inválido. Um novo email de confirmação de conta foi enviado.",
+      "2112": "Senha Inválida",
+      "2137": "Usuário não encontrado.",
+      "2154": "Recaptcha inválido. Tente novamente.",
+      "2155": "Recaptcha inválido.",
+      "2061": "O e-mail ou a senha estão incorretos.",
+      "2216": "A confirmação online para esse serviço está desativada.",
+      "2139": "Você não está na lista de espera deste serviço.",
+      "2031": "O serviço não existe",
+      "2138": "Você já está na lista de espera deste serviço.",
+      "2224": "Conta não aprovada para realização de pagamento",
+      "2225": "Valor(es) pago(s) excedeu o valor total do pagamento",
+      "2227": "Splitter não encontrado",
+      "2228": "Erro de comunicação. Tente novamente",
+      "2230": "Dia para repasse não disponível",
+      "2231": "Tipo da conta inválida",
+      "2232": "O seu pagamento foi cancelado",
+      "2241": "Não foi possível concluir o agendamento, entre em contato com a unidade de atendimento",
+      "2243": "Pagamento não autorizado",
+      "2244": "Não existe contrato de pagamento para essa empresa",
+      "confirm-email-title": "Erro ao confirmar conta!",
+      "confirm-email-invalid-link": "Link de confirmação inválido",
+      "err": "Erro",
+      "fail-request": "Falha na Solicitação",
+      "not-permission": "Você não tem permissão para fazer esta ação",
+      "not-save-rating": "Ops! Não foi possível salvar a avaliação.",
+      "request-error": "Ops! Não conseguimos processar sua solicitação...",
+      "ticket-not-found": "Ops! Atendimento não encontrado..."
+    },
+    "info": {
+      "no-results": "Nenhum resultado",
+      "no-services-available": "Nenhum serviços disponível",
+      "no-sessions-selected": "Nenhum horário selecionado!"
+    },
+    "warning": {
+      "put-rating": "Atribua uma nota ao seu atendimento!",
+      "unconfirmed-email": "Email ainda não foi confirmado.",
+      "warn": "Aviso"
+    },
+    "not-result": {
+      "title": "Sua pesquisa não encontrou resultados!"
+    }
+  },
+  "required": "O campo {{value}} é obrigatório",
+  "invalid": "Insira um {{value}} válido",
+  "short-value": "{{value}} muito curto(a).",
+  "long-value": "{{value}} muito longo(a).",
+  "terms": "Termos de uso e privacidade",
+  "read-terms": "Ler termos de uso.",
+  "actions": {
+    "sign-in": "Entrar",
+    "sign-out": "Sair",
+    "create-account": "Cadastre-se",
+    "emit-ticket": "Agendar",
+    "book-now": "Agendar agora",
+    "register-app": "Comece agora",
+    "tutorial": "Fale com um especialista",
+    "send-email": "Enviar agora",
+    "confirm-account": "Confirmar cadastro",
+    "go-next-session": "Ir para a vaga mais próxima",
+    "ticket-details": "Detalhes do bilhete",
+    "my-tickets": "Ver meus bilhetes",
+    "schedule-again": "Agendar novamente",
+    "confirm_review": "Confirmar avaliação",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "resend-confirmation": "Reenviar Confirmação",
+    "clear": "Limpar",
+    "save": "Salvar",
+    "continue": "Continuar",
+    "schedule": "Faça seu agendamento",
+    "change-password": "Alterar Senha",
+    "show-service": "Ver outros serviços",
+    "back": "Voltar",
+    "next": "Avançar",
+    "close": "Fechar"
+  },
+  "ticket": {
+    "opened": "Agendado",
+    "authorized": "Autorizado",
+    "confirmed": "Confirmado",
+    "checked": "Checado",
+    "called": "Chamado",
+    "started": "Iniciado",
+    "completed": "Finalizado",
+    "canceled": "Cancelado",
+    "reponed": "Reaberto"
+  },
+  "footer": {
+  },
+  "labels": {
+    "schedule": "Agenda",
+    "day": "Dia",
+    "hour": "Horário",
+    "details": "Detalhes",
+    "tickets": "Bilhetes",
+    "email": "Email",
+    "password": "Senha",
+    "new-password": "Nova Senha",
+    "current-password": "Senha Atual",
+    "confirm-password": "Confirmar Senha",
+    "name": "Nome",
+    "lastname": "Sobrenome",
+    "phone": "Telefone",
+    "message": "Mensagem",
+    "priority": "Prioridade",
+    "not-preferential": "Não preferencial",
+    "preferential": "Preferencial",
+    "preferential+80": "+80",
+    "status": "Status",
+    "smartcode": "SmartCode",
+    "resource": "Profissional",
+    "forecast": "Previsão",
+    "section": "Sessão",
+    "timezone": "Fuso horário",
+    "historic": "Histórico",
+    "search": "Pesquisar",
+    "birthday": "Dia de Nascimento",
+    "birthmonth": "Mês de Nascimento",
+    "birthyear": "Ano de nascimento",
+    "expiration-date": "Data de Vencimento",
+    "securityCode": "Código de Segurança",
+    "numberCard": "Número do Cartão"
+  },
+  "header": {
+    "scheduling": "Agendar",
+    "home": "Home",
+    "ticket-search": "Acompanhar",
+    "tutorial": "Conheça",
+    "my-account": "Minha Conta",
+    "create-account": "Cadastre-se",
+    "login": "Login",
+    "my-tickets": "Meus bilhetes"
+   },
+  "home": {
+    "title": "home",
+    "cover": {
+      "title": "Uma revolução para o seu atendimento"
+    },
+    "brief": {
+      "description": "O Filazero é uma plataforma de atendimento completa, 100% online, que moderniza o atendimento das empresas e melhora a experiência de seus clientes finais."
+    },
+    "catchphrases": {
+      "p0": "Nós eliminamos filas presenciais através da sua virtualização.",
+      "p1": "Fortalecemos seu relacionamento com novos clientes.",
+      "p2": "Reduzimos os custos da sua empresa.",
+      "p3": "Devolvemos o tempo do seu cliente."
+    },
+    "stats": {
+      "title": "Números",
+      "items": {
+        "more-capture": {
+          "title": "<strong>+400%</strong> na captação de novos clientes",
+          "description": "Expanda seus canais de comunicação para a web e smartphones."
+        },
+        "reduce-costs": {
+          "title": "Reduza em até <strong>63%</strong> os custos no atendimento",
+          "description": "Reduza os custos estruturais (cadeiras, café, descartáveis e entretenimento), de colaboradores extras e de ligações para confirmar agendamentos."
+        },
+        "more-feedbacks": {
+          "title": "<strong>8x</strong> mais feedbacks, para você melhorar ainda mais o serviço.",
+          "description": "Por conta da facilidade e uso intuitivo, o número de feedbacks aumenta em mais de 8x, ajudando sua empresa a melhorar sua qualidade, através de críticas reais e construtivas."
+        }
+      }
+    },
+    "cases": {
+      "title": "Cases",
+      "description": "As empresas com menos filas presenciais contam com o Filazero para seus agendamentos."
+    },
+    "awards": {
+      "title": "Prêmios"
+    },
+    "benefits": {
+      "title": "Benefícios",
+      "description": "Escolha o Filazero porque sua empresa e os seus clientes ganham com ele.",
+      "business-client": {
+        "title": "Empresa e Cliente",
+        "items-labels": {
+          "business": "Para seu negócio:",
+          "client": "Para seu cliente:"
+        },
+        "items": {
+          "more-channels": {
+            "title": "Ampliação dos canais de atendimento:",
+            "business": "agendamentos pelo aplicativo ou site 24 horas por dia.",
+            "client": "mais canais para agendar o serviço, quando e onde quiser."
+          },
+          "time-and-place": {
+            "title": "Cliente no lugar e hora certos",
+            "business": "evite gargalos em horários de pico, dê fluidez ao seu atendimento e evite colaboradores extras.",
+            "client": "atendimento sem filas ou esperas, mesmo nos horários de pico."
+          },
+          "forecast": {
+            "title": "Previsão de atendimento:",
+            "business": "melhor gerenciamento dos atendimentos, tudo em tempo real.",
+            "client": "cliente atualizado em tempo real com sua previsão de atendimento."
+          },
+          "feedback": {
+            "title": "Feedback",
+            "business": "entenda melhor seu cliente, de acordo com as opiniões dadas por ele.",
+            "client": "vivemos na era da informação e os clientes podem dar sua opinião instantaneamente."
+          }
+        }
+      },
+      "problem-solution": {
+        "title": "Problemas x Soluções",
+        "items-labels": {
+          "problem": "Problema:",
+          "solution": "Solução:"
+        },
+        "items": {
+          "satisfaction": {
+            "problem": "insatisfação dos clientes causada pela demora e atrasos do modelo atual.",
+            "solution": "o cliente se dirige à empresa quando o aplicativo indica a previsão de seu atendimento."
+          },
+          "availability": {
+            "problem": "ficar preso ao horário comercial para realizar agendamentos.",
+            "solution": "online e na nuvem, os agendamentos são feitos 24 horas por dia, todos os dias."
+          },
+          "communication": {
+            "problem": "custos operacionais para confirmação e reagendamentos manuais ou por telefone.",
+            "solution": "o cliente recebe notificação automatizada para confirmar o seu agendamento."
+          },
+          "cancellation": {
+            "problem": "custos operacionais desnecessários para cancelamentos e encaixes.",
+            "solution": "lista de espera inteligente, se um cliente cancela o sistema encontra outro e reorganiza o cronograma."
+          },
+          "feedback": {
+            "problem": "clientes insatisfeitos com o tempo de espera, criticam a empresa para amigos e em redes sociais.",
+            "solution": "fortaleça seu relacionamento, obtendo o feedback de seu cliente sempre que o atendimento for completado."
+          }
+        }
+      }
+    },
+    "how-it-works": {
+      "title": "Como funciona",
+      "items": {
+        "scheduling": {
+          "title": "Agendamento:",
+          "description": "internet, aplicativo ou ligando para atendente"
+        },
+        "confirmation": {
+          "title": "Confirmação:",
+          "description": "confirmamos o agendamento com o cliente pra você"
+        },
+        "check-in": {
+          "title": "Check-in:",
+          "description": "o cliente confirma sua presença, automaticamente, ao chegar em sua empresa"
+        },
+        "attendance": {
+          "title": "Atendimento:",
+          "description": "com a previsão de atendimento seu cliente é atendido na hora certa"
+        },
+        "feedback": {
+          "title": "Feedback:",
+          "description": "a cada atendimento completado receba a opinião de seu cliente"
+        }
+      }
+    },
+    "info": {
+      "download": "Baixe no seu smartphone"
+    }
+  },
+  "scheduling": {
+    "explore": {
+      "title": "Explore, Encontre e Agende"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "forgot-password": "Esqueceu sua senha?",
+    "social-network": "Entre com sua conta social",
+    "new-customer": "Ainda não tem conta?"
+  },
+  "password-forgot": {
+    "title-header": "Recuperar Senha",
+    "subtitle-message": "Quase lá! Falta pouco para recuperar sua senha...",
+    "message-link-1": "Agora você só precisa",
+    "message-link-2": "acessar o link",
+    "message-link-3": "no email que acabamos de enviar para"
+  },
+  "reset-password": {
+    "title-header": "Criar nova senha",
+    "invalid-token": "Algo deu errado...",
+    "invalid-link": "A senha já foi recuperada através desse link.",
+    "success-message-title": "Tudo pronto!",
+    "success-message-1": "Agora você pode acessar o",
+    "success-message-2": "com a sua nova senha."
+  },
+  "contact": {
+    "hook": "Preencha o formulário para falar conosco",
+    "info": "Caso prefira, você pode nos enviar uma mensagem diretamente para",
+    "subject": "Contato - Filazero para consumidores"
+  },
+  "register": {
+    "hook": "Espere menos, faça mais",
+    "info": "O Filazero foi pensado para pessoas que valorizam o seu tempo. Fácil de usar e disponível em smartphones, deixa tudo ao alcance das mãos.",
+    "privacy-terms": "Eu aceito os termos de uso e de privacidade do Filazero."
+  },
+  "my-account": {
+    "change-personal-info": "Editar dados",
+    "change-password": "Mudar Senha",
+    "gender": "Gênero:",
+    "male": "Masculino",
+    "female": "Feminino"
+  },
+  "filters": "Filtros",
+  "my-tickets": {
+    "where": "Onde",
+    "when": "Quando",
+    "show-tickets": "Mostrar bilhetes:",
+    "actived-tickets": "Ativos",
+    "finished-tickets": "Concluídos",
+    "canceled-tickets": "Cancelados",
+    "expired-tickets": "Expirados",
+    "apply": "Aplicar",
+    "show-more": "Mostrar Mais",
+    "all-tickets-loaded": "Todos os Bilhetes foram carregados!",
+    "search-place-hold": "Encontre um bilhete..."
+  },
+  "ticket-search": {
+    "hook": "Acompanhe o status do seu bilhete utilizando o smart-code!"
+  },
+  "self-service": {
+    "professional": "Selecione um profissional",
+    "confirmation": "Confirmação",
+    "other-service": "Outro serviço",
+    "save-your-ticket": "Guarde o código do seu bilhete:",
+    "select-your-session": "Selecione o horário desejado ao lado.",
+    "sessions-available": "Horários",
+    "no-preference": "Sem preferência",
+    "business-preference": "Selecione uma unidade",
+    "select-business-unit": "Por favor escolha uma unidade de negocio",
+    "not-found-vacancy": "Não há vagas disponíveis para este serviço.",
+    "overbook": "Receba notificações de novas vagas",
+    "overbook-alert-me": "Avise-me",
+    "orientation-title": "Orientações",
+    "orientation-subtitle": "Verifique essas informações antes de prosseguir",
+    "orientation-confirm": "Estou ciente",
+    "payment": "Pagamento",
+    "additional-data": "Dados Adicionais",
+    "more-info": "Precisamos de mais algumas informações ..."
+  },
+  "company-service":{
+    "search-place-hold": "Encontre um serviço..."
+  },
+  "ticket-details": {
+    "contact-link": "para maiores esclarecimentos.",
+    "feedback-message": {
+      "default": "Deixe seu comentário",
+      "unsatisfactory": "Nos ajude a melhorar deixando sua opinião!",
+      "good": "Hum... tudo bem, mas por que não 5 estrelas?",
+      "very-good": "Esse atendimento merece até ser elogiado, concorda?"
+    },
+    "details-note": "* A previsão de atendimento pode ser alterada sem prévio aviso.",
+    "info-contact": "Não foi possível encontrar o atendimento buscado. Por favor, entre em ",
+    "info-key-error": "está correta.",
+    "key-error": "Por favor, verifique se a chave de acesso",
+    "location": "Local",
+    "orientation-title": "Orientações",
+    "qr-code-title": "Acompanhe",
+    "qr-code-note": "Utilize o leitor de QRCode presente em nosso aplicativo para acompanhar o seu atendimento em tempo real.",
+    "review-date": "Avaliado em",
+    "review": "Avaliação",
+    "payment": "pagamento",
+    "updated": "atualizado em",
+    "status-payments": {
+      "0": "aguardando pagamento",
+      "1": "pago",
+      "2": "não pago"
+    }
+  },
+  "overbook": {
+    "subscription-confirmed": "Tudo certo! Inscrição realizada com sucesso...",
+    "receive-email": "Fique atento, você receberá um email sempre que uma nova vaga surgir.",
+    "register-account": "Aproveite para concluir seu cadastro e ter total acesso aos recursos do Filazero.",
+    "subscription-remove": "Inscrição cancelada com sucesso!",
+    "no-receive-notification": "Você não receberá notificações deste serviço."
+  },
+  "categories": {
+    "ARTS_AND_ENTERTAINMENT": "Artes e entretenimento",
+    "AUTOMOTIVE": "Automotivo",
+    "BEAUTY_AND_FITNESS": "Beleza e fitness",
+    "BOOKS_AND_LITERATURE": "Livros e literatura",
+    "BUSINESS_AND_INDUSTRIAL_MARKETS": "Negócios e Mercado industrial",
+    "TECHNOLOGY": "Tecnologia",
+    "FINANCE": "Finanças",
+    "FOOD_AND_DRINK": "Comidas e bebidas",
+    "GAMES": "Jogos",
+    "HEALTHCARE": "Saúde",
+    "HOBBIES_AND_LEISURE": "Hobbies e lazer",
+    "HOME_AND_GARDEN": "Casa e jardim",
+    "INTERNET_AND_TELECOM": "Internet e telecomunicações",
+    "JOBS_AND_EDUCATION": "Empregos e educação",
+    "LAW_AND_GOVERNMENT": "Lei e governo",
+    "NEWS": "Notícias",
+    "ONLINE_COMMUNITIES": "Comunidades online",
+    "PEOPLE_AND_SOCIETY": "Pessoas e sociedade",
+    "PETS_AND_ANIMALS": "Animais de estimação",
+    "REAL_ESTATE": "Imobiliária",
+    "REFERENCE": "Referência",
+    "SCIENCE": "Ciência",
+    "SHOPPING": "Compras",
+    "SPORTS": "Esportes",
+    "TRAVEL": "Viagens",
+    "OTHER": "Outros",
+    "UNSPECIFIED": "Não especificado"
+  },
+  "title": {
+    "account-confirmation": "Confirmação de Conta",
+    "new-user": "Novo Usuário",
+    "ticket-search": "Acompanhar",
+    "my-account": "Minha Conta",
+    "business-unit": "Agendamento",
+    "company": "Empresas",
+    "contact": "Contato",
+    "explore": "Explore",
+    "home": "Home",
+    "login": "Entrar",
+    "my-tickets": "Meus bilhetes",
+    "register": "Cadastre-se",
+    "scheduling": "Agendamento",
+    "search-ticket": "Buscar bilhete",
+    "services": "Serviços",
+    "ticket-details": "Detalhes do bilhete",
+    "subscription-cancel": "Cancelar Inscrição",
+    "smart-queue": "Lista de Espera",
+    "terms": "Termos de uso e privacidade"
+  },
+  "months": [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  ]
+}

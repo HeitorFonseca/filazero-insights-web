@@ -1,0 +1,76 @@
+<header class="noprint" [ngClass]="{ 'reduce': !isMenuExpanded }" [style.background-color]="template.templateColor || '#530f6d'">
+  <nav class="menu" [ngClass]="{ 'expand': isMenuExpanded }" [style.background-color]="template.templateColor || '#530f6d'">
+    <button *ngIf="!displayBackButton" class="btn-icon menu-icon" (click)="menuToggle()" [ngClass]="{ 'menu-itens': !isMenuExpanded }">
+      <div id="side-menu" [ngClass]="{ 'close': isMenuExpanded }">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    <button *ngIf="displayBackButton" class="btn-icon menu-icon" (click)="backRoute()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <figure class="menu-logo">
+      <a [routerLink]="logoRoute" (click)="menuReduce()">
+        <img [src]="template.logoUrl || logoFilazero" alt="Logo">
+      </a>
+      <figcaption>Logo Filazero</figcaption>
+    </figure>
+
+    <div class="list-container" [ngClass]="{ 'menu-itens': !isMenuExpanded }" [style.background-color]="template.templateColor || '#530f6d'">
+
+      <ul>
+        <li *ngIf="user && isAuth()">
+          <div class="menu-display">
+            <mat-icon class="user-icon">account_circle</mat-icon>
+            <span>{{user.firstName}} {{user.lastName}}</span>
+            <span class="user-email">{{user.email}}</span>
+          </div>
+        </li>
+        <div class="menu-display" *ngIf="isAuth()">
+          <li>
+            <a href="#" (click)="logOut()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>{{'actions.sign-out' | translate}}</span>
+            </a>
+          </li>
+        </div>
+        <li *ngIf="!isAuth()">
+          <a routerLinkActive="active" [routerLink]="['/user/login']" (click)="menuReduce()">
+            <mat-icon fontSet="fa" fontIcon="fa-sign-in"></mat-icon>
+            <span>{{'actions.sign-in' | translate}}</span>
+          </a>
+        </li>
+        <li>
+          <div *ngIf="user && isAuth()" class="user-info">
+            <button class="big-screen" mat-button [matMenuTriggerFor]="menu">
+              <mat-icon class="user-icon">account_circle</mat-icon>
+              <span> {{user.firstName}} {{user.lastName}}</span>
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="icon-container" [ngClass]="{ 'menu-itens': !isMenuExpanded }" [style.background-color]="template.templateColor || '#530f6d'">
+      <button class="btn-icon">
+        <a href="https://www.instagram.com/filazeroapp/?hl=pt-br" target="_blank">
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+        </a>
+      </button>
+
+      <button class="btn-icon">
+        <a href="https://pt-br.facebook.com/filazero/" target="_blank">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+      </button>
+
+      <button class="btn-icon">
+        <a href="https://www.linkedin.com/company/filazero/" target="_blank">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+      </button>
+    </div>
+  </nav>
+</header>

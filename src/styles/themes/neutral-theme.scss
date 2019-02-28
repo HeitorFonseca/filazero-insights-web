@@ -1,0 +1,9 @@
+$neutral-theme-primary: mat-palette($mat-gray, 700, 900, 500);
+$neutral-theme-accent: mat-palette($mat-green);
+$neutral-theme-warn: mat-palette($mat-red);
+
+$neutral-theme: mat-light-theme(
+    $neutral-theme-primary,
+    $neutral-theme-accent,
+    $neutral-theme-warn
+);

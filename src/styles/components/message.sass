@@ -1,0 +1,67 @@
+.message
+  margin: auto
+  width: max-content
+  text-align: center
+
+  .icon-container
+    margin: auto
+    width: 12vw
+    height: 12vw
+    position: relative
+    border-radius: 50%
+
+    i
+      position: absolute
+      font-size: 6vw
+      top: 3vw
+      left: 3vw
+
+  .text-message, .text-description
+    font-weight: 500
+    +font-family(message)
+    color: #c1c1c1
+
+  .text-message
+    margin-top: 20px
+    font-size: 1.4em
+
+  .text-description
+    font-size: 1.1em
+
++screen(map-get($screen, small))
+  .message
+    .icon-container
+      width: 24vw
+      height: 24vw
+
+      i
+        font-size: 12vw
+        top: 6vw
+        left: 6vw
+
+    .text-message
+      font-size: 1.2em
+
+    .text-description
+      font-size: 0.9em
+
+.danger
+  div
+    background-color: rgba(255, 119, 119, 0.1)
+
+    i
+      color: rgba(255, 119, 119, 0.3)
+
+.warning
+  div
+    background-color: rgba(193, 200, 204, 0.2)
+
+    i
+      color: rgba(193, 200, 204, 0.4)
+
+.success
+  div
+    background-color: rgba(76, 175, 80, 0.4)
+
+    i
+      color: #ffffff

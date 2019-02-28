@@ -1,0 +1,115 @@
+@charset 'UTF-8'
+
+@import 'base'
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
+@import '~css-star-rating/scss/star-rating'
+@import '~@angular/material/theming'
+
+@include mat-core()
+
+@import 'themes/neutral-theme'
+
+// partials
+@import 'components/message'
+@import 'components/button'
+@import 'components/form'
+@import 'components/filter'
+@import 'media/print'
+
+html, body
+  width: 100%
+  height: 100%
+  background: $color-lighter
+  color: $color-darker
+  text-rendering: optimizeLegibility
+
+a:focus, button:focus, input:focus, textarea:focus
+  outline: none
+
+button, .clickable
+  outline: none
+  cursor: pointer
+
+.title-section, .title-article
+  padding: 25px 0 10px 0
+  background-color: $fz-bg-title
+
+h1, h2, h3, h4, p
+  font-weight: 500
+  margin: 0
+  +font-family(default)
+
+h1
+  font-size: 2em
+
+h2
+  font-size: 1.6em
+
+h3
+  font-size: 1.5em
+
+h4
+  font-size: 1.4em
+
+p
+  font-size: 1.4em
+
+a:hover
+  text-decoration: none
+
+.orientation
+  text-align: justify !important
+  white-space: pre-wrap
+
+.rating
+  outline: none
+
+// Material
+.form-container
+  width: 100%
+
+  .item-form
+    width: 100%
+
+.mat-search
+  text-align: center
+  .mat-form-field
+    width: 40%
+
+.card
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
+
++screen(map-get($screen, small))
+  h1
+    font-size: 1.5em
+
+  h2
+    font-size: 1.4em
+
+  h3
+    font-size: 1.3em
+
+  h4
+    font-size: 1.2em
+
+  p
+    font-size: 1em
+
+  .mat-search
+    .mat-form-field
+      width: 100%
+
++flex-filter
+
+
+@import 'custom-company-theme'
+
+@mixin custom-components($theme)
+  @include custom-company-theme($theme)
+
+.neutral-theme
+  @include angular-material-theme($neutral-theme)
+  @include custom-components($neutral-theme)
+
+.mat-form-field-infix
+  width: 100% !important

@@ -1,0 +1,292 @@
+@import 'src/styles/base'
+
+header
+  height: $header-size
+  background-color: $fz-color
+  z-index: 2
+  padding: 0 4vw
+
+.user
+  font-size: 2em
+  color: white
+
+.user-info
+  .big-screen
+    display: block
+
+  .small-screen
+    display: none
+
+  button
+    background: none
+    border: none
+    font-size: 1em
+    color: white
+
+    .user-icon
+      vertical-align: none
+
+      +screen(map-get($screen, small))
+        vertical-align: sub
+
+figure
+  margin: 10px 0 0 0
+  display: inline-block
+
+  figcaption
+    display: none
+
+img
+  height: 40px
+  margin-top: 5px
+
+.btn-icon
+  display: none
+
+.list-container
+  margin-top: 10px
+  display: inline-block
+  float: right
+
+  ul
+    position: relative
+    padding: 8px 0 0 0
+    margin: 0
+
+    li
+      font-size: 0.9em
+      display: inline-block
+      list-style: none
+      margin: 0 10px
+      text-transform: uppercase
+
+      .mat-icon
+        display: none
+
+      .user-icon
+        display: inline-block
+
+.ticket-icon
+  font-size: 25px
+
+a
+  color: #ffffff
+
+.menu-logo
+  display: inline-block
+
+.btn-scheduling
+  background-color: #751898
+  padding: 5px 7px
+  font-weight: 700
+  border-radius: 7px
+
+.menu-display
+  display: none
+
++screen(map-get($screen, medium))
+  header
+    height: 60px
+    padding: 0 2vw
+
+  .menu
+    padding: 0 3%
+    height: 100%
+
+  .list-container
+    margin-top: 3px
+    ul
+      li
+        font-size: 0.8em
+        margin: 0 8px
+
+  figure
+    margin-top: 15px
+    img
+      height: 28px
+      margin-top: -2px
+
+
++screen(map-get($screen, small))
+  header
+    height: 60px
+    padding: 0
+
+    &.reduce
+      animation: reduce 0.4s
+      animation-timing-function: ease-in-out
+      @keyframes reduce
+        0%
+          padding: 0 30px
+          height: 100%
+        100%
+          padding: 0
+          height: $header-size
+
+  .menu
+    z-index: 3
+    padding: 0
+    width: 100%
+
+    &.expand
+      animation: expand 0.4s
+      animation-timing-function: ease-in-out
+      @keyframes expand
+        0%
+          padding: 0
+          height: $header-size
+        100%
+          padding: 0 30px
+          height: 100%
+
+  .menu-icon
+    position: absolute
+    top: -5px
+    margin: auto
+    padding-left: 0
+
+  .menu-logo
+    position: relative
+    left: 40px
+    top: -4px
+
+  .expand
+    padding: 0 30px
+    position: fixed
+    overflow-y: scroll
+    top: 0
+
+  .btn-icon
+    display: inline-block
+    border: none
+    background-color: transparent
+    font-size: 2.5em
+    color: #ffffff
+    margin-left: 10px
+
+  figure
+    img
+      margin: 0 0 20px 0
+
+  .list-container
+    width: 100%
+    min-height: 75%
+
+    &.menu-itens
+      display: none
+
+    ul
+      text-align: left
+      margin: 0 10px
+      padding: 0
+
+      li
+        text-transform: none
+        display: block
+        font-weight: 400
+        font-size: 1.4em
+        margin-bottom: 5vw
+        padding-left: 0
+        margin-left: 0
+
+        .mat-icon
+          position: absolute
+          margin-top: 6px
+          display: block
+
+        span
+          margin-left: 30px
+
+  a
+    color: #ffffff
+
+  .icon-container
+    text-align: center
+    width: 100%
+    background-color: $fz-color
+
+    &.menu-itens
+      display: none
+
+    .btn-icon
+      margin: 0 10px
+      padding: 0
+
+  .btn-scheduling
+    padding: 0
+    background-color: transparent !important
+    font-weight: 900
+
+    .mat-icon
+      display: block
+
+  .user-icon
+    font-size: 1.2em
+
+  .user-email
+    display: block
+    font-size: 0.5em
+    position: absolute
+    top: 25px
+    left: 10px
+    margin-left: 19px
+
+  .user-info
+    position: absolute
+    top: -15px
+    left: 1px
+
+    .big-screen
+      display: none
+
+  .small-screen
+    display: block
+    padding: 0 4px
+    color: white
+
+  .menu-display
+    display: block
+    color: white
+
+#side-menu
+  font-size: 23px
+  width: 1em
+  height: 1em
+  position: relative
+  margin: 20px auto
+  transform: rotate(0deg)
+  transition: 0.5s ease-in-out
+  cursor: pointer
+
+#side-menu span
+  display: block
+  position: absolute
+  height: 0.15em
+  width: 100%
+  background: #ffffff
+  border-radius: 0.225em
+  opacity: 1
+  left: 0
+  transform: rotate(0deg)
+  transition: 0.25s ease-in-out
+
+#side-menu span:nth-child(1)
+  top: 0
+
+#side-menu span:nth-child(2)
+  top: 0.425em
+
+#side-menu span:nth-child(3)
+  top: 0.85em
+
+#side-menu.close span:nth-child(1)
+  top: 0.45em
+  transform: rotate(135deg)
+
+#side-menu.close span:nth-child(2)
+  opacity: 0
+  left: -1.5em
+
+#side-menu.close span:nth-child(3)
+  top: 0.45em
+  transform: rotate(-135deg)

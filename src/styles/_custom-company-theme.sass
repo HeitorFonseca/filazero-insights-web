@@ -1,0 +1,20 @@
+@import '~@angular/material/theming'
+
+@mixin custom-company-theme($theme)
+  $primary: map-get($theme, primary)
+  $accent: map-get($theme, accent)
+
+  article
+    mat-chip.highlight
+      background-color: mat-color($primary) !important
+
+  section
+    .btn-aplicar
+      background-color: mat-color($accent) !important
+
+  .spinner:before
+    border-color: mat-color($primary) !important
+    border-top-color: #ece6e6 !important
+
+  .btn-confirm button
+    background-color: mat-color($accent) !important

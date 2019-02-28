@@ -1,0 +1,51 @@
+// Screen
+$screen: (large: 1150px, medium: 945px, small: 800px);
+
+// Color
+$fz-color: #530f6d;
+$fz-soft-font: #cccccc;
+$fz-soft-border: #e1d7f5;
+
+$fz-bg: #ffffff;
+$fz-bg-title: #fafafa;
+
+$color-lighter: #f0f0f0;
+$color-darker: #444444;
+
+// Star rating color
+$color-negative-rating: $fz-color !default;
+$color-ok-rating: $fz-color !default;
+$color-positive-rating: $fz-color !default;
+$color-default-rating: $fz-color !default;
+
+$mat-card-color: rgba(255, 255, 255, 0.6);
+
+$color-custom: (1: #6d5cae, 2: #8a7dbe);
+
+// Size Components
+$header-size: 75px;
+$body-size: calc(100% - 60px);
+$footer-size: 70px;
+
+// Font
+$fonts: (
+  default: (
+    family: ('Nunito', sans-serif),
+    src: 'https://fonts.googleapis.com/css?family=Nunito',
+  ),
+  light: (
+    family: ('Raleway', sans-serif),
+    src: 'https://fonts.googleapis.com/css?family=Raleway:400,700',
+  ),
+  message: (
+    family: ('Roboto', sans-serif),
+    src: 'https://fonts.googleapis.com/css?family=Roboto',
+  ),
+  icons-mat: (
+    family: ('Material Icons'),
+    src: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+  ),
+  icons-fa: (
+    family: ('FontAwesome'),
+  ),
+);

@@ -1,0 +1,40 @@
+%spinner
+  content: ''
+  box-sizing: border-box
+  position: absolute
+  left: 50%
+  margin-top: -15px
+  margin-left: -15px
+  border-radius: 50%
+  border: 2.9px solid $fz-color
+  border-top-color: #e1d7f5
+  animation: spinner 0.8s linear infinite
+  -webkit-animation: spinner 0.8s linear infinite
+  -moz-animation: spinner 0.8s linear infinite
+
+%spinner-small
+  content: ''
+  box-sizing: border-box
+  position: absolute
+  margin-top: -10px
+  margin-left: -10px
+  border-radius: 50%
+  border-right: 2px dotted transparent
+  animation: spinner-button 0.9s linear infinite
+
+%cards-container
+  display: flex
+  flex-wrap: wrap
+  margin: auto
+  color: $fz-color
+
+%card
+  cursor: pointer
+  padding: 20px
+  border-top: none
+  background-color: #ffffff
+
+%icon
+  +font-family(icons-fa)
+  margin: auto
+  border-radius: 50%

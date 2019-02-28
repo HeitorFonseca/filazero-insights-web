@@ -1,0 +1,28 @@
+.filter-container
+  padding: 1em
+  position: sticky
+  top: 0
+  z-index: 100
+
+  section
+    margin-top: 1.3em
+
+    &.button-wrapper
+      text-align: center
+
+  .mat-icon
+    display: none
+
++screen(map-get($screen, small))
+  .filter-container
+    position: fixed
+    top: 0
+    width: 100%
+    height: 100%
+    background-color: #ffffff
+    overflow-y: auto
+
+    .mat-icon
+      display: block
+      position: absolute
+      right: 1em
