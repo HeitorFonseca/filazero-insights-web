@@ -26,9 +26,8 @@ export class HomeComponent implements OnInit {
   faChartBar = faChartBar;
   faChartLine = faChartLine;
   faChartArea = faChartArea;
-  //arrays auxiliares para gráficos de desempenho (barras estacadas)
-  tempomedio1 = [];
-  tempomedio2 = [];
+  //guardando antigos valores para gráficos de performance de tempo
+  oldDataChart = [];
 
   constructor(private chartService: ChartService) { }
 
@@ -84,16 +83,18 @@ export class HomeComponent implements OnInit {
         if(filtraLine!=undefined){
           this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset();
         }else{
-          var novo : ChartData;
-          novo = {
-            data: randomDataset(),
-            label: 'teste',
-            type: "line",
-            fill: false,
-            backgroundColor: 'rgba(77,116,234,0.2)',
-            borderColor: 'rgba(77,110,240,0.2)'
-          };
-          this.chartData.push(novo);
+          if(this.aggregator.barChartType!='horizontalBar'){
+            var novo : ChartData;
+            novo = {
+              data: randomDataset(),
+              label: 'teste',
+              type: "line",
+              fill: false,
+              backgroundColor: 'rgba(77,116,234,0.2)',
+              borderColor: 'rgba(77,110,240,0.2)'
+            };
+            this.chartData.push(novo);
+          }
         }
       }
     }else if(destino.indexOf("dimensoesIn")!=-1){
@@ -108,39 +109,46 @@ export class HomeComponent implements OnInit {
     }else{
       document.getElementById('trigger-charts').style.display="block";
     }
-    this.calculatePercentage();
 
-    console.log(this.chart.chart.config.options);
+    this.calculatePercentage();
+    
+    var _this = this;
+
+    this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
+      console.log(tooltipItem);    
+        //remover - exemplo da documentação do chart.js
+        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+    
+        if (label) {
+            label += ': ';
+        }
+        //label += Math.round(tooltipItem.xLabel * 100) / 100;
+        label += _this.oldDataChart[tooltipItem.datasetIndex][tooltipItem.index];
+        return label;
+    }
+
+    //this.chart.chart.options.tooltips.callbacks.label = this.customTooltip();
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
 
   calculatePercentage(): void{
-    //guardando valores para customizar o tooltip
-    this.tempomedio1 = this.chartData[0].data;
-    this.tempomedio2 = this.chartData[1].data;
-    
+    //debugger;
     var tempomedio1 = this.chartData[0].data;
     var tempomedio2 = this.chartData[1].data;
+    //guardando valores para customizar o tooltip   
+    this.oldDataChart[0] = tempomedio1.slice();
+    this.oldDataChart[1] = tempomedio2.slice();
+
     var total = 0;
     var temp = 0;
     for(var i=0 ; i < tempomedio1.length && i< tempomedio2.length ; i++){
-      total = tempomedio1[i] + this.tempomedio2[i];
+      total = tempomedio1[i] + tempomedio2[i];
       temp = Math.ceil((tempomedio1[i]*100)/total);
       tempomedio1[i] = temp;
       tempomedio2[i] = 100-temp;
     }
     this.chartData[0].data = tempomedio1;
     this.chartData[1].data = tempomedio2;
-  }
-
-  customTooltip(){
-    var tooltips = {
-      callbacks:{
-          label: function(tooltipItem,data){
-              
-          }
-      }
-    }
   }
 }
