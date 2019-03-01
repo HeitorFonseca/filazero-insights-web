@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ChartData } from '../../chartdata';
-import { CHARTDATA, BARCHARTCOLORS } from '../../mock-charts';
+import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL } from '../../mock-charts';
 import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
 import { BARCHARTLEGEND } from '../../mock-charts';
 import { BARCHARTLABELS } from '../../mock-charts';
@@ -21,7 +21,7 @@ export class ChartService {
   }
 
   aggre2 = {
-    barChartType: BARCHARTTYPE,
+    barChartType: BARCHARTTYPEHORIZONTAL,
     barChartLegend: BARCHARTLEGEND,
     barChartLabels: BARCHARTLABELS,
     barChartOptions: BARCHARTTESTOPTIONS,

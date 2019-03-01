@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
-import { ChartService } from '../../shared/services/chart.service';
+import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { Chart } from 'chart.js';
+import * as ChartZoom from 'chartjs-plugin-zoom';
+
 import { ChartData } from '../../chartdata';
 import { METRICASDIM } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
-import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
-
+import { ChartService } from '../../shared/services/chart.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -32,6 +34,8 @@ export class HomeComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
+    Chart.pluginService.register(ChartZoom);
+
     this.getAggregatorChart();
     this.getChartData();
     this.metricasOut = METRICASDIM.metricas;
@@ -42,17 +46,17 @@ export class HomeComponent implements OnInit {
   }
 
   getAggregatorChart(): void{
-    this.chartService.getAnotherAggregator()
-    .subscribe(aggregator => this.aggregator = aggregator);
-    /*this.chartService.getAggregatorChart()
+    /*this.chartService.getAnotherAggregator()
     .subscribe(aggregator => this.aggregator = aggregator);*/
+    this.chartService.getAggregatorChart()
+    .subscribe(aggregator => this.aggregator = aggregator);
   }
 
   getChartData(): void{
-    this.chartService.getAnotherData()
-    .subscribe(chartData => this.chartData = chartData);
-    /*this.chartService.getChartData()
+    /*this.chartService.getAnotherData()
     .subscribe(chartData => this.chartData = chartData);*/
+    this.chartService.getChartData()
+    .subscribe(chartData => this.chartData = chartData);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -68,9 +72,10 @@ export class HomeComponent implements OnInit {
     var destino = event.container.element.nativeElement.id;
     
     if(destino.indexOf("metricasin")!=-1){
+     // debugger;
       this.metricasIn = event.container.data;
       var filtraLine = this.chartData.find(cd => cd.type!=null && cd.type=="line");
-      if(this.metricasIn.includes("média")){
+      if(this.metricasIn.includes("Média")){
         if(filtraLine!=undefined){
           this.chartData.splice(
             this.chartData.indexOf(
@@ -81,12 +86,12 @@ export class HomeComponent implements OnInit {
         //queries para que funcione corretamente
       }else{
         if(filtraLine!=undefined){
-          this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset();
+          this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset(20);
         }else{
           if(this.aggregator.barChartType!='horizontalBar'){
             var novo : ChartData;
             novo = {
-              data: randomDataset(),
+              data: randomDataset(20),
               label: 'teste',
               type: "line",
               fill: false,
@@ -101,7 +106,7 @@ export class HomeComponent implements OnInit {
       this.dimensoesIn = event.container.data;
     }
     for(let cd of this.chartData){
-      cd.data = randomDataset();
+      cd.data = randomDataset(20);
     }
     //não é preciso mostrar os gráficos se não há filtros
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
@@ -110,24 +115,21 @@ export class HomeComponent implements OnInit {
       document.getElementById('trigger-charts').style.display="block";
     }
 
-    this.calculatePercentage();
-    
     var _this = this;
-
-    this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
-      console.log(tooltipItem);    
-        //remover - exemplo da documentação do chart.js
-        var label = data.datasets[tooltipItem.datasetIndex].label || '';
     
+    if(this.chart.chart.config.type=='horizontalBar'){
+      this.calculatePercentage();
+    
+      this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
+        var label = data.datasets[tooltipItem.datasetIndex].label || '';
         if (label) {
             label += ': ';
         }
-        //label += Math.round(tooltipItem.xLabel * 100) / 100;
         label += _this.oldDataChart[tooltipItem.datasetIndex][tooltipItem.index];
         return label;
+      }
     }
 
-    //this.chart.chart.options.tooltips.callbacks.label = this.customTooltip();
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }

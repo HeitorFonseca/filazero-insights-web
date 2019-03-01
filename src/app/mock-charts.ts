@@ -7,7 +7,8 @@ export const CHARTDATA: ChartData[] = [
     type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.2)',borderColor: 'rgba(77,110,240,0.2)'}
 ];
 
-export const BARCHARTTYPE = 'horizontalBar';
+export const BARCHARTTYPE = 'bar';
+export const BARCHARTTYPEHORIZONTAL = 'horizontalBar';
 export const BARCHARTLEGEND = true;
 export const BARCHARTLABELS = ['2006', '2007', '2008'];
 export const BARCHARTOPTIONS = {
@@ -33,10 +34,10 @@ export const BARCHARTCOLORS = [
     }
 ];
 
-export function randomDataset(): number[]{
+export function randomDataset(multiplier): number[]{
     var numb = [];
     for(let i=0 ; i < 3; i++){
-        numb.push(Math.ceil(Math.random() * 20));
+        numb.push(Math.ceil(Math.random() * multiplier));
     }
     return numb;
 }
@@ -60,13 +61,28 @@ export const BARCHARTTESTOPTIONS = {
                     callback: function(value){return value+ "%"},
                     stepSize: 50                                                                                                                                                                          
                 }
-                /*
-                scaleLabel: {
-                    display: true,
-                    labelString: "Percentage"
-                } */
             }
         ],
         yAxes: [{stacked: true}]
     }
 };
+
+export const BARCHARTTOPTIONS = {
+    responsive: true,
+    scales: {
+        xAxes: [
+            {
+                stacked: true,
+                ticks: {
+                    min: 0,
+                    max: 100,
+                    callback: function(value){return value+ "%"},
+                    stepSize: 50                                                                                                                                                                          
+                }
+            }
+        ],
+        yAxes: [{stacked: true}]
+    }
+};
+
+//tabela de feedback
