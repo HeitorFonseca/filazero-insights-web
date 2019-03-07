@@ -46,17 +46,17 @@ export class HomeComponent implements OnInit {
   }
 
   getAggregatorChart(): void{
-    /*this.chartService.getAnotherAggregator()
-    .subscribe(aggregator => this.aggregator = aggregator);*/
-    this.chartService.getAggregatorChart()
+    this.chartService.getAtendAggregator()
     .subscribe(aggregator => this.aggregator = aggregator);
+    /*this.chartService.getAggregatorChart()
+    .subscribe(aggregator => this.aggregator = aggregator);*/
   }
 
   getChartData(): void{
-    /*this.chartService.getAnotherData()
-    .subscribe(chartData => this.chartData = chartData);*/
-    this.chartService.getChartData()
+    this.chartService.getAtendData()
     .subscribe(chartData => this.chartData = chartData);
+    /*this.chartService.getChartData()
+    .subscribe(chartData => this.chartData = chartData);*/
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -86,17 +86,17 @@ export class HomeComponent implements OnInit {
         //queries para que funcione corretamente
       }else{
         if(filtraLine!=undefined){
-          this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset(20);
+          this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset(20,6);
         }else{
           if(this.aggregator.barChartType!='horizontalBar'){
             var novo : ChartData;
             novo = {
-              data: randomDataset(20),
+              data: randomDataset(20,6),
               label: 'teste',
               type: "line",
               fill: false,
               backgroundColor: 'rgba(77,116,234,0.2)',
-              borderColor: 'rgba(77,110,240,0.2)'
+              borderColor: 'rgba(255,255,255,0.9)'
             };
             this.chartData.push(novo);
           }
@@ -106,7 +106,12 @@ export class HomeComponent implements OnInit {
       this.dimensoesIn = event.container.data;
     }
     for(let cd of this.chartData){
-      cd.data = randomDataset(20);
+      cd.data = randomDataset(20,6);
+      var aux = cd.label.slice().split("-");
+      if(aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
+      || aux[0].indexOf('16')>-1 || aux[0].indexOf('17')>-1 || aux[0].indexOf('18')>-1){
+        cd.data.pop();
+      }
     }
     //não é preciso mostrar os gráficos se não há filtros
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){

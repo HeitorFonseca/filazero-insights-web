@@ -5,4 +5,5 @@ export class ChartData{
     fill?: boolean;
     backgroundColor?: string;
     borderColor?: string;
+    yAxisID?: string;
 }
