@@ -106,11 +106,15 @@ export class HomeComponent implements OnInit {
       this.dimensoesIn = event.container.data;
     }
     for(let cd of this.chartData){
-      cd.data = randomDataset(20,6);
-      var aux = cd.label.slice().split("-");
-      if(aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
-      || aux[0].indexOf('16')>-1 || aux[0].indexOf('17')>-1 || aux[0].indexOf('18')>-1){
-        cd.data.pop();
+      if(cd.label.includes('Média mensal de avaliações')){
+        cd.data = randomDataset(5,6);
+      }else{
+        cd.data = randomDataset(20,6);
+        var aux = cd.label.slice().split("-");
+        if(aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
+        || aux[0].indexOf('16')>-1 || aux[0].indexOf('17')>-1 || aux[0].indexOf('18')>-1){
+          cd.data.pop();
+        }
       }
     }
     //não é preciso mostrar os gráficos se não há filtros
