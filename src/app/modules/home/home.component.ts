@@ -9,6 +9,8 @@ import { ChartData } from '../../chartdata';
 import { METRICASDIM } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
+
+import * as PluginLabels from 'chartjs-plugin-labels';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,6 +38,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     Chart.pluginService.register(ChartZoom);
+    Chart.pluginService.register(PluginLabels);
 
     this.getAggregatorChart();
     this.getChartData();
@@ -162,7 +165,7 @@ export class HomeComponent implements OnInit {
         return label;
       }
     }
-
+    console.log(this.chart.chart.config.data);
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
