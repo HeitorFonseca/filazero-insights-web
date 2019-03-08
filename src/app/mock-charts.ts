@@ -84,153 +84,210 @@ export const BARCHARTTOPTIONS = {
         yAxes: [{stacked: true}]
     }
 };
-
-//tabela de horários de atendimento
-export const CHARTDATAATD: ChartData[] = [
-    {data: [], label: '7-8h',backgroundColor:'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-1'},
-    {data: [], label: '8-9h',backgroundColor: 'rgba(77,116,234,0.5)'
-    , borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-2'},
-    {data: [], label: '9-10h',backgroundColor:'rgba(77,116,234,0.5)',
-    borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-3'},
-    {data: [], label: '10-11h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-4'},
-    {data: [], label: '11-12h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-5'},
-    {data: [], label: '12-13h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-6'}, 
-    {data: [], label: '13-14h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-7'},
-    {data: [], label: '14-15h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-8'},
-    {data: [], label: '15-16h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-9'},
-    {data: [], label: '16-17h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-10'},
-    {data: [], label: '17-18h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-11'},
-    {data: [], label: '18-19h', backgroundColor: 'rgba(77,116,234,0.5)',
-     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-12'}  
-];
-export const BARCHARTLABELSATD = ['Segunda-feira', 'Terça-feira', 'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+//GRÁFICO DE ATENDIMENTO
 export const BARCHARTATDOPTIONS = {
-    scaleShowVerticalLines: false,
+    responsive: true,
     title: {
         display: true,
         text: 'Horários de Pico',
         fontSize: 15
     },
     scales: {
-      xAxes: [{
-        barPercentage: 1,
-        categoryPercentage: 0.7
+        xAxes:[{
+            type: 'time',
+            time:{
+                unit: 'hour'
+            }
       }],
-      yAxes: [{
-        label:'7-8h',
-        id: "atd-1",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-2",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-3",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-4",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-5",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-6",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-7",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-8",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-9",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-10",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-11",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }, {
-        display:false,
-        id: "atd-12",
-        ticks: {
-            min:0,
-            max:20,
-            display:false
-        }
-      }]
+        yAxes:[{
+            ticks:{
+                beginAtZero: true
+            }
+        }]
     }
-  };
+}
+export const CHARTDATAATD = [
+    {
+        label: "Segunda-feira",
+        data: [{
+            x: new Date().setHours(6,0), y: 15
+        }, {
+            x: new Date().setHours(7,0), y: 15
+        }, {
+            x: new Date().setHours(8,0), y: 18
+        }, {
+            x: new Date().setHours(9,0), y: 18
+        }, {
+            x: new Date().setHours(10,0), y: 20
+        }, {
+            x: new Date().setHours(11,0), y: 8
+        }, {
+            x: new Date().setHours(12,0), y: 4
+        }, {
+            x: new Date().setHours(13,0), y: 6
+        }, {
+            x: new Date().setHours(14,0), y: 4
+        }, {
+            x: new Date().setHours(15,0), y: 10
+        }, {
+            x: new Date().setHours(16,0), y: 14
+        }, {
+            x: new Date().setHours(17,0), y: 9
+        }, {
+            x: new Date().setHours(18,0), y: 3
+        }],
+        borderColor: 'red',
+        backgroundColor:'rgba(225,10,24,0.8)'
+    },
+    {
+        label: "Terça-feira",
+        data: [{
+            x: new Date().setHours(6,0), y: 5
+        }, {
+            x: new Date().setHours(7,0), y: 9
+        }, {
+            x: new Date().setHours(8,0), y: 16
+        }, {
+            x: new Date().setHours(9,0), y: 10
+        }, {
+            x: new Date().setHours(10,0), y: 10
+        }, {
+            x: new Date().setHours(11,0), y: 18
+        }, {
+            x: new Date().setHours(12,0), y: 4
+        }, {
+            x: new Date().setHours(13,0), y: 16
+        }, {
+            x: new Date().setHours(14,0), y: 14
+        }, {
+            x: new Date().setHours(15,0), y: 15
+        }, {
+            x: new Date().setHours(16,0), y: 4
+        }, {
+            x: new Date().setHours(17,0), y: 7
+        }, {
+            x: new Date().setHours(18,0), y: 5
+        }],
+        borderColor: 'red'
+    },
+    {
+        label: "Quarta-feira",
+        data: [{
+            x: new Date().setHours(6,0), y: 7
+        }, {
+            x: new Date().setHours(7,0), y: 11
+        }, {
+            x: new Date().setHours(8,0), y: 11
+        }, {
+            x: new Date().setHours(9,0), y: 13
+        }, {
+            x: new Date().setHours(10,0), y: 14
+        }, {
+            x: new Date().setHours(11,0), y: 19
+        }, {
+            x: new Date().setHours(12,0), y: 14
+        }, {
+            x: new Date().setHours(13,0), y: 14
+        }, {
+            x: new Date().setHours(14,0), y: 10
+        }, {
+            x: new Date().setHours(15,0), y: 12
+        }, {
+            x: new Date().setHours(16,0), y: 14
+        }, {
+            x: new Date().setHours(17,0), y: 7
+        }, {
+            x: new Date().setHours(18,0), y: 5
+        }],
+        borderColor: 'red'
+    },
+    {
+        label: "Quinta-feira",
+        data: [{
+            x: new Date().setHours(6,0), y: 6
+        }, {
+            x: new Date().setHours(7,0), y: 7
+        }, {
+            x: new Date().setHours(8,0), y: 19
+        }, {
+            x: new Date().setHours(9,0), y: 20
+        }, {
+            x: new Date().setHours(10,0), y: 13
+        }, {
+            x: new Date().setHours(11,0), y: 11
+        }, {
+            x: new Date().setHours(12,0), y: 7
+        }, {
+            x: new Date().setHours(13,0), y: 16
+        }, {
+            x: new Date().setHours(14,0), y: 11
+        }, {
+            x: new Date().setHours(15,0), y: 17
+        }, {
+            x: new Date().setHours(16,0), y: 9
+        }, {
+            x: new Date().setHours(17,0), y: 7
+        }, {
+            x: new Date().setHours(18,0), y: 5
+        }],
+        borderColor: 'red'
+    },
+    {
+        label: "Sexta-feira",
+        data: [{
+            x: new Date().setHours(6,0), y: 5
+        }, {
+            x: new Date().setHours(7,0), y: 9
+        }, {
+            x: new Date().setHours(8,0), y: 16
+        }, {
+            x: new Date().setHours(9,0), y: 10
+        }, {
+            x: new Date().setHours(10,0), y: 10
+        }, {
+            x: new Date().setHours(11,0), y: 18
+        }, {
+            x: new Date().setHours(12,0), y: 4
+        }, {
+            x: new Date().setHours(13,0), y: 16
+        }, {
+            x: new Date().setHours(14,0), y: 14
+        }, {
+            x: new Date().setHours(15,0), y: 15
+        }, {
+            x: new Date().setHours(16,0), y: 4
+        }, {
+            x: new Date().setHours(17,0), y: 7
+        }, {
+            x: new Date().setHours(18,0), y: 5
+        }],
+        borderColor: 'red'
+    },
+    {
+        label: "Sábado",
+        data: [{
+            x: new Date().setHours(7,0), y: 9
+        }, {
+            x: new Date().setHours(8,0), y: 8
+        }, {
+            x: new Date().setHours(9,0), y: 10
+        }, {
+            x: new Date().setHours(10,0), y: 10
+        }, {
+            x: new Date().setHours(11,0), y: 14
+        }, {
+            x: new Date().setHours(12,0), y: 7
+        }],
+        borderColor: 'red'
+    }
+];
 
 //GRÁFICO DE FEEDBACK
 export const CHARTDATAFEEDBACK: ChartData[] = [
     {data: [0,0,0], label: 'Média mensal de avaliações',backgroundColor:'rgba(225,10,24,0.2)',
      borderColor: 'rgba(200,20,24,0.2)',yAxisID:'y-media'},
     {data: [0,0,0], label: 'Total de avaliações',
-     type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.2)',
+     type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.7)',
      borderColor: 'rgba(77,110,240,0.2)', yAxisID:'y-total'}
 ];
 export const CHARTLABELSFEEDBACK = ['Ago/18','Set/18','Out/18'];

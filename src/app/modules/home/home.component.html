@@ -42,9 +42,9 @@
 <div class="col-9">
   <!-- tabela -->
 </div>
-<div class="col-3">
+<div id="outs-teste" class="col-3">
     <div class="example-container row">
-      <h2>Métricas</h2>
+      <h4>Métricas</h4>
       <div 
         id="metricasout"
         cdkDropList
@@ -60,7 +60,7 @@
       </div>
    </div>
     <div class="example-container row">
-      <h2>Dimensões</h2>
+      <h4>Dimensões</h4>
       <div
         id="dimensoesOut"
         cdkDropList
@@ -78,19 +78,19 @@
   </div>
 </div>
 <div id="trigger-charts" class="col-9">
-    <div id="charts">
-        <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-            [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
-    </div>   
-    <div id="available-charts">
-      <div>
-        <fa-icon [icon]="faChartBar"></fa-icon>
-      </div>
-      <div>
-        <fa-icon [icon]="faChartLine"></fa-icon>
-      </div>
-      <div>
-        <fa-icon [icon]="faChartArea"></fa-icon>
-      </div>
-    </div> 
+  <div id="charts">
+      <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+          [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+  </div>   
+  <div id="available-charts">
+    <div>
+      <fa-icon [icon]="faChartBar"></fa-icon>
+    </div>
+    <div>
+      <fa-icon [icon]="faChartLine"></fa-icon>
+    </div>
+    <div>
+      <fa-icon [icon]="faChartArea"></fa-icon>
+    </div>
+  </div> 
 </div>

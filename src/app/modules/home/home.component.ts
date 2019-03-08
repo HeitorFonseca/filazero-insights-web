@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   
   public chartData: ChartData[];
+  //public chartData: ChartData[];
   public aggregator;
   metricasOut: string[];
   dimensoesOut: string[];
@@ -59,6 +60,16 @@ export class HomeComponent implements OnInit {
     .subscribe(chartData => this.chartData = chartData);*/
   }
 
+  getFeedbackChartData(): void{
+    this.chartService.getFeedbackData()
+    .subscribe(chartData => this.chartData = chartData);
+  }
+
+  getAggregatorFeedback(): void{
+    this.chartService.getAggregatorFeedback()
+    .subscribe(aggregator => this.aggregator = aggregator);
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -89,8 +100,8 @@ export class HomeComponent implements OnInit {
           this.chartData.find(cd => cd.type!=null && cd.type=="line").data = randomDataset(20,6);
         }else{
           if(this.aggregator.barChartType!='horizontalBar'){
-            var novo : ChartData;
-            novo = {
+            //var novo : ChartData;
+            var novo = {
               data: randomDataset(20,6),
               label: 'teste',
               type: "line",
@@ -105,9 +116,22 @@ export class HomeComponent implements OnInit {
     }else if(destino.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.container.data;
     }
+    /* escolha de gráfico mockado - a forma a qual
+    configurar os gráficos ainda deve ser pensada com mais calma
+    debugger;
+    switch(event.item.data){
+        case 'Feedback':
+          this.getAggregatorFeedback();
+          this.getFeedbackChartData();
+          this.chart.chart.update();
+          break;
+    }*/
+    //geração aleatória de dados será excluída assim que integrar com API
     for(let cd of this.chartData){
       if(cd.label.includes('Média mensal de avaliações')){
         cd.data = randomDataset(5,6);
+      }else if(cd.label.includes('Total de avaliações')){
+        cd.data = randomDataset(100,6);
       }else{
         cd.data = randomDataset(20,6);
         var aux = cd.label.slice().split("-");
