@@ -4,13 +4,14 @@ import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-sv
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
 import * as ChartZoom from 'chartjs-plugin-zoom';
+//import * as PluginLabels from 'chartjs-plugin-labels';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { ChartData } from '../../chartdata';
 import { METRICASDIM } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
-
-import * as PluginLabels from 'chartjs-plugin-labels';
+//moment().day("Monday").to
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     Chart.pluginService.register(ChartZoom);
-    Chart.pluginService.register(PluginLabels);
+    Chart.pluginService.register(ChartDataLabels);
 
     this.getAggregatorChart();
     this.getChartData();
@@ -150,7 +151,7 @@ export class HomeComponent implements OnInit {
     }else{
       document.getElementById('trigger-charts').style.display="block";
     }
-
+    
     var _this = this;
     
     if(this.chart.chart.config.type=='horizontalBar'){

@@ -86,32 +86,33 @@ export const BARCHARTTOPTIONS = {
 };
 //GRÁFICO DE ATENDIMENTO
 export const CHARTDATAATD: ChartData[] = [
-    {data: [], label: '6-7h',backgroundColor:'rgba(77,116,234,0.65)',
+    {data: [], label: '6-7h',backgroundColor:'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-1'},
-    {data: [], label: '7-8h',backgroundColor: 'rgba(77,234,116,0.65)'
+    {data: [], label: '7-8h',backgroundColor: 'rgba(77,116,234,1.0)'
     , borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-2'},
-    {data: [], label: '8-9h',backgroundColor:'rgba(77,150,234,0.65)',
+    {data: [], label: '8-9h',backgroundColor:'rgba(77,116,234,1.0)',
     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-3'},
-    {data: [], label: '9-10h', backgroundColor: 'rgba(100,116,234,0.65)',
+    {data: [], label: '9-10h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-4'},
-    {data: [], label: '10-11h', backgroundColor: 'rgba(100,220,116,0.65)',
+    {data: [], label: '10-11h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-5'},
-    {data: [], label: '11-12h', backgroundColor: 'rgba(77,170,240,0.65)',
+    {data: [], label: '11-12h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-6'}, 
-    {data: [], label: '13-14h', backgroundColor: 'rgba(45,116,234,0.65)',
+    {data: [], label: '13-14h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-7'},
-    {data: [], label: '14-15h', backgroundColor: 'rgba(77,0,234,0.65)',
+    {data: [], label: '14-15h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-8'},
-    {data: [], label: '15-16h', backgroundColor: 'rgba(30,116,234,0.65)',
+    {data: [], label: '15-16h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-9'},
-    {data: [], label: '16-17h', backgroundColor: 'rgba(77,100,210,0.65)',
+    {data: [], label: '16-17h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-10'},
-    {data: [], label: '17-18h', backgroundColor: 'rgba(100,65,210,0.65)',
+    {data: [], label: '17-18h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-11'},
-    {data: [], label: '18-19h', backgroundColor: 'rgba(77,55,234,0.65)',
+    {data: [], label: '18-19h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-12'}  
 ];
 export const BARCHARTLABELSATD = ['Segunda-feira', 'Terça-feira', 'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
 export const BARCHARTATDOPTIONS = {
     scaleShowVerticalLines: false,
     title: {
@@ -120,14 +121,11 @@ export const BARCHARTATDOPTIONS = {
         fontSize: 15
     },
     scales: {
-      /*xAxes: [{
-        barPercentage: 1,
-        categoryPercentage: 0.7,
-        type: 'time',
-        time:{
-            unit:'day'
+      xAxes: [{
+        ticks:{
+            padding: 50
         }
-      }],*/
+      }],
       yAxes: [{
         
         id: "atd-1",
@@ -230,10 +228,23 @@ export const BARCHARTATDOPTIONS = {
       }]
     },
     plugins:{
-        labels:
+        /*labels:
         {
             render:function (args) {
                 return args.dataset.label;
+            },
+            fontSize: 9
+        }*/
+        datalabels:{
+            anchor: 'start',
+            align:'end',
+            font:{
+                size:10
+            },
+            offset: -40,
+            rotation: -90,
+            formatter: function(value,context){
+                return context.dataset.label;
             }
         }
     }
