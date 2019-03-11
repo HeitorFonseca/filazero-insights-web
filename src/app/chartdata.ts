@@ -1,5 +1,5 @@
 export class ChartData{
-    data : number[];
+    data : any[];
     label: string;
     type?:string;
     fill?: boolean;

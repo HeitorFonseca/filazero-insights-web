@@ -228,13 +228,6 @@ export const BARCHARTATDOPTIONS = {
       }]
     },
     plugins:{
-        /*labels:
-        {
-            render:function (args) {
-                return args.dataset.label;
-            },
-            fontSize: 9
-        }*/
         datalabels:{
             anchor: 'start',
             align:'end',

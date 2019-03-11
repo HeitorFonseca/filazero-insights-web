@@ -22,8 +22,9 @@ export class HomeComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   
   public chartData: ChartData[];
-  //public chartData: ChartData[];
   public aggregator;
+
+  auxOldLabels=[];
   metricasOut: string[];
   dimensoesOut: string[];
   metricasIn = [];
@@ -139,7 +140,7 @@ export class HomeComponent implements OnInit {
       }else{
         cd.data = randomDataset(20,6);
         var aux = cd.label.slice().split("-");
-        if(aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
+        if(aux[0].indexOf('6')>-1||aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
         || aux[0].indexOf('16')>-1 || aux[0].indexOf('17')>-1 || aux[0].indexOf('18')>-1){
           cd.data.pop();
         }
@@ -189,5 +190,20 @@ export class HomeComponent implements OnInit {
     }
     this.chartData[0].data = tempomedio1;
     this.chartData[1].data = tempomedio2;
+  }
+
+  //eventos de clique para mudar tipo dos gráficos
+  changeToLineChart(event: Event){
+    this.auxOldLabels = []
+    for(let cd of this.chartData){
+      if('label' in cd){
+        this.auxOldLabels.push(cd.label);
+        delete cd.label;
+      }
+      var aux = cd.data.slice();
+      for(let a of aux){
+        
+      }
+    }
   }
 }

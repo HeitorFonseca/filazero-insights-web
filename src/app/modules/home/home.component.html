@@ -39,10 +39,12 @@
   </div>
 </div>
 <div class="row">
-<div class="col-9">
-  <!-- tabela -->
+<div id="table-section" class="col-9">
+  <div id="tabela" class="table table-striped table-hover">
+  </div>
 </div>
-<div id="outs-teste" class="col-3">
+<div class="col-1"></div>
+<div id="outs-teste" class="col-2">
     <div class="example-container row">
       <h4>Métricas</h4>
       <div 
@@ -77,20 +79,22 @@
     </div> 
   </div>
 </div>
-<div id="trigger-charts" class="col-9">
-  <div id="charts">
-      <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-          [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
-  </div>   
-  <div id="available-charts">
-    <div>
-      <fa-icon [icon]="faChartBar"></fa-icon>
-    </div>
-    <div>
-      <fa-icon [icon]="faChartLine"></fa-icon>
-    </div>
-    <div>
-      <fa-icon [icon]="faChartArea"></fa-icon>
-    </div>
-  </div> 
+<div class="row">
+  <div id="trigger-charts" class="col-9">
+    <div id="charts">
+        <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+            [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+    </div>   
+    <div id="available-charts">
+      <div>
+        <fa-icon (click)="changeToBarChart()" [icon]="faChartBar"></fa-icon>
+      </div>
+      <div>
+        <fa-icon (click)="changeToLineChart()" [icon]="faChartLine"></fa-icon>
+      </div>
+      <div>
+        <fa-icon (click)="changeToAreaChart()" [icon]="faChartArea"></fa-icon>
+      </div>
+    </div> 
+  </div>
 </div>
