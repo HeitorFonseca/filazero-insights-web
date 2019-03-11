@@ -11,6 +11,7 @@ import { ChartData } from '../../chartdata';
 import { METRICASDIM } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
+import { isUndefined } from 'util';
 //moment().day("Monday").to
 @Component({
   selector: 'app-home',
@@ -167,7 +168,7 @@ export class HomeComponent implements OnInit {
         return label;
       }
     }
-    console.log(this.chart.chart.config.data);
+    
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
@@ -194,16 +195,49 @@ export class HomeComponent implements OnInit {
 
   //eventos de clique para mudar tipo dos gráficos
   changeToLineChart(event: Event){
-    this.auxOldLabels = []
+    
+    this.chart.chart.config.type='line';
     for(let cd of this.chartData){
-      if('label' in cd){
+      cd.type='line';
+      cd.fill = false;
+      cd.borderColor = 'rgba(77,116,234,1.0)';
+    }
+    for(let axis of this.chart.chart.options.scales.yAxes){
+      axis.type='linear';
+      console.log(axis);
+    }
+    /*for(let xAxis of this.chart.chart.options.scales.xAxes){
+      xAxis.type='time';
+      xAxis.time = {
+        unit: 'week',
+        isoWeekday: true
+      };
+    }*/
+    this.chart.chart.config.data.datasets = this.chartData;
+    this.chart.chart.update();
+   /* this.auxOldLabels = []
+    for(let cd of this.chartData){
+      if(typeof(cd.label) != typeof(undefined)){
         this.auxOldLabels.push(cd.label);
         delete cd.label;
       }
       var aux = cd.data.slice();
-      for(let a of aux){
-        
+      for(var i=0;i<aux.length;i++){
+        cd.data[i] = {
+
+        };
       }
+    }*/
+  }
+
+  changeToBarChart(event: Event){
+    this.chart.chart.config.type='bar';
+    for(let cd of this.chartData){
+      cd.borderColor = 'rgba(255,255,255,1.0)';
+      delete cd.type;
+      delete cd.fill;
     }
+    this.chart.chart.config.data.datasets = this.chartData;
+    this.chart.chart.update();
   }
 }
