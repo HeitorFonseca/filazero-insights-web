@@ -282,205 +282,38 @@ export const BARCHARTTOPTIONSFEEDB = {
     }
 };
 
-/*
-//tabela de horários de atendimento
-
-
-export const BARCHARTATDOPTIONS = {
-    responsive: true,
-    title: {
-        display: true,
-        text: 'Horários de Pico',
-        fontSize: 15
-    },
-    scales: {
-        xAxes:[{
-            type: 'time',
-            time:{
-                unit: 'hour'
-            }
-      }],
-        yAxes:[{
-            ticks:{
-                beginAtZero: true
-            }
-        }]
-    }
-}
-export const CHARTDATAATD = [
+//gráfico de classificação média por serviço
+export const BARCHARTDATACLASSMEDIA: ChartData[] = [
     {
-        label: "Segunda-feira",
-        data: [{
-            x: new Date().setHours(6,0), y: 15
-        }, {
-            x: new Date().setHours(7,0), y: 15
-        }, {
-            x: new Date().setHours(8,0), y: 18
-        }, {
-            x: new Date().setHours(9,0), y: 18
-        }, {
-            x: new Date().setHours(10,0), y: 20
-        }, {
-            x: new Date().setHours(11,0), y: 8
-        }, {
-            x: new Date().setHours(12,0), y: 4
-        }, {
-            x: new Date().setHours(13,0), y: 6
-        }, {
-            x: new Date().setHours(14,0), y: 4
-        }, {
-            x: new Date().setHours(15,0), y: 10
-        }, {
-            x: new Date().setHours(16,0), y: 14
-        }, {
-            x: new Date().setHours(17,0), y: 9
-        }, {
-            x: new Date().setHours(18,0), y: 3
-        }],
-        borderColor: 'red',
-        backgroundColor:'rgba(225,10,24,0.8)'
+        data: [], label: 'Média',backgroundColor:'rgba(255, 153, 0, 0.8)',
+        borderColor: 'rgba(255,255,255,0.9)'
     },
     {
-        label: "Terça-feira",
-        data: [{
-            x: new Date().setHours(6,0), y: 5
-        }, {
-            x: new Date().setHours(7,0), y: 9
-        }, {
-            x: new Date().setHours(8,0), y: 16
-        }, {
-            x: new Date().setHours(9,0), y: 10
-        }, {
-            x: new Date().setHours(10,0), y: 10
-        }, {
-            x: new Date().setHours(11,0), y: 18
-        }, {
-            x: new Date().setHours(12,0), y: 4
-        }, {
-            x: new Date().setHours(13,0), y: 16
-        }, {
-            x: new Date().setHours(14,0), y: 14
-        }, {
-            x: new Date().setHours(15,0), y: 15
-        }, {
-            x: new Date().setHours(16,0), y: 4
-        }, {
-            x: new Date().setHours(17,0), y: 7
-        }, {
-            x: new Date().setHours(18,0), y: 5
-        }],
-        borderColor: 'red'
-    },
-    {
-        label: "Quarta-feira",
-        data: [{
-            x: new Date().setHours(6,0), y: 7
-        }, {
-            x: new Date().setHours(7,0), y: 11
-        }, {
-            x: new Date().setHours(8,0), y: 11
-        }, {
-            x: new Date().setHours(9,0), y: 13
-        }, {
-            x: new Date().setHours(10,0), y: 14
-        }, {
-            x: new Date().setHours(11,0), y: 19
-        }, {
-            x: new Date().setHours(12,0), y: 14
-        }, {
-            x: new Date().setHours(13,0), y: 14
-        }, {
-            x: new Date().setHours(14,0), y: 10
-        }, {
-            x: new Date().setHours(15,0), y: 12
-        }, {
-            x: new Date().setHours(16,0), y: 14
-        }, {
-            x: new Date().setHours(17,0), y: 7
-        }, {
-            x: new Date().setHours(18,0), y: 5
-        }],
-        borderColor: 'red'
-    },
-    {
-        label: "Quinta-feira",
-        data: [{
-            x: new Date().setHours(6,0), y: 6
-        }, {
-            x: new Date().setHours(7,0), y: 7
-        }, {
-            x: new Date().setHours(8,0), y: 19
-        }, {
-            x: new Date().setHours(9,0), y: 20
-        }, {
-            x: new Date().setHours(10,0), y: 13
-        }, {
-            x: new Date().setHours(11,0), y: 11
-        }, {
-            x: new Date().setHours(12,0), y: 7
-        }, {
-            x: new Date().setHours(13,0), y: 16
-        }, {
-            x: new Date().setHours(14,0), y: 11
-        }, {
-            x: new Date().setHours(15,0), y: 17
-        }, {
-            x: new Date().setHours(16,0), y: 9
-        }, {
-            x: new Date().setHours(17,0), y: 7
-        }, {
-            x: new Date().setHours(18,0), y: 5
-        }],
-        borderColor: 'red'
-    },
-    {
-        label: "Sexta-feira",
-        data: [{
-            x: new Date().setHours(6,0), y: 5
-        }, {
-            x: new Date().setHours(7,0), y: 9
-        }, {
-            x: new Date().setHours(8,0), y: 16
-        }, {
-            x: new Date().setHours(9,0), y: 10
-        }, {
-            x: new Date().setHours(10,0), y: 10
-        }, {
-            x: new Date().setHours(11,0), y: 18
-        }, {
-            x: new Date().setHours(12,0), y: 4
-        }, {
-            x: new Date().setHours(13,0), y: 16
-        }, {
-            x: new Date().setHours(14,0), y: 14
-        }, {
-            x: new Date().setHours(15,0), y: 15
-        }, {
-            x: new Date().setHours(16,0), y: 4
-        }, {
-            x: new Date().setHours(17,0), y: 7
-        }, {
-            x: new Date().setHours(18,0), y: 5
-        }],
-        borderColor: 'red'
-    },
-    {
-        label: "Sábado",
-        data: [{
-            x: new Date().setHours(7,0), y: 9
-        }, {
-            x: new Date().setHours(8,0), y: 8
-        }, {
-            x: new Date().setHours(9,0), y: 10
-        }, {
-            x: new Date().setHours(10,0), y: 10
-        }, {
-            x: new Date().setHours(11,0), y: 14
-        }, {
-            x: new Date().setHours(12,0), y: 7
-        }],
-        borderColor: 'red'
+        data: [], label: 'Total',backgroundColor:'rgba(0,0,225,0.8)',
+        borderColor: 'rgba(255,255,255,0.9)' 
     }
 ];
-
-*/
+export const BARCHARTLABELSCLASSMEDIA = ['Serviço 1', 'Serviço 2'];
+export const BARCHARTOPTCLASSMEDIA = {
+    responsive: true,
+    plugins:{
+        datalabels:{
+            anchor: 'end',
+            align: 'end',
+            clamp: true,
+            color: 'black',
+            font:{
+                size: '14'
+            }
+        }
+    },
+    scales:{
+        xAxes: [{
+            ticks: {
+                min: 0,
+                //callback: function(value){return value+ "%"},
+                stepSize: 5                                                                                                                                                                          
+            }
+        }]    
+    }
+};

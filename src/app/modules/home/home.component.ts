@@ -53,14 +53,14 @@ export class HomeComponent implements OnInit {
   }
 
   getAggregatorChart(): void{
-    this.chartService.getAtendAggregator()
+    this.chartService.getAggregatorClassMedia()
     .subscribe(aggregator => this.aggregator = aggregator);
     /*this.chartService.getAggregatorChart()
     .subscribe(aggregator => this.aggregator = aggregator);*/
   }
 
   getChartData(): void{
-    this.chartService.getAtendData()
+    this.chartService.getDataClassMedia()
     .subscribe(chartData => this.chartData = chartData);
     /*this.chartService.getChartData()
     .subscribe(chartData => this.chartData = chartData);*/
@@ -134,7 +134,7 @@ export class HomeComponent implements OnInit {
     }*/
     //geração aleatória de dados será excluída assim que integrar com API
     for(let cd of this.chartData){
-      if(cd.label.includes('Média mensal de avaliações')){
+      if(cd.label.includes('Média mensal de avaliações')||cd.label.indexOf('Média')>-1){
         cd.data = randomDataset(5,6);
       }else if(cd.label.includes('Total de avaliações')){
         cd.data = randomDataset(100,6);
@@ -156,7 +156,8 @@ export class HomeComponent implements OnInit {
     
     var _this = this;
     
-    if(this.chart.chart.config.type=='horizontalBar'){
+    if(this.chart.chart.config.type=='horizontalBar' &&
+      this.chart.chart.options.scales.xAxes.stacked){
       this.calculatePercentage();
     
       this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
@@ -204,7 +205,6 @@ export class HomeComponent implements OnInit {
     }
     for(let axis of this.chart.chart.options.scales.yAxes){
       axis.type='linear';
-      console.log(axis);
     }
     /*for(let xAxis of this.chart.chart.options.scales.xAxes){
       xAxis.type='time';

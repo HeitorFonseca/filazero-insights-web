@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { ChartData } from '../../chartdata';
-import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL, CHARTDATAATD, randomDataset, BARCHARTLABELSATD } from '../../mock-charts';
+import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL, CHARTDATAATD, randomDataset, BARCHARTLABELSATD, BARCHARTLABELSCLASSMEDIA, BARCHARTOPTCLASSMEDIA } from '../../mock-charts';
 import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
 import { BARCHARTLEGEND } from '../../mock-charts';
 import { BARCHARTLABELS, BARCHARTATDOPTIONS } from '../../mock-charts';
-import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, BARCHARTTOPTIONSFEEDB } from '../../mock-charts';
+import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, 
+  BARCHARTTOPTIONSFEEDB, BARCHARTDATACLASSMEDIA } from '../../mock-charts';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -42,6 +43,13 @@ export class ChartService {
     barChartOptions: BARCHARTTOPTIONSFEEDB
   }
 
+  aggreClassMedia = {
+    barChartType: BARCHARTTYPEHORIZONTAL,
+    barChartLegend: true,
+    barChartLabels: BARCHARTLABELSCLASSMEDIA,
+    barChartOptions: BARCHARTOPTCLASSMEDIA
+  }
+
   constructor() { }
 
   getChartData(): Observable<ChartData[]>{
@@ -74,5 +82,13 @@ export class ChartService {
 
   getAggregatorFeedback(): Observable<any>{
     return of(this.aggreFeedback);
+  }
+
+  getDataClassMedia(): Observable<ChartData[]>{
+    return of(BARCHARTDATACLASSMEDIA);
+  }
+
+  getAggregatorClassMedia(): Observable<any>{
+    return of(this.aggreClassMedia);
   }
 }

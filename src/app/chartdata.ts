@@ -6,4 +6,5 @@ export class ChartData{
     backgroundColor?: string;
     borderColor?: string;
     yAxisID?: string;
+    xAxisID?: string;
 }
