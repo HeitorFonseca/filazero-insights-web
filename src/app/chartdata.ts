@@ -7,4 +7,5 @@ export class ChartData{
     borderColor?: string;
     yAxisID?: string;
     xAxisID?: string;
+    datalabels?: any;
 }

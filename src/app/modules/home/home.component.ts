@@ -8,10 +8,10 @@ import * as ChartZoom from 'chartjs-plugin-zoom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { ChartData } from '../../chartdata';
-import { METRICASDIM } from '../../mock-met-dim';
+import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
-import { isUndefined } from 'util';
+
 //moment().day("Monday").to
 @Component({
   selector: 'app-home',
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   public chartData: ChartData[];
   public aggregator;
 
-  auxOldLabels=[];
+  auxOldChartType='';
   metricasOut: string[];
   dimensoesOut: string[];
   metricasIn = [];
@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   faChartArea = faChartArea;
   //guardando antigos valores para gráficos de performance de tempo
   oldDataChart = [];
+  
 
   constructor(private chartService: ChartService) { }
 
@@ -47,20 +48,19 @@ export class HomeComponent implements OnInit {
     this.getChartData();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
-    //this.chartData = [];
     
     document.getElementById('trigger-charts').style.display="none";
   }
 
   getAggregatorChart(): void{
-    this.chartService.getAggregatorClassMedia()
+    this.chartService.getAtendAggregator()
     .subscribe(aggregator => this.aggregator = aggregator);
     /*this.chartService.getAggregatorChart()
     .subscribe(aggregator => this.aggregator = aggregator);*/
   }
 
   getChartData(): void{
-    this.chartService.getDataClassMedia()
+    this.chartService.getAtendData()
     .subscribe(chartData => this.chartData = chartData);
     /*this.chartService.getChartData()
     .subscribe(chartData => this.chartData = chartData);*/
@@ -122,16 +122,7 @@ export class HomeComponent implements OnInit {
     }else if(destino.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.container.data;
     }
-    /* escolha de gráfico mockado - a forma a qual
-    configurar os gráficos ainda deve ser pensada com mais calma
-    debugger;
-    switch(event.item.data){
-        case 'Feedback':
-          this.getAggregatorFeedback();
-          this.getFeedbackChartData();
-          this.chart.chart.update();
-          break;
-    }*/
+    
     //geração aleatória de dados será excluída assim que integrar com API
     for(let cd of this.chartData){
       if(cd.label.includes('Média mensal de avaliações')||cd.label.indexOf('Média')>-1){
@@ -158,6 +149,8 @@ export class HomeComponent implements OnInit {
     
     if(this.chart.chart.config.type=='horizontalBar' &&
       this.chart.chart.options.scales.xAxes.stacked){
+        //o gráfico de barra horizontal empilhada é o único
+        //que deve-se fazer a conversão para porcentagem 
       this.calculatePercentage();
     
       this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
@@ -196,42 +189,38 @@ export class HomeComponent implements OnInit {
 
   //eventos de clique para mudar tipo dos gráficos
   changeToLineChart(event: Event){
-    
-    this.chart.chart.config.type='line';
+    var tipoGrafico = this.chart.chart.config.type+'';
+    if(tipoGrafico.toUpperCase().indexOf('BAR')>0){
+      this.auxOldChartType = this.chart.chart.config.type;
+    }
+    this.aggregator.barChartType = 'line';
     for(let cd of this.chartData){
-      cd.type='line';
       cd.fill = false;
       cd.borderColor = 'rgba(77,116,234,1.0)';
     }
-    for(let axis of this.chart.chart.options.scales.yAxes){
-      axis.type='linear';
-    }
-    /*for(let xAxis of this.chart.chart.options.scales.xAxes){
-      xAxis.type='time';
-      xAxis.time = {
-        unit: 'week',
-        isoWeekday: true
-      };
-    }*/
-    this.chart.chart.config.data.datasets = this.chartData;
+    //criada visualização em variáveis separadas pois a simples troca tornava a visualização
+    //um pouco mais difícil de enxergar
+    var grafico_horarios = this.aggregator.barChartOptions.title.text=="Horários de Pico";
+    
+    var ctx = document.getElementsByTagName('canvas')[0];
+    var newChart = new Chart(ctx,{
+      type: this.aggregator.barChartType,
+      data: grafico_horarios? CHARTDATAATDTIME:this.chartData,
+      labels: this.aggregator.barChartLabels,
+      options: grafico_horarios? BARCHARTATDTIMEOPTIONS:this.aggregator.barChartOptions
+    });
     this.chart.chart.update();
-   /* this.auxOldLabels = []
-    for(let cd of this.chartData){
-      if(typeof(cd.label) != typeof(undefined)){
-        this.auxOldLabels.push(cd.label);
-        delete cd.label;
-      }
-      var aux = cd.data.slice();
-      for(var i=0;i<aux.length;i++){
-        cd.data[i] = {
-
-        };
-      }
-    }*/
+  
   }
 
   changeToBarChart(event: Event){
-    this.chart.chart.config.type='bar';
+    if(this.auxOldChartType.indexOf('horizontal')<0){
+      this.chart.chart.config.type='bar';
+      this.aggregator.barChartType = 'bar';
+    }else{
+      this.chart.chart.config.type='horizontalBar';
+      this.aggregator.barChartType = 'horizontalBar';
+    }
     for(let cd of this.chartData){
       cd.borderColor = 'rgba(255,255,255,1.0)';
       delete cd.type;

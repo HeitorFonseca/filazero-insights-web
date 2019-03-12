@@ -246,28 +246,30 @@ export const BARCHARTATDOPTIONS = {
 //GRÁFICO DE FEEDBACK
 export const CHARTDATAFEEDBACK: ChartData[] = [
     {data: [0,0,0], label: 'Média mensal de avaliações',backgroundColor:'rgba(225,10,24,0.2)',
-     borderColor: 'rgba(200,20,24,0.2)',yAxisID:'y-media'},
+     borderColor: 'rgba(200,20,24,0.2)',yAxisID:'y-media',datalabels:{
+        anchor: 'center',
+        clamp: true
+    }},
     {data: [0,0,0], label: 'Total de avaliações',
      type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.7)',
-     borderColor: 'rgba(77,110,240,0.2)', yAxisID:'y-total'}
+     borderColor: 'rgba(77,110,240,0.2)', yAxisID:'y-total',datalabels:{
+        anchor: 'start',
+        clamp: true,
+        align: 'end'
+    }}
 ];
 export const CHARTLABELSFEEDBACK = ['Ago/18','Set/18','Out/18'];
 export const BARCHARTTOPTIONSFEEDB = {
     responsive: true,
     scales: {
-       /* xAxes: [
-            {
-                  
-            }
-        ],*/
         yAxes: [{
             id:'y-media',
             position:'left',
             ticks: {
+                padding: 23,
                 min: 0,
                 max: 5,
-                //callback: function(value){return value+ "%"},
-                stepSize: 1                                                                                                                                                                          
+                stepSize: 1
             }
         },{
             id:'y-total',
@@ -275,7 +277,6 @@ export const BARCHARTTOPTIONSFEEDB = {
             ticks: {
                 min: 0,
                 max: 100,
-                //callback: function(value){return value+ "%"},
                 stepSize: 10                                                                                                                                                                          
             }
         }]
@@ -290,7 +291,7 @@ export const BARCHARTDATACLASSMEDIA: ChartData[] = [
     },
     {
         data: [], label: 'Total',backgroundColor:'rgba(0,0,225,0.8)',
-        borderColor: 'rgba(255,255,255,0.9)' 
+        borderColor: 'rgba(255,255,255,0.9)'
     }
 ];
 export const BARCHARTLABELSCLASSMEDIA = ['Serviço 1', 'Serviço 2'];
