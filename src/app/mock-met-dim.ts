@@ -184,7 +184,10 @@ export const BARCHARTATDTIMEOPTIONS = {
       xAxes: [{
         type:'time',
         time:{
-          format: 'HH:mm'
+          parser: 'HH',
+          min: '06:00:00',
+          max: '18:00:00',
+          stepSize: 1
         },
         ticks:{
           padding: 20 

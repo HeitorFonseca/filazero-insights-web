@@ -11,6 +11,7 @@ import { ChartData } from '../../chartdata';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //moment().day("Monday").to
 @Component({
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   
-  public chartData: ChartData[];
+  public chartData;
   public aggregator;
 
   auxOldChartType='';
@@ -36,7 +37,9 @@ export class HomeComponent implements OnInit {
   faChartArea = faChartArea;
   //guardando antigos valores para gráficos de performance de tempo
   oldDataChart = [];
-  
+  public dataAtdTime = CHARTDATAATDTIME;
+  public atdOptions = BARCHARTATDTIMEOPTIONS;
+  public atdTypeChart = 'line';
 
   constructor(private chartService: ChartService) { }
 
@@ -201,16 +204,17 @@ export class HomeComponent implements OnInit {
     //criada visualização em variáveis separadas pois a simples troca tornava a visualização
     //um pouco mais difícil de enxergar
     var grafico_horarios = this.aggregator.barChartOptions.title.text=="Horários de Pico";
-    
-    var ctx = document.getElementsByTagName('canvas')[0];
-    var newChart = new Chart(ctx,{
-      type: this.aggregator.barChartType,
-      data: grafico_horarios? CHARTDATAATDTIME:this.chartData,
-      labels: this.aggregator.barChartLabels,
-      options: grafico_horarios? BARCHARTATDTIMEOPTIONS:this.aggregator.barChartOptions
-    });
-    this.chart.chart.update();
+    if(grafico_horarios){
+      this.chartData = CHARTDATAATDTIME;
+      //this.aggregator.barChartOptions = BARCHARTATDTIMEOPTIONS;
+      this.chart.chart.options = BARCHARTATDTIMEOPTIONS;
+      
+    }
   
+    this.chart.chart.config.type = this.aggregator.barChartType;
+    this.chart.chart.config.data.datasets = this.chartData;
+    this.chart.chart.update();
+    console.log(this.chart.chart);
   }
 
   changeToBarChart(event: Event){
@@ -221,6 +225,12 @@ export class HomeComponent implements OnInit {
       this.chart.chart.config.type='horizontalBar';
       this.aggregator.barChartType = 'horizontalBar';
     }
+    var grafico_horarios = this.aggregator.barChartOptions.title.text=="Horários de Pico";
+    if(grafico_horarios){
+      this.getChartData();
+      this.getAggregatorChart();
+      this.chart.chart.options = this.aggregator.barChartOptions;
+    }
     for(let cd of this.chartData){
       cd.borderColor = 'rgba(255,255,255,1.0)';
       delete cd.type;
@@ -228,5 +238,6 @@ export class HomeComponent implements OnInit {
     }
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
+    console.log(this.chart.chart);
   }
 }
