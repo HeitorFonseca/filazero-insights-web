@@ -40,8 +40,46 @@
 </div>
 <div class="row">
 <div id="table-section" class="col-9">
-  <div id="tabela" class="table table-striped table-hover">
-  </div>
+  <table mat-table
+    [dataSource]="dataSource" multiTemplateDataRows
+    class="mat-elevation-z8">
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail"
+            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <div class="example-element-diagram">
+          <div class="example-element-nome"> {{element.nome}} </div>
+          <div class="example-element-agendados"> {{element.agendados}} </div>
+          <div class="example-element-concluidos"> {{element.concluidos}} </div>
+          <div class="example-element-cancelados"> {{element.cancelados}} </div>
+          <div class="example-element-naoconcluidos"> {{element.naoconcluidos}} </div>
+        </div>
+        <div *ngFor="let atendente of element.atendentes" class="row example-element-description">
+          <div class="elem-atd-nome">{{atendente.nome}}</div>
+          <div class="elem-atd-agendados"> {{atendente.agendados}}</div>
+          <div class="elem-atd-concluidos"> {{atendente.concluidos}}</div>
+          <div class="elem-atd-cancelados"> {{atendente.cancelados}}</div>
+          <div class="elem-atd-naoconcluidos"> {{atendente.naoconcluidos}}</div>
+        </div>
+      </div>
+    </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+
 </div>
 <div class="col-1"></div>
 <div id="outs-teste" class="col-2">

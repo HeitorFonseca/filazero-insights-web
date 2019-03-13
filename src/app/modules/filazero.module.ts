@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
+import { MatTableModule } from '@angular/material/table';  
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { HomeComponent } from './home/home.component';
   DragDropModule,
     NgbModule,
     ChartsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatTableModule
   ],
   declarations: [HomeComponent],
   exports: []

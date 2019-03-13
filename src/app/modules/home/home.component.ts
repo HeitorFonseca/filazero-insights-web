@@ -4,20 +4,26 @@ import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-sv
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
 import * as ChartZoom from 'chartjs-plugin-zoom';
-//import * as PluginLabels from 'chartjs-plugin-labels';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import { ChartData } from '../../chartdata';
+import { Generics,SERVICOS } from '../../mock-dados-tabela';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 //moment().day("Monday").to
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.sass']
+  styleUrls: ['./home.component.sass'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class HomeComponent implements OnInit {
 
@@ -35,11 +41,11 @@ export class HomeComponent implements OnInit {
   faChartBar = faChartBar;
   faChartLine = faChartLine;
   faChartArea = faChartArea;
-  //guardando antigos valores para gráficos de performance de tempo
-  oldDataChart = [];
-  public dataAtdTime = CHARTDATAATDTIME;
-  public atdOptions = BARCHARTATDTIMEOPTIONS;
-  public atdTypeChart = 'line';
+
+  //dados mockados para visualizar tabela
+  dataSource = SERVICOS;
+  columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
+  expandedElement: Generics | null;
 
   constructor(private chartService: ChartService) { }
 
