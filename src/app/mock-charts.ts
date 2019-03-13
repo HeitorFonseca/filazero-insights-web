@@ -49,8 +49,15 @@ export const BARCHARTTESTDATA: ChartData[] = [
      borderColor: 'rgba(200,20,24,0.2)'}
 ];
 
+export const BARCHARTATDPRFLABELS = ['Serviço 1', 'Serviço 2', 'Serviço 3'];
+
 export const BARCHARTTESTOPTIONS = {
     responsive: true,
+    title: {
+        display: true,
+        text: 'Performance de atendimento por serviço',
+        fontSize: 15
+    },
     scales: {
         xAxes: [
             {
@@ -69,6 +76,11 @@ export const BARCHARTTESTOPTIONS = {
 
 export const BARCHARTTOPTIONS = {
     responsive: true,
+    title: {
+        display: true,
+        text: 'Performance de atendimento por serviço',
+        fontSize: 15
+    },
     scales: {
         xAxes: [
             {
@@ -261,6 +273,11 @@ export const CHARTDATAFEEDBACK: ChartData[] = [
 export const CHARTLABELSFEEDBACK = ['Ago/18','Set/18','Out/18'];
 export const BARCHARTTOPTIONSFEEDB = {
     responsive: true,
+    title: {
+        display: true,
+        text: 'Classificação mensal x Nº de avaliações',
+        fontSize: 15
+    },
     scales: {
         yAxes: [{
             id:'y-media',
@@ -286,7 +303,7 @@ export const BARCHARTTOPTIONSFEEDB = {
 //gráfico de classificação média por serviço
 export const BARCHARTDATACLASSMEDIA: ChartData[] = [
     {
-        data: [], label: 'Média',backgroundColor:'rgba(255, 153, 0, 0.8)',
+        data: [], label: 'Classificação média',backgroundColor:'rgba(255, 153, 0, 0.8)',
         borderColor: 'rgba(255,255,255,0.9)'
     },
     {
@@ -297,6 +314,11 @@ export const BARCHARTDATACLASSMEDIA: ChartData[] = [
 export const BARCHARTLABELSCLASSMEDIA = ['Serviço 1', 'Serviço 2'];
 export const BARCHARTOPTCLASSMEDIA = {
     responsive: true,
+    title: {
+        display: true,
+        text: 'Classificação média por serviço',
+        fontSize: 15
+    },
     plugins:{
         datalabels:{
             anchor: 'end',

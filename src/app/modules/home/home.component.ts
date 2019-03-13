@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit {
     Chart.pluginService.register(ChartZoom);
     Chart.pluginService.register(ChartDataLabels);
 
-    this.getAggregatorChart();
     this.getChartData();
+    this.getAggregatorChart();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
     
@@ -56,27 +56,35 @@ export class HomeComponent implements OnInit {
   }
 
   getAggregatorChart(): void{
-    this.chartService.getAtendAggregator()
-    .subscribe(aggregator => this.aggregator = aggregator);
-    /*this.chartService.getAggregatorChart()
-    .subscribe(aggregator => this.aggregator = aggregator);*/
+    this.chartService.getAtendAggregator().subscribe(aggregator => this.aggregator = aggregator);
   }
 
   getChartData(): void{
-    this.chartService.getAtendData()
-    .subscribe(chartData => this.chartData = chartData);
-    /*this.chartService.getChartData()
-    .subscribe(chartData => this.chartData = chartData);*/
+    this.chartService.getAtendData().subscribe(chartData => this.chartData = chartData);
   }
 
   getFeedbackChartData(): void{
-    this.chartService.getFeedbackData()
-    .subscribe(chartData => this.chartData = chartData);
+    this.chartService.getFeedbackData().subscribe(chartData => this.chartData = chartData);
   }
 
   getAggregatorFeedback(): void{
-    this.chartService.getAggregatorFeedback()
-    .subscribe(aggregator => this.aggregator = aggregator);
+    this.chartService.getAggregatorFeedback().subscribe(aggregator => this.aggregator = aggregator);
+  }
+
+  getClassMediaChartData(): void{
+    this.chartService.getDataClassMedia().subscribe(chartData => this.chartData = chartData);
+  }
+
+  getAggregatorClassMedia(): void{
+    this.chartService.getAggregatorClassMedia().subscribe(aggregator => this.aggregator = aggregator);
+  }
+
+  getAtdPerformanceData(): void{
+    this.chartService.getAnotherData().subscribe(chartData => this.chartData = chartData);
+  }
+
+  getAtdPerformanceAggregator(): void{
+    this.chartService.getAnotherAggregator().subscribe(aggregator => this.aggregator = aggregator);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -128,7 +136,7 @@ export class HomeComponent implements OnInit {
     
     //geração aleatória de dados será excluída assim que integrar com API
     for(let cd of this.chartData){
-      if(cd.label.includes('Média mensal de avaliações')||cd.label.indexOf('Média')>-1){
+      if(cd.label.includes('Média mensal de avaliações')||cd.label.indexOf('média')>-1){
         cd.data = randomDataset(5,6);
       }else if(cd.label.includes('Total de avaliações')){
         cd.data = randomDataset(100,6);
@@ -214,7 +222,6 @@ export class HomeComponent implements OnInit {
     this.chart.chart.config.type = this.aggregator.barChartType;
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
-    console.log(this.chart.chart);
   }
 
   changeToBarChart(event: Event){
@@ -238,6 +245,5 @@ export class HomeComponent implements OnInit {
     }
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
-    console.log(this.chart.chart);
   }
 }

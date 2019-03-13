@@ -4,7 +4,7 @@ import { ChartData } from '../../chartdata';
 import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL, CHARTDATAATD, randomDataset, BARCHARTLABELSATD, BARCHARTLABELSCLASSMEDIA, BARCHARTOPTCLASSMEDIA } from '../../mock-charts';
 import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
 import { BARCHARTLEGEND } from '../../mock-charts';
-import { BARCHARTLABELS, BARCHARTATDOPTIONS } from '../../mock-charts';
+import { BARCHARTLABELS, BARCHARTATDOPTIONS, BARCHARTATDPRFLABELS } from '../../mock-charts';
 import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, 
   BARCHARTTOPTIONSFEEDB, BARCHARTDATACLASSMEDIA } from '../../mock-charts';
 import { Observable, of } from 'rxjs';
@@ -24,7 +24,7 @@ export class ChartService {
   aggre2 = {
     barChartType: BARCHARTTYPEHORIZONTAL,
     barChartLegend: BARCHARTLEGEND,
-    barChartLabels: BARCHARTLABELS,
+    barChartLabels: BARCHARTATDPRFLABELS,
     barChartOptions: BARCHARTTESTOPTIONS,
     barChartColors: BARCHARTCOLORS
   }
