@@ -6,15 +6,17 @@ import { ChartsModule } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
 import { MatTableModule } from '@angular/material/table';  
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   imports: [
     CommonModule,
-  DragDropModule,
+    DragDropModule,
     NgbModule,
     ChartsModule,
     FontAwesomeModule,
-    MatTableModule
+    MatTableModule,
+    BrowserAnimationsModule
   ],
   declarations: [HomeComponent],
   exports: []

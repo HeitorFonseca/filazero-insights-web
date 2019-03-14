@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit {
   faChartLine = faChartLine;
   faChartArea = faChartArea;
 
+  //para guardar valores originais dos dados de performance de atendimento
+  //e serem exibidos no tooltip
+  oldDataChart = [];
+
   //dados mockados para visualizar tabela
   dataSource = SERVICOS;
   columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
