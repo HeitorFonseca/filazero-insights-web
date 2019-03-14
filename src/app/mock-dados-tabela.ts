@@ -36,7 +36,7 @@ export const SERVICOS: Generics[] = [
         agendados: 43,
         concluidos: 32,
         cancelados: 11,
-        naoconcluidos: 0,
+        naoconcluidos: 1,
         atendentes: [
             {
                 nome: 'Recepção',

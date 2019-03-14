@@ -256,4 +256,20 @@ export class HomeComponent implements OnInit {
     this.chart.chart.config.data.datasets = this.chartData;
     this.chart.chart.update();
   }
+
+  getTotalAgendados(){
+    return this.dataSource.map(s => s.agendados).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalCancelados(){
+    return this.dataSource.map(s => s.cancelados).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalConcluidos(){
+    return this.dataSource.map(s => s.concluidos).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalNaoConcluidos(){
+    return this.dataSource.map(s => s.naoconcluidos).reduce((acc, value) => acc + value, 0);
+  }
 }
