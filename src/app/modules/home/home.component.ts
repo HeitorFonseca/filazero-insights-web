@@ -6,7 +6,7 @@ import { Chart } from 'chart.js';
 import * as ChartZoom from 'chartjs-plugin-zoom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import { Generics,SERVICOS } from '../../mock-dados-tabela';
+import { Generics, SERVICOS, PERFORMANCE } from '../../mock-dados-tabela';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
@@ -46,10 +46,12 @@ export class HomeComponent implements OnInit {
   //e serem exibidos no tooltip
   oldDataChart = [];
 
-  //dados mockados para visualizar tabela
+  //dados mockados para visualizar tabela de perfomance por serviços e atendentes
   dataSource = SERVICOS;
   columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
   expandedElement: Generics | null;
+  //dados mockados para tabela de performance geral
+  
 
   constructor(private chartService: ChartService) { }
 
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
     this.dimensoesOut = METRICASDIM.dimensoes;
     
     document.getElementById('trigger-charts').style.display="none";
+    document.getElementById('performanceServico').style.display='none';
   }
 
   getAggregatorChart(): void{
@@ -163,6 +166,14 @@ export class HomeComponent implements OnInit {
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
       document.getElementById('trigger-charts').style.display="none";
     }else{
+      if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
+        this.dataSource = SERVICOS;
+        this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
+        document.getElementById('performanceTotal').style.display='none';
+        document.getElementById('performanceServico').style.display='block';
+      }else{
+        document.getElementById('performanceServico').style.display='none';
+      }
       document.getElementById('trigger-charts').style.display="block";
     }
     
