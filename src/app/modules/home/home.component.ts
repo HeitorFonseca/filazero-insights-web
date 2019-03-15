@@ -159,12 +159,7 @@ export class HomeComponent implements OnInit {
       
     }else if(destino.indexOf("dimensoesOut")!=-1&&origem.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.previousContainer.data;
-      var auxTeste = this.dimensoesIn.slice();
-      var jaExiste = true;
       
-      auxTeste.filter(function(obj){
-        var val = obj['servico'];
-      });
       if(this.columnsToDisplay.indexOf('servico')!=-1 && this.dimensoesIn.indexOf('Serviço')<0){
         var indexS = this.columnsToDisplay.indexOf('servico',0);
         this.columnsToDisplay.splice(indexS,1); 
