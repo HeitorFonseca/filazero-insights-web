@@ -48,6 +48,12 @@
               <mat-icon class="user-icon">account_circle</mat-icon>
               <span> {{user.firstName}} {{user.lastName}}</span>
             </button>
+            <mat-menu #menu="matMenu" overlapTrigger="false">
+              <button mat-menu-item (click)="logOut()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>{{'actions.sign-out' | translate}}</span>
+              </button>
+            </mat-menu>
           </div>
         </li>
       </ul>

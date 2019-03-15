@@ -53,11 +53,16 @@ export class HeaderComponent implements OnInit {
   logOut(): void {
     this.user = undefined;
     this._auth.logOut();
+    this.menuReduce();
     this._router.navigate(['/user/login']);
   }
 
   backRoute() {
     window.history.back();
+  }
+
+  menuReduce(): void {
+    this.isMenuExpanded = false;
   }
 
   menuToggle(): void {

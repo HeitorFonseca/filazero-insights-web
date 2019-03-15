@@ -26,7 +26,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         catchError((err: any): Observable<HttpEvent<any>> => {
           if (err.status === 401) {
             this._auth.logOut();
-            // this._router.navigate(['/user/login']);
+            this._router.navigate(['/user/login']);
             return next.handle(request);
           }
           return next.handle(request);

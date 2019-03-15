@@ -1,0 +1,24 @@
+<section>
+  <h1 [ngClass]="{ 'modal-bg' : isModalOpen }" class="title-section">{{'login.title' | translate }}</h1>
+  <article>
+    <form class="grid content-wrap" #loginForm="ngForm" class="form-container">
+      <mat-form-field class="item-form">
+        <mat-label>{{'labels.email' | translate }}</mat-label>
+        <input name="email" matInput [(ngModel)]="loginData.userName" [ngModelOptions]="{standalone:true}">
+      </mat-form-field>
+
+      <mat-form-field class="item-form">
+        <mat-label>{{'labels.password' | translate }}</mat-label>
+        <input name="password" matInput type="password" [(ngModel)]="loginData.password" [ngModelOptions]="{standalone:true}" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+      <a routerLink="/user/forgot-password">{{'login.forgot-password' | translate }}</a>
+
+      <button mat-raised-button class="fz-btn" (click)="login(loginData)">
+        <span class="spinner-button" *ngIf="isLoading"></span>
+        {{'actions.sign-in' | translate }}
+      </button>
+
+    </form>
+  </article>
+</section>

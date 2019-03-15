@@ -5,8 +5,11 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class EventService {
 
+  static changeTitle = new EventEmitter<string>();
+
   /* Eventos de Login */
   static afterLogin = new EventEmitter();
+  static loginModal = new EventEmitter<boolean>();
 
   constructor() { }
 }
