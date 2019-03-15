@@ -4,9 +4,9 @@ export interface Generics{
     concluidos?: number;
     cancelados?: number;
     naoconcluidos?: number;
-    atendentes?: Generics[];
     mediaEspera?: string;
     mediaAtd?: string;
+    atendentes?: Generics[];
 }
 
 export const SERVICOS: Generics[] = [
@@ -90,15 +90,33 @@ export const PERFORMANCE: Generics[] = [
                 agendados: 22,
                 concluidos: 18,
                 cancelados: 4,
-                naoconcluidos: 1
+                naoconcluidos: 1,
+                mediaEspera:'0:49:00',
+                mediaAtd: '0:25:00'
             },
             {
                 nome: 'Guichê 2',
                 agendados: 21,
                 concluidos: 12,
                 cancelados: 7,
-                naoconcluidos: 0
+                naoconcluidos: 0,
+                mediaEspera:'0:19:00',
+                mediaAtd: '0:42:00'
             }
         ]
     }
+];
+
+export const SERVICOSTEMP =[
+    {servico: 'Pediatria'},
+    {servico: 'Cardiologia'}
+];
+
+export const ATENDENTESTEMP =[
+    {servico: 'Pediatria',
+    atendente: 'Joselia'},
+    {servico: 'Pediatria',
+    atendente: 'Ferdinando'},
+    {servico: 'Cardiologia',
+    atendente: 'Ruan'}
 ];

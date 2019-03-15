@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
 import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
@@ -6,11 +6,13 @@ import { Chart } from 'chart.js';
 import * as ChartZoom from 'chartjs-plugin-zoom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import { Generics, SERVICOS, PERFORMANCE } from '../../mock-dados-tabela';
+import { Generics, SERVICOSTEMP, ATENDENTESTEMP} from '../../mock-dados-tabela';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { DataSource } from '@angular/cdk/table';
+import { ConsoleReporter } from 'jasmine';
 
 //moment().day("Monday").to
 @Component({
@@ -37,6 +39,7 @@ export class HomeComponent implements OnInit {
   dimensoesOut: string[];
   metricasIn = [];
   dimensoesIn = [];
+  colunasIn = [];
   //ícones font awesome
   faChartBar = faChartBar;
   faChartLine = faChartLine;
@@ -47,12 +50,11 @@ export class HomeComponent implements OnInit {
   oldDataChart = [];
 
   //dados mockados para visualizar tabela de perfomance por serviços e atendentes
-  dataSource = SERVICOS;
-  columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
+  dataSource = [];
+  columnsToDisplay = [];
   expandedElement: Generics | null;
   //dados mockados para tabela de performance geral
   
-
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
@@ -65,7 +67,6 @@ export class HomeComponent implements OnInit {
     this.dimensoesOut = METRICASDIM.dimensoes;
     
     document.getElementById('trigger-charts').style.display="none";
-    document.getElementById('performanceServico').style.display='none';
   }
 
   getAggregatorChart(): void{
@@ -111,6 +112,7 @@ export class HomeComponent implements OnInit {
     }
     //mudanças na tabela mockada
     var destino = event.container.element.nativeElement.id;
+    var origem = event.previousContainer.element.nativeElement.id;
     
     if(destino.indexOf("metricasin")!=-1){
      // debugger;
@@ -145,6 +147,26 @@ export class HomeComponent implements OnInit {
       }
     }else if(destino.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.container.data;
+      var atendenteExiste = this.dimensoesIn.indexOf('Atendente')>-1;
+      if(this.dimensoesIn.indexOf('Serviço')>-1){
+        this.dataSource = SERVICOSTEMP;
+        if(this.columnsToDisplay.indexOf('servico')==-1)this.columnsToDisplay.push('servico');
+      }
+      if(atendenteExiste){
+        this.dataSource = ATENDENTESTEMP;
+        if(this.columnsToDisplay.indexOf('atendente')==-1) this.columnsToDisplay.push('atendente');
+      }//fazer método para simplificar e eliminar duplicação de código/lógica
+      
+    }else if(destino.indexOf("dimensoesOut")!=-1&&origem.indexOf("dimensoesIn")!=-1){
+      this.dimensoesIn = event.previousContainer.data;
+      var auxTeste = this.dimensoesIn.slice();
+      if(this.columnsToDisplay.indexOf('servico')!=-1 && this.dimensoesIn.indexOf('Serviço')<0){
+        var indexS = this.columnsToDisplay.indexOf('servico',0);
+        this.columnsToDisplay.splice(indexS,1); 
+      }else if(this.columnsToDisplay.indexOf('atendente')!=-1 && this.dimensoesIn.indexOf('Atendente')<0){
+        var indexA = this.columnsToDisplay.indexOf('atendente',0);
+        this.columnsToDisplay.splice(indexA,1);
+      }
     }
     
     //geração aleatória de dados será excluída assim que integrar com API
@@ -166,14 +188,13 @@ export class HomeComponent implements OnInit {
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
       document.getElementById('trigger-charts').style.display="none";
     }else{
-      if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
+      /*if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
         this.dataSource = SERVICOS;
         this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
-        document.getElementById('performanceTotal').style.display='none';
-        document.getElementById('performanceServico').style.display='block';
       }else{
-        document.getElementById('performanceServico').style.display='none';
-      }
+        this.dataSource = PERFORMANCE;
+        this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos','mediaEspera','mediaAtd'];
+      }*/
       document.getElementById('trigger-charts').style.display="block";
     }
     
