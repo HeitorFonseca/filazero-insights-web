@@ -43,9 +43,16 @@ export function randomDataset(multiplier, tamArray): number[]{
 }
 
 export const BARCHARTTESTDATA: ChartData[] = [
-    {data: [14,13,27], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.2)',
+    {data: [14,13,27], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.9)',
+     borderColor: 'rgba(77,116,234,0.9)'},
+    {data: [11,20,12], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.9)',
+     borderColor: 'rgba(200,20,24,0.9)'}
+];
+
+export const BARCHARTPERFTOTALDATA: ChartData[] = [
+    {data: [18], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.2)',
      borderColor: 'rgba(77,116,234,0.2)'},
-    {data: [11,20,12], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.2)',
+    {data: [15], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.2)',
      borderColor: 'rgba(200,20,24,0.2)'}
 ];
 

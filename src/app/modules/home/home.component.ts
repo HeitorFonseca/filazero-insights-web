@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
 import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
@@ -12,7 +12,7 @@ import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { DataSource } from '@angular/cdk/table';
-import { ConsoleReporter } from 'jasmine';
+
 
 //moment().day("Monday").to
 @Component({
@@ -29,10 +29,20 @@ import { ConsoleReporter } from 'jasmine';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChildren(BaseChartDirective) charts: QueryList<BaseChartDirective>;
   
+  //dados mockados para todos os gráficos
   public chartData;
+  public dataPerformance;
+  public dataPerfServico;
+  public dataClassMedia;
+  public dataFeedback;
+  //dados mockados para opções de todos os gráficos
   public aggregator;
+  public aggrePerformance;
+  public aggrePerfServico;
+  public aggreClassMedia;
+  public aggreFeedback;
 
   auxOldChartType='';
   metricasOut: string[];
@@ -53,8 +63,9 @@ export class HomeComponent implements OnInit {
   dataSource = [];
   columnsToDisplay = [];
   expandedElement: Generics | null;
-  //dados mockados para tabela de performance geral
   
+  chartsHTML;
+
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
@@ -63,10 +74,15 @@ export class HomeComponent implements OnInit {
 
     this.getChartData();
     this.getAggregatorChart();
+    this.getAtdPerformanceData();
+    this.getAtdPerformanceAggregator();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
     
-    document.getElementById('trigger-charts').style.display="none";
+    this.chartsHTML = document.getElementsByClassName('trigger-charts');
+    for(var i=0;i<this.chartsHTML.length;i++){
+      this.chartsHTML[i].style.display = 'none';
+    }
   }
 
   getAggregatorChart(): void{
@@ -78,27 +94,27 @@ export class HomeComponent implements OnInit {
   }
 
   getFeedbackChartData(): void{
-    this.chartService.getFeedbackData().subscribe(chartData => this.chartData = chartData);
+    this.chartService.getFeedbackData().subscribe(chartData => this.dataFeedback = chartData);
   }
 
   getAggregatorFeedback(): void{
-    this.chartService.getAggregatorFeedback().subscribe(aggregator => this.aggregator = aggregator);
+    this.chartService.getAggregatorFeedback().subscribe(aggregator => this.aggreFeedback = aggregator);
   }
 
   getClassMediaChartData(): void{
-    this.chartService.getDataClassMedia().subscribe(chartData => this.chartData = chartData);
+    this.chartService.getDataClassMedia().subscribe(chartData => this.dataClassMedia = chartData);
   }
 
   getAggregatorClassMedia(): void{
-    this.chartService.getAggregatorClassMedia().subscribe(aggregator => this.aggregator = aggregator);
+    this.chartService.getAggregatorClassMedia().subscribe(aggregator => this.aggreClassMedia = aggregator);
   }
 
   getAtdPerformanceData(): void{
-    this.chartService.getAnotherData().subscribe(chartData => this.chartData = chartData);
+    this.chartService.getAnotherData().subscribe(chartData => this.dataPerfServico = chartData);
   }
 
   getAtdPerformanceAggregator(): void{
-    this.chartService.getAnotherAggregator().subscribe(aggregator => this.aggregator = aggregator);
+    this.chartService.getAnotherAggregator().subscribe(aggregator => this.aggrePerfServico = aggregator);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -186,9 +202,12 @@ export class HomeComponent implements OnInit {
         }
       }
     }
+    
     //não é preciso mostrar os gráficos se não há filtros
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
-      document.getElementById('trigger-charts').style.display="none";
+      for(var i=0;i<this.chartsHTML.length;i++){
+        this.chartsHTML[i].style.display = 'none';
+      }
     }else{
       /*if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
         this.dataSource = SERVICOS;
@@ -197,18 +216,24 @@ export class HomeComponent implements OnInit {
         this.dataSource = PERFORMANCE;
         this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos','mediaEspera','mediaAtd'];
       }*/
-      document.getElementById('trigger-charts').style.display="block";
+      for(var i=0;i<this.chartsHTML.length;i++){
+        this.chartsHTML[i].style.display = 'block';
+      }
     }
     
     var _this = this;
     
-    if(this.chart.chart.config.type=='horizontalBar' &&
-      this.chart.chart.options.scales.xAxes.stacked){
-        //o gráfico de barra horizontal empilhada é o único
-        //que deve-se fazer a conversão para porcentagem 
-      this.calculatePercentage();
+    var performanceAtdCharts = this.charts.toArray().filter(item =>
+      //o gráfico de barra horizontal empilhada é o único
+      //que deve-se fazer a conversão para porcentagem 
+      item.chart.config.type=='horizontalBar' &&
+       item.chart.options.scales.xAxes[0].stacked
+    );
     
-      this.chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
+    for(let chart of performanceAtdCharts){
+      this.calculatePercentage(chart.datasets);
+    
+      chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
         var label = data.datasets[tooltipItem.datasetIndex].label || '';
         if (label) {
             label += ': ';
@@ -217,15 +242,17 @@ export class HomeComponent implements OnInit {
         return label;
       }
     }
-    
-    this.chart.chart.config.data.datasets = this.chartData;
-    this.chart.chart.update();
+    //console.log(this.charts);
+    this.charts.first.chart.config.data.datasets = this.chartData;
+    this.charts.forEach(child => {
+      child.chart.update();
+    })
   }
 
-  calculatePercentage(): void{
+  calculatePercentage(datasets): void{
     //debugger;
-    var tempomedio1 = this.chartData[0].data;
-    var tempomedio2 = this.chartData[1].data;
+    var tempomedio1 = datasets[0].data;
+    var tempomedio2 = datasets[1].data;
     //guardando valores para customizar o tooltip   
     this.oldDataChart[0] = tempomedio1.slice();
     this.oldDataChart[1] = tempomedio2.slice();
@@ -238,57 +265,64 @@ export class HomeComponent implements OnInit {
       tempomedio1[i] = temp;
       tempomedio2[i] = 100-temp;
     }
-    this.chartData[0].data = tempomedio1;
-    this.chartData[1].data = tempomedio2;
+    datasets[0].data = tempomedio1;
+    datasets[1].data = tempomedio2;
   }
 
   //eventos de clique para mudar tipo dos gráficos
-  changeToLineChart(event: Event){
-    var tipoGrafico = this.chart.chart.config.type+'';
-    if(tipoGrafico.toUpperCase().indexOf('BAR')>0){
-      this.auxOldChartType = this.chart.chart.config.type;
+  changeToLineChart(event: Event){    
+    var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
+    var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
+    
+    var tipoGrafico = canvasAtt.chart.config.type+'';
+    if(tipoGrafico.toUpperCase().indexOf('BAR')>-1){
+      this.auxOldChartType = canvasAtt.chart.config.type;
     }
-    this.aggregator.barChartType = 'line';
-    for(let cd of this.chartData){
-      cd.fill = false;
+    canvasAtt.chart.config.type = 'line';
+    for(let cd of canvasAtt.chart.config.data.datasets){
+      //cd.fill = false;
       cd.borderColor = 'rgba(77,116,234,1.0)';
     }
     //criada visualização em variáveis separadas pois a simples troca tornava a visualização
     //um pouco mais difícil de enxergar
-    var grafico_horarios = this.aggregator.barChartOptions.title.text=="Horários de Pico";
+    var grafico_horarios = canvasAtt.chart.config.options.title.text=="Horários de Pico";
     if(grafico_horarios){
+      this.aggregator.barChartType = 'line';
       this.chartData = CHARTDATAATDTIME;
-      //this.aggregator.barChartOptions = BARCHARTATDTIMEOPTIONS;
-      this.chart.chart.options = BARCHARTATDTIMEOPTIONS;
-      
+      this.charts.first.options = BARCHARTATDTIMEOPTIONS;
+      canvasAtt.chart.config.type = this.aggregator.barChartType;
+      canvasAtt.chart.config.data.datasets = this.chartData;
     }
-  
-    this.chart.chart.config.type = this.aggregator.barChartType;
-    this.chart.chart.config.data.datasets = this.chartData;
-    this.chart.chart.update();
+    canvasAtt.chart.update();
+    console.log(canvasAtt.chart.config);
   }
 
   changeToBarChart(event: Event){
+    var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
+    var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
+    
     if(this.auxOldChartType.indexOf('horizontal')<0){
-      this.chart.chart.config.type='bar';
-      this.aggregator.barChartType = 'bar';
+      canvasAtt.chart.config.type='bar';
+      //this.aggregator.barChartType = 'bar';
     }else{
-      this.chart.chart.config.type='horizontalBar';
-      this.aggregator.barChartType = 'horizontalBar';
+      canvasAtt.chart.config.type='horizontalBar';
+      //this.aggregator.barChartType = 'horizontalBar';
     }
-    var grafico_horarios = this.aggregator.barChartOptions.title.text=="Horários de Pico";
+    var grafico_horarios = canvasAtt.chart.options.title.text=="Horários de Pico";
     if(grafico_horarios){
       this.getChartData();
       this.getAggregatorChart();
-      this.chart.chart.options = this.aggregator.barChartOptions;
+      canvasAtt.chart.options = this.aggregator.barChartOptions;
+      canvasAtt.chart.config.data.datasets = this.chartData;
     }
-    for(let cd of this.chartData){
+    for(let cd of canvasAtt.chart.config.data.datasets){
       cd.borderColor = 'rgba(255,255,255,1.0)';
       delete cd.type;
       delete cd.fill;
     }
-    this.chart.chart.config.data.datasets = this.chartData;
-    this.chart.chart.update();
+    
+    canvasAtt.chart.update();
+    console.log(canvasAtt.chart);
   }
 
   getTotalAgendados(){

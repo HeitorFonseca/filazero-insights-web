@@ -151,21 +151,58 @@
   </div>
 </div>
 <div class="row">
-  <div id="trigger-charts" class="col-9">
+  <div class="trigger-charts col-9">
     <div id="charts">
-        <canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+        <canvas id="horariosPico" baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
             [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
-    </div>   
-    <div id="available-charts">
-      <div>
-        <fa-icon (click)="changeToBarChart()" [icon]="faChartBar"></fa-icon>
-      </div>
-      <div>
-        <fa-icon (click)="changeToLineChart()" [icon]="faChartLine"></fa-icon>
-      </div>
-      <div>
-        <fa-icon (click)="changeToAreaChart()" [icon]="faChartArea"></fa-icon>
-      </div>
-    </div> 
+    </div>
+    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
   </div>
 </div>
+<!--gráficos de performance-->
+<div class="row">
+  <div class="trigger-charts col-6">
+      <div>
+          <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels" [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend"
+                [chartType]="aggrePerfServico.barChartType" [colors]="aggrePerfServico.barChartColors"></canvas>
+      </div>
+    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+  </div>
+  <div class="trigger-charts col-6">
+    <div>
+        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+    </div>
+    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+  </div>
+</div>
+<!--gráficos de avaliações-->
+<div class="row">
+  <div class="trigger-charts col-6">
+    <div>
+        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+    </div>
+    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+  </div>
+  <div class="trigger-charts col-6">
+    <div>
+        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+    </div>
+    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+  </div>
+</div>
+<ng-template #chartVisOpts>
+  <div id="available-charts">
+    <div>
+      <fa-icon (click)="changeToBarChart($event)" [icon]="faChartBar"></fa-icon>
+    </div>
+    <div>
+      <fa-icon (click)="changeToLineChart($event)" [icon]="faChartLine"></fa-icon>
+    </div>
+    <div>
+      <fa-icon (click)="changeToAreaChart()" [icon]="faChartArea"></fa-icon>
+    </div>
+  </div>
+ </ng-template> 
