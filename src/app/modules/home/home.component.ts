@@ -27,4 +27,9 @@ export class HomeComponent implements OnInit {
 
   }
 
+  selectProvider(provider) {
+
+    console.log(provider);
+  }
+
 }

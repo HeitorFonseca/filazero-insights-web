@@ -30,6 +30,8 @@
     "core-js": "^2.5.4",
     "css-star-rating": "^1.2.4",
     "font-awesome": "^4.7.0",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
