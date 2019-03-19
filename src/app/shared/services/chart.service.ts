@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { ChartData } from '../../chartdata';
 import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL, CHARTDATAATD, randomDataset, BARCHARTLABELSATD, BARCHARTLABELSCLASSMEDIA, BARCHARTOPTCLASSMEDIA } from '../../mock-charts';
 import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
-import { BARCHARTLEGEND } from '../../mock-charts';
-import { BARCHARTLABELS, BARCHARTATDOPTIONS, BARCHARTATDPRFLABELS } from '../../mock-charts';
+import { BARCHARTLEGEND,BARCHARTPERFTOTALDATA } from '../../mock-charts';
+import { BARCHARTLABELS, BARCHARTATDOPTIONS, BARCHARTTOPTIONS, BARCHARTATDPRFLABELS } from '../../mock-charts';
 import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, 
   BARCHARTTOPTIONSFEEDB, BARCHARTDATACLASSMEDIA } from '../../mock-charts';
 import { Observable, of } from 'rxjs';
@@ -21,7 +21,7 @@ export class ChartService {
     barChartColors: BARCHARTCOLORS
   }
 
-  aggre2 = {
+  aggre2 = {//performance de atendimento por serviço
     barChartType: BARCHARTTYPEHORIZONTAL,
     barChartLegend: BARCHARTLEGEND,
     barChartLabels: BARCHARTATDPRFLABELS,
@@ -29,25 +29,31 @@ export class ChartService {
     barChartColors: BARCHARTCOLORS
   }
 
-  aggre3 = {
+  aggre3 = {//horários de pico
     barChartType: BARCHARTTYPE,
     barChartLegend: false,
     barChartLabels: BARCHARTLABELSATD,
     barChartOptions: BARCHARTATDOPTIONS
   }
 
-  aggreFeedback = {
+  aggreFeedback = {//classificação média/serviço
     barChartType: BARCHARTTYPE,
     barChartLegend: true,
     barChartLabels: CHARTLABELSFEEDBACK,
     barChartOptions: BARCHARTTOPTIONSFEEDB
   }
 
-  aggreClassMedia = {
+  aggreClassMedia = {//classificação média/mês
     barChartType: BARCHARTTYPEHORIZONTAL,
     barChartLegend: true,
     barChartLabels: BARCHARTLABELSCLASSMEDIA,
     barChartOptions: BARCHARTOPTCLASSMEDIA
+  }
+
+  aggrePerfTotal = {//performance de atendimento geral
+    barChartType: BARCHARTTYPEHORIZONTAL,
+    barChartLegend: BARCHARTLEGEND,
+    barChartOptions: BARCHARTTOPTIONS
   }
 
   constructor() { }
@@ -90,5 +96,13 @@ export class ChartService {
 
   getAggregatorClassMedia(): Observable<any>{
     return of(this.aggreClassMedia);
+  }
+
+  getPerformanceTotalData(): Observable<ChartData[]>{
+    return of(BARCHARTPERFTOTALDATA);
+  }
+
+  getAggregatorPerfTotal(): Observable<Object>{
+    return of(this.aggrePerfTotal);
   }
 }

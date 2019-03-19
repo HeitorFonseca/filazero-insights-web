@@ -154,43 +154,43 @@
   <div class="trigger-charts col-9">
     <div id="charts">
         <canvas id="horariosPico" baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-            [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+            [chartType]="aggregator.barChartType"></canvas>
     </div>
-    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+    <!--[colors]="aggregator.barChartColors"<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
 </div>
 <!--gráficos de performance-->
 <div class="row">
   <div class="trigger-charts col-6">
-      <div>
-          <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels" [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend"
-                [chartType]="aggrePerfServico.barChartType" [colors]="aggrePerfServico.barChartColors"></canvas>
-      </div>
-    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+    <div>
+      <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels" [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend"
+            [chartType]="aggrePerfServico.barChartType"></canvas>
+    </div>
+    <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
   <div class="trigger-charts col-6">
     <div>
-        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+        <canvas baseChart id="perfTotal" [datasets]="dataPerformance" [options]="aggrePerformance.barChartOptions" [legend]="aggrePerformance.barChartLegend"
+              [chartType]="aggrePerformance.barChartType"></canvas>
     </div>
-    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+    <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
 </div>
 <!--gráficos de avaliações-->
 <div class="row">
   <div class="trigger-charts col-6">
     <div>
-        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+       <canvas baseChart id="classMediaServico" [datasets]="dataFeedback" [labels]="aggreFeedback.barChartLabels" [options]="aggreFeedback.barChartOptions" [legend]="aggreFeedback.barChartLegend"
+              [chartType]="aggreFeedback.barChartType" [colors]="aggreFeedback.barChartColors"></canvas>
     </div>
-    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+    <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
   <div class="trigger-charts col-6">
     <div>
-        <!--<canvas baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
-              [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>-->
+      <canvas baseChart id="classMediaMes" [datasets]="dataClassMedia" [labels]="aggreClassMedia.barChartLabels" [options]="aggreClassMedia.barChartOptions" [legend]="aggreClassMedia.barChartLegend"
+              [chartType]="aggreClassMedia.barChartType" [colors]="aggreClassMedia.barChartColors"></canvas>
     </div>
-    <ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
+    <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
 </div>
 <ng-template #chartVisOpts>
@@ -201,8 +201,8 @@
     <div>
       <fa-icon (click)="changeToLineChart($event)" [icon]="faChartLine"></fa-icon>
     </div>
-    <div>
+    <!--<div>
       <fa-icon (click)="changeToAreaChart()" [icon]="faChartArea"></fa-icon>
-    </div>
+    </div>-->
   </div>
  </ng-template> 

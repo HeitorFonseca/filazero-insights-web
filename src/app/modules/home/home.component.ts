@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
-import { faChartLine, faChartBar, faChartArea } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartBar, faChartArea, faForward } from '@fortawesome/free-solid-svg-icons';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
 import * as ChartZoom from 'chartjs-plugin-zoom';
@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
   //para guardar valores originais dos dados de performance de atendimento
   //e serem exibidos no tooltip
   oldDataChart = [];
+  oldDataChart2 = [];
 
   //dados mockados para visualizar tabela de perfomance por serviços e atendentes
   dataSource = [];
@@ -71,11 +72,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     Chart.pluginService.register(ChartZoom);
     Chart.pluginService.register(ChartDataLabels);
-
+    //pegando dados mockados para todos os gráficos
     this.getChartData();
     this.getAggregatorChart();
     this.getAtdPerformanceData();
     this.getAtdPerformanceAggregator();
+    this.getAtdPerfTotalAggregator();
+    this.getAtdPerfTotalData();
+    this.getAggregatorClassMedia();
+    this.getClassMediaChartData();
+    this.getFeedbackChartData();
+    this.getAggregatorFeedback();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
     
@@ -117,6 +124,14 @@ export class HomeComponent implements OnInit {
     this.chartService.getAnotherAggregator().subscribe(aggregator => this.aggrePerfServico = aggregator);
   }
 
+  getAtdPerfTotalData(): void{
+    this.chartService.getPerformanceTotalData().subscribe(chartData => this.dataPerformance = chartData);
+  }
+
+  getAtdPerfTotalAggregator(): void{
+    this.chartService.getAggregatorPerfTotal().subscribe(aggregator => this.aggrePerformance = aggregator);
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -133,7 +148,7 @@ export class HomeComponent implements OnInit {
     if(destino.indexOf("metricasin")!=-1){
      // debugger;
       this.metricasIn = event.container.data;
-      var filtraLine = this.chartData.find(cd => cd.type!=null && cd.type=="line");
+      /*var filtraLine = this.chartData.find(cd => cd.type!=null && cd.type=="line");
       if(this.metricasIn.includes("Média")){
         if(filtraLine!=undefined){
           this.chartData.splice(
@@ -160,7 +175,7 @@ export class HomeComponent implements OnInit {
             this.chartData.push(novo);
           }
         }
-      }
+      }*/
     }else if(destino.indexOf("dimensoesIn")!=-1){
       this.dimensoesIn = event.container.data;
       var atendenteExiste = this.dimensoesIn.indexOf('Atendente')>-1;
@@ -184,22 +199,6 @@ export class HomeComponent implements OnInit {
         this.dataSource = this.columnsToDisplay.indexOf('servico')!=-1 ? SERVICOSTEMP : [];
         var indexA = this.columnsToDisplay.indexOf('atendente',0);
         this.columnsToDisplay.splice(indexA,1);
-      }
-    }
-    
-    //geração aleatória de dados será excluída assim que integrar com API
-    for(let cd of this.chartData){
-      if(cd.label.includes('Média mensal de avaliações')||cd.label.indexOf('média')>-1){
-        cd.data = randomDataset(5,6);
-      }else if(cd.label.includes('Total de avaliações')){
-        cd.data = randomDataset(100,6);
-      }else{
-        cd.data = randomDataset(20,6);
-        var aux = cd.label.slice().split("-");
-        if(aux[0].indexOf('6')>-1||aux[0].indexOf('13')>-1||aux[0].indexOf('14')>-1||aux[0].indexOf('15')>-1
-        || aux[0].indexOf('16')>-1 || aux[0].indexOf('17')>-1 || aux[0].indexOf('18')>-1){
-          cd.data.pop();
-        }
       }
     }
     
@@ -231,31 +230,34 @@ export class HomeComponent implements OnInit {
     );
     
     for(let chart of performanceAtdCharts){
-      this.calculatePercentage(chart.datasets);
+      this.calculatePercentage(chart.datasets,chart.ctx.canvas.id);
     
       chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
         var label = data.datasets[tooltipItem.datasetIndex].label || '';
         if (label) {
             label += ': ';
         }
-        label += _this.oldDataChart[tooltipItem.datasetIndex][tooltipItem.index];
+        var arrayAuxOldData = chart.ctx.canvas.id.indexOf('Total')>-1?_this.oldDataChart2:_this.oldDataChart;
+        label += arrayAuxOldData[tooltipItem.datasetIndex][tooltipItem.index];
         return label;
       }
     }
     //console.log(this.charts);
-    this.charts.first.chart.config.data.datasets = this.chartData;
+    //this.charts.first.chart.config.data.datasets = this.chartData;
     this.charts.forEach(child => {
       child.chart.update();
     })
   }
 
-  calculatePercentage(datasets): void{
+  calculatePercentage(datasets, chartID): void{
     //debugger;
     var tempomedio1 = datasets[0].data;
     var tempomedio2 = datasets[1].data;
+
+    var arrayAuxOldData = chartID.indexOf('Total')>-1?this.oldDataChart2:this.oldDataChart;
     //guardando valores para customizar o tooltip   
-    this.oldDataChart[0] = tempomedio1.slice();
-    this.oldDataChart[1] = tempomedio2.slice();
+    arrayAuxOldData[0] = tempomedio1.slice();
+    arrayAuxOldData[1] = tempomedio2.slice();
 
     var total = 0;
     var temp = 0;
@@ -270,8 +272,9 @@ export class HomeComponent implements OnInit {
   }
 
   //eventos de clique para mudar tipo dos gráficos
-  changeToLineChart(event: Event){    
-    var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
+  changeToLineChart(event: MouseEvent){
+    console.log(event);
+    /*var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
     var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
     
     var tipoGrafico = canvasAtt.chart.config.type+'';
@@ -289,16 +292,18 @@ export class HomeComponent implements OnInit {
     if(grafico_horarios){
       this.aggregator.barChartType = 'line';
       this.chartData = CHARTDATAATDTIME;
-      this.charts.first.options = BARCHARTATDTIMEOPTIONS;
+      canvasAtt.chart.config.options = BARCHARTATDTIMEOPTIONS;
       canvasAtt.chart.config.type = this.aggregator.barChartType;
       canvasAtt.chart.config.data.datasets = this.chartData;
     }
     canvasAtt.chart.update();
-    console.log(canvasAtt.chart.config);
+    console.log(canvasAtt.chart.config);*/
   }
 
-  changeToBarChart(event: Event){
-    var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
+  changeToBarChart(event: MouseEvent){
+    console.log(event.srcElement);
+    
+    /*var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
     var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
     
     if(this.auxOldChartType.indexOf('horizontal')<0){
@@ -322,7 +327,7 @@ export class HomeComponent implements OnInit {
     }
     
     canvasAtt.chart.update();
-    console.log(canvasAtt.chart);
+    console.log(canvasAtt.chart);*/
   }
 
   getTotalAgendados(){

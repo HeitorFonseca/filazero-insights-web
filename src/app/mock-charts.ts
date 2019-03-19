@@ -81,11 +81,18 @@ export const BARCHARTTESTOPTIONS = {
     }
 };
 
+export const CHARTPERFATDDATA: ChartData[] = [
+    {data: [18], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.9)',
+    borderColor: 'rgba(77,116,234,0.9)'},
+    {data: [15], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.9)',
+    borderColor: 'rgba(200,20,24,0.9)'}
+];
+
 export const BARCHARTTOPTIONS = {
     responsive: true,
     title: {
         display: true,
-        text: 'Performance de atendimento por serviço',
+        text: 'Performance de atendimento',
         fontSize: 15
     },
     scales: {
@@ -100,34 +107,37 @@ export const BARCHARTTOPTIONS = {
                 }
             }
         ],
-        yAxes: [{stacked: true}]
+        yAxes: [{
+            barPercentage: 0.3,
+            stacked: true
+        }]
     }
 };
 //GRÁFICO DE ATENDIMENTO
 export const CHARTDATAATD: ChartData[] = [
-    {data: [], label: '6-7h',backgroundColor:'rgba(77,116,234,1.0)',
+    {data: [5,6,4,1,2], label: '6-7h',backgroundColor:'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-1'},
-    {data: [], label: '7-8h',backgroundColor: 'rgba(77,116,234,1.0)'
+    {data: [6,3,14,10,8,4], label: '7-8h',backgroundColor: 'rgba(77,116,234,1.0)'
     , borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-2'},
-    {data: [], label: '8-9h',backgroundColor:'rgba(77,116,234,1.0)',
+    {data: [8,8,13,12,6,7], label: '8-9h',backgroundColor:'rgba(77,116,234,1.0)',
     borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-3'},
-    {data: [], label: '9-10h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [7,9,14,18,8,13], label: '9-10h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-4'},
-    {data: [], label: '10-11h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [10,13,7,4,9,10], label: '10-11h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-5'},
-    {data: [], label: '11-12h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [8,16,18,7,8,9], label: '11-12h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-6'}, 
-    {data: [], label: '13-14h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [15,4,11,11,4,7], label: '13-14h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-7'},
-    {data: [], label: '14-15h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [7,4,11,10,18], label: '14-15h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-8'},
-    {data: [], label: '15-16h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [2,2,12,11,14], label: '15-16h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-9'},
-    {data: [], label: '16-17h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [6,2,15,12,2], label: '16-17h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-10'},
-    {data: [], label: '17-18h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [15,13,15,10,18], label: '17-18h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-11'},
-    {data: [], label: '18-19h', backgroundColor: 'rgba(77,116,234,1.0)',
+    {data: [5,3,6,7,8], label: '18-19h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-12'}  
 ];
 export const BARCHARTLABELSATD = ['Segunda-feira', 'Terça-feira', 'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
@@ -264,12 +274,12 @@ export const BARCHARTATDOPTIONS = {
 
 //GRÁFICO DE FEEDBACK
 export const CHARTDATAFEEDBACK: ChartData[] = [
-    {data: [0,0,0], label: 'Média mensal de avaliações',backgroundColor:'rgba(225,10,24,0.2)',
+    {data: [4.71,3.5,5], label: 'Média mensal de avaliações',backgroundColor:'rgba(225,10,24,0.2)',
      borderColor: 'rgba(200,20,24,0.2)',yAxisID:'y-media',datalabels:{
         anchor: 'center',
         clamp: true
     }},
-    {data: [0,0,0], label: 'Total de avaliações',
+    {data: [20,38,10], label: 'Total de avaliações',
      type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.7)',
      borderColor: 'rgba(77,110,240,0.2)', yAxisID:'y-total',datalabels:{
         anchor: 'start',
@@ -310,11 +320,11 @@ export const BARCHARTTOPTIONSFEEDB = {
 //gráfico de classificação média por serviço
 export const BARCHARTDATACLASSMEDIA: ChartData[] = [
     {
-        data: [], label: 'Classificação média',backgroundColor:'rgba(255, 153, 0, 0.8)',
+        data: [3.9,4.5], label: 'Classificação média',backgroundColor:'rgba(255, 153, 0, 0.8)',
         borderColor: 'rgba(255,255,255,0.9)'
     },
     {
-        data: [], label: 'Total',backgroundColor:'rgba(0,0,225,0.8)',
+        data: [10,15], label: 'Total',backgroundColor:'rgba(0,0,225,0.8)',
         borderColor: 'rgba(255,255,255,0.9)'
     }
 ];
