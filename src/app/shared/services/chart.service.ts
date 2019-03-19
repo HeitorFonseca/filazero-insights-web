@@ -4,7 +4,7 @@ import { ChartData } from '../../chartdata';
 import { CHARTDATA, BARCHARTCOLORS, BARCHARTTYPEHORIZONTAL, CHARTDATAATD, randomDataset, BARCHARTLABELSATD, BARCHARTLABELSCLASSMEDIA, BARCHARTOPTCLASSMEDIA } from '../../mock-charts';
 import { BARCHARTTYPE, BARCHARTTESTOPTIONS, BARCHARTTESTDATA } from '../../mock-charts';
 import { BARCHARTLEGEND,BARCHARTPERFTOTALDATA } from '../../mock-charts';
-import { BARCHARTLABELS, BARCHARTATDOPTIONS, BARCHARTTOPTIONS, BARCHARTATDPRFLABELS } from '../../mock-charts';
+import { BARCHARTLABELS, ATDCHARTCOLORS, BARCHARTATDOPTIONS, BARCHARTTOPTIONS, BARCHARTATDPRFLABELS } from '../../mock-charts';
 import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, 
   BARCHARTTOPTIONSFEEDB, BARCHARTDATACLASSMEDIA } from '../../mock-charts';
 import { Observable, of } from 'rxjs';
@@ -33,7 +33,8 @@ export class ChartService {
     barChartType: BARCHARTTYPE,
     barChartLegend: false,
     barChartLabels: BARCHARTLABELSATD,
-    barChartOptions: BARCHARTATDOPTIONS
+    barChartOptions: BARCHARTATDOPTIONS,
+    barChartColors: ATDCHARTCOLORS
   }
 
   aggreFeedback = {//classificação média/serviço

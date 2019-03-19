@@ -52,7 +52,13 @@
   </div>
 </div>
 <div class="row">
-<div id="table-section" class="col-9">
+  <div class="trigger-charts col-9">
+    <div id="charts">
+        <canvas id="horariosPico" baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
+            [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+    </div>
+  </div>
+<!--<div id="table-section" class="col-9">
   <table mat-table id='performanceServico'
     [dataSource]="dataSource" multiTemplateDataRows
     class="mat-elevation-z8">
@@ -60,7 +66,7 @@
       <th mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
       <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
     </ng-container>
-    <!--<ng-container matColumnDef="agendados">
+    <ng-container matColumnDef="agendados">
       <th mat-header-cell *matHeaderCellDef> AGENDADOS </th>
       <td mat-cell *matCellDef="let element"> {{element.agendados}} </td>
       <td mat-footer-cell *matFooterCellDef> {{ getTotalAgendados() }} </td>
@@ -106,15 +112,15 @@
       </div>
     </td>
     </ng-container>
-  -->
+  
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"class="example-element-row"></tr>
-   <!--[class.example-expanded-row]="expandedElement === element"
+   [class.example-expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element" <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"class="example-detail-row"></tr>
-    <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>-->
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
   </table>
-</div>
-<div class="col-1"></div>
+</div>-->
+<div class="col-1"></div><!--espaçamento para não ficar colado na lista de dimensões-->
 <div id="outs-teste" class="col-2">
     <div class="example-container row">
       <h4>Métricas</h4>
@@ -150,15 +156,15 @@
     </div> 
   </div>
 </div>
-<div class="row">
+<!--<div class="row">
   <div class="trigger-charts col-9">
     <div id="charts">
         <canvas id="horariosPico" baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions" [legend]="aggregator.barChartLegend"
             [chartType]="aggregator.barChartType"></canvas>
     </div>
-    <!--[colors]="aggregator.barChartColors"<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
+    [colors]="aggregator.barChartColors"<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>
   </div>
-</div>
+</div>-->
 <!--gráficos de performance-->
 <div class="row">
   <div class="trigger-charts col-6">
@@ -180,14 +186,14 @@
 <div class="row">
   <div class="trigger-charts col-6">
     <div>
-       <canvas baseChart id="classMediaServico" [datasets]="dataFeedback" [labels]="aggreFeedback.barChartLabels" [options]="aggreFeedback.barChartOptions" [legend]="aggreFeedback.barChartLegend"
+       <canvas baseChart id="classMediaMes" [datasets]="dataFeedback" [labels]="aggreFeedback.barChartLabels" [options]="aggreFeedback.barChartOptions" [legend]="aggreFeedback.barChartLegend"
               [chartType]="aggreFeedback.barChartType" [colors]="aggreFeedback.barChartColors"></canvas>
     </div>
     <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->
   </div>
   <div class="trigger-charts col-6">
     <div>
-      <canvas baseChart id="classMediaMes" [datasets]="dataClassMedia" [labels]="aggreClassMedia.barChartLabels" [options]="aggreClassMedia.barChartOptions" [legend]="aggreClassMedia.barChartLegend"
+      <canvas baseChart id="classMediaServico" [datasets]="dataClassMedia" [labels]="aggreClassMedia.barChartLabels" [options]="aggreClassMedia.barChartOptions" [legend]="aggreClassMedia.barChartLegend"
               [chartType]="aggreClassMedia.barChartType" [colors]="aggreClassMedia.barChartColors"></canvas>
     </div>
     <!--<ng-container *ngTemplateOutlet="chartVisOpts"></ng-container>-->

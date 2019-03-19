@@ -8,4 +8,5 @@ export class ChartData{
     yAxisID?: string;
     xAxisID?: string;
     datalabels?: any;
+    borderDash?: number[];
 }

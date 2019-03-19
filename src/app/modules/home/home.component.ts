@@ -3,8 +3,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular
 import { faChartLine, faChartBar, faChartArea, faForward } from '@fortawesome/free-solid-svg-icons';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
-import * as ChartZoom from 'chartjs-plugin-zoom';
+//import * as ChartZoom from 'chartjs-plugin-zoom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 import { Generics, SERVICOSTEMP, ATENDENTESTEMP} from '../../mock-dados-tabela';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
@@ -70,8 +71,9 @@ export class HomeComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
-    Chart.pluginService.register(ChartZoom);
+    //Chart.pluginService.register(ChartZoom);
     Chart.pluginService.register(ChartDataLabels);
+    //Chart.pluginService.register(ChartAnnotation);
     //pegando dados mockados para todos os gráficos
     this.getChartData();
     this.getAggregatorChart();
@@ -86,9 +88,43 @@ export class HomeComponent implements OnInit {
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
     
-    this.chartsHTML = document.getElementsByClassName('trigger-charts');
+    /*this.chartsHTML = document.getElementsByClassName('trigger-charts');
     for(var i=0;i<this.chartsHTML.length;i++){
       this.chartsHTML[i].style.display = 'none';
+    }*/
+  }
+
+  ngAfterViewInit(){
+    var _this = this;
+    
+    var performanceAtdCharts = this.charts.toArray().filter(item =>
+      //o gráfico de barra horizontal empilhada é o único
+      //que deve-se fazer a conversão para porcentagem 
+      item.chart.config.type=='horizontalBar' &&
+      item.chart.options.scales.xAxes[0].stacked
+    );
+    
+    for(let chart of performanceAtdCharts){
+      this.calculatePercentage(chart.datasets,chart.ctx.canvas.id);
+
+      chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
+        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+        if (label) {
+            label += ': ';
+        }
+        var arrayAuxOldData = chart.ctx.canvas.id.indexOf('Total')>-1?_this.oldDataChart2:_this.oldDataChart;
+        label += arrayAuxOldData[tooltipItem.datasetIndex][tooltipItem.index];
+        return label;
+      }
+      chart.chart.options.plugins = {
+        datalabels:{
+          formatter: function(value,context){
+            var arrayAuxOldData = chart.ctx.canvas.id.indexOf('Total')>-1?_this.oldDataChart2:_this.oldDataChart;
+            return arrayAuxOldData[context.datasetIndex][context.dataIndex];
+          }
+        }
+      };
+      chart.chart.update();
     }
   }
 
@@ -201,20 +237,20 @@ export class HomeComponent implements OnInit {
         this.columnsToDisplay.splice(indexA,1);
       }
     }
-    
+    /*
     //não é preciso mostrar os gráficos se não há filtros
     if(this.metricasIn.length==0 && this.dimensoesIn.length==0){
       for(var i=0;i<this.chartsHTML.length;i++){
         this.chartsHTML[i].style.display = 'none';
       }
     }else{
-      /*if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
+      if(this.dimensoesIn.indexOf('Atendente')>-1 && this.dimensoesIn.indexOf('Serviço')>-1){
         this.dataSource = SERVICOS;
         this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos'];
       }else{
         this.dataSource = PERFORMANCE;
         this.columnsToDisplay = ['nome', 'agendados', 'concluidos', 'cancelados','naoconcluidos','mediaEspera','mediaAtd'];
-      }*/
+      }
       for(var i=0;i<this.chartsHTML.length;i++){
         this.chartsHTML[i].style.display = 'block';
       }
@@ -246,7 +282,7 @@ export class HomeComponent implements OnInit {
     //this.charts.first.chart.config.data.datasets = this.chartData;
     this.charts.forEach(child => {
       child.chart.update();
-    })
+    })*/
   }
 
   calculatePercentage(datasets, chartID): void{

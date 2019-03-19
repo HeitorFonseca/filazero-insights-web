@@ -34,6 +34,57 @@ export const BARCHARTCOLORS = [
     }
 ];
 
+export const ATDCHARTCOLORS = [
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    },
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    },
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    },
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    },
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    },
+    {
+        backgroundColor: 'rgba(77,116,234,1.0)',
+        borderColor: 'rgba(255,255,255,1.0)',
+        pointBackgroundColor: 'rgba(77,110,240,0.2)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,116,234,1.0)'
+    }
+];
+
 export function randomDataset(multiplier, tamArray): number[]{
     var numb = [];
     for(let i=0 ; i < tamArray; i++){
@@ -277,6 +328,7 @@ export const CHARTDATAFEEDBACK: ChartData[] = [
     {data: [4.71,3.5,5], label: 'Média mensal de avaliações',backgroundColor:'rgba(225,10,24,0.2)',
      borderColor: 'rgba(200,20,24,0.2)',yAxisID:'y-media',datalabels:{
         anchor: 'center',
+        color: 'white',
         clamp: true
     }},
     {data: [20,38,10], label: 'Total de avaliações',
@@ -285,6 +337,21 @@ export const CHARTDATAFEEDBACK: ChartData[] = [
         anchor: 'start',
         clamp: true,
         align: 'end'
+    }},
+    {data: [22,22,22], label: 'Total de avaliações',
+     type:'line',fill:false, backgroundColor: 'rgba(77,116,234,0.7)',
+     borderColor: 'rgba(77,110,240,0.2)', yAxisID:'y-total',datalabels:{
+        anchor: 'start',
+        clamp: true,
+        align: 'end',   
+        formatter: function(value, context){
+            console.log(context);
+            if(context.dataIndex==1){
+                return value;
+            }else{
+                return "";
+            }
+        }
     }}
 ];
 export const CHARTLABELSFEEDBACK = ['Ago/18','Set/18','Out/18'];
@@ -314,7 +381,24 @@ export const BARCHARTTOPTIONSFEEDB = {
                 stepSize: 10                                                                                                                                                                          
             }
         }]
-    }
+    }/*, 
+    annotation:{
+        drawTime: 'afterDatasetsDraw',
+        annotations: [{
+            drawTime: 'afterDraw',
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y-total',
+            value: '22',
+            borderColor: 'rgb(75, 192, 192)',
+            borderWidth: 4,
+            label: {
+                enabled: true,
+                content: 'Média geral'
+            }
+        }]
+    }*/
+    
 };
 
 //gráfico de classificação média por serviço
