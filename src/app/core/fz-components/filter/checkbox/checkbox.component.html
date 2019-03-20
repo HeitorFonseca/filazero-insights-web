@@ -1,0 +1,10 @@
+<section>
+  <h2>{{ param.title }}</h2>
+  <mat-checkbox
+     color="primary"
+     *ngFor="let item of items"
+     [checked]="filter[param.key].indexOf(item) > -1"
+     (change)="toggleFilter(item)">
+    {{item.name}}
+  </mat-checkbox>
+</section>

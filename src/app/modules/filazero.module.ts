@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { MaterialModule } from '../utils/material.module';
-
+import { FilterModule } from '../core/fz-components/filter/filter.module';
 
 import { HomeComponent } from './home/home.component';
 
@@ -22,9 +22,12 @@ import { HomeComponent } from './home/home.component';
     TranslateModule,
     MaterialModule,
     DragDropModule,
-    NgbModule
+    NgbModule,
+    FilterModule
   ],
   declarations: [HomeComponent],
-  exports: []
+  exports: [
+    FilterModule
+  ]
 })
 export class FilazeroModule { }
