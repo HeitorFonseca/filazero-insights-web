@@ -5,14 +5,13 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { Chart } from 'chart.js';
 //import * as ChartZoom from 'chartjs-plugin-zoom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 import { Generics, SERVICOSTEMP, ATENDENTESTEMP} from '../../mock-dados-tabela';
 import { METRICASDIM, CHARTDATAATDTIME, BARCHARTATDTIMEOPTIONS } from '../../mock-met-dim';
 import { randomDataset } from '../../mock-charts';
 import { ChartService } from '../../shared/services/chart.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { DataSource } from '@angular/cdk/table';
+import { DataSource, CdkTableModule } from '@angular/cdk/table';
 
 
 //moment().day("Monday").to
@@ -45,7 +44,7 @@ export class HomeComponent implements OnInit {
   public aggreClassMedia;
   public aggreFeedback;
 
-  auxOldChartType='';
+  auxOldChartType;
   metricasOut: string[];
   dimensoesOut: string[];
   metricasIn = [];
@@ -75,6 +74,7 @@ export class HomeComponent implements OnInit {
     Chart.pluginService.register(ChartDataLabels);
     //Chart.pluginService.register(ChartAnnotation);
     //pegando dados mockados para todos os gráficos
+
     this.getChartData();
     this.getAggregatorChart();
     this.getAtdPerformanceData();
@@ -87,16 +87,17 @@ export class HomeComponent implements OnInit {
     this.getAggregatorFeedback();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
-    
     /*this.chartsHTML = document.getElementsByClassName('trigger-charts');
     for(var i=0;i<this.chartsHTML.length;i++){
       this.chartsHTML[i].style.display = 'none';
     }*/
+    this.getDataFromServer();
   }
 
   ngAfterViewInit(){
-    var _this = this;
     
+    var _this = this;
+
     var performanceAtdCharts = this.charts.toArray().filter(item =>
       //o gráfico de barra horizontal empilhada é o único
       //que deve-se fazer a conversão para porcentagem 
@@ -126,6 +127,84 @@ export class HomeComponent implements OnInit {
       };
       chart.chart.update();
     }
+   // console.log(this.auxOldChartType);
+  }
+
+  getDataFromServer(): void{
+    this.chartService.getDataFromServer().subscribe(res=>{
+      //this.auxOldChartType = res;
+      //preenchimento de gráfico com média de tempo de espera e de atendimento de determinados serviços
+      
+      /*debugger;
+        for(var i=0;i<this.dataPerformance.length;i++){
+        var atual = this.dataPerformance[i];
+        atual.data=[];
+        if(atual.label.indexOf('espera')>-1){
+          atual.data.push(res.performanceWaitAvgMin);
+        }else{
+          atual.data.push(res.performanceAtdAvgMin);
+        } 
+      }*/
+      console.log(this.dataPerformance);
+      for(let dt of this.dataPerformance){
+        dt.data = [];
+        if(dt.label.indexOf('espera')>-1){
+          dt.data.push(res.performanceWaitAvgMin);
+        }else{
+          dt.data.push(res.performanceAtdAvgMin);
+        }
+      }
+      
+      console.log(this.dataPerformance);
+
+      //prenchimento de gráfico de performance de atendimento por serviço
+      this.aggrePerfServico.barChartLabels = [];
+      this.dataPerfServico.forEach(dt=>{
+        dt.data = [];
+      });
+      for(let servico of res.dataPerformanceTimePerService){
+        this.aggrePerfServico.barChartLabels.push(servico.serviceName);
+        this.dataPerfServico.forEach(dt =>{
+          if(dt.label.indexOf('espera')>-1){
+            dt.data.push(servico.avgTimeWait);
+          }else{
+            dt.data.push(servico.avgTimeAtd);
+          }
+        });
+      }
+      //preenchimento de gráfico de classificação média e total por serviço
+      this.dataClassMedia.forEach(dcm =>{
+        dcm.data = [];
+      });
+      this.aggreClassMedia.barChartLabels = [];
+      for(let servico of res.dataFeedbackPerService){
+        this.aggreClassMedia.barChartLabels.push(servico.serviceName);
+        this.dataClassMedia.forEach(dcm =>{
+          if(dcm.label.indexOf('Classi')>-1){
+            dcm.data.push(servico.averageRate);
+          }else{
+            dcm.data.push(servico.totalRatings);
+          }
+        });
+      }
+      //preenchimento de gráfico de feedbacks durante os meses de acordo com intervalo de tempo fornecido
+      this.aggreFeedback.barChartLabels = [];
+      this.dataFeedback.forEach(dfb =>{
+        dfb.data = [];
+      });
+      for(let mes of res.dataAvgRatePerMonth){
+        this.aggreFeedback.barChartLabels.push(mes.monthShort);
+        for(let dfb of this.dataFeedback){
+          if(dfb.label.indexOf('Média geral')>-1){
+            dfb.data.push(res.totalRatings);
+          }else if(dfb.label.indexOf('mensal')>-1){
+            dfb.data.push(mes.averageRate);
+          }else{
+            dfb.data.push(mes.countRate);
+          }
+        }
+      }
+    });
   }
 
   getAggregatorChart(): void{

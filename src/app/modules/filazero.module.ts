@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
 import { MatTableModule } from '@angular/material/table';  
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     ChartsModule,
     FontAwesomeModule,
     MatTableModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   declarations: [HomeComponent],
   exports: []

@@ -8,7 +8,7 @@ import { BARCHARTLABELS, ATDCHARTCOLORS, BARCHARTATDOPTIONS, BARCHARTTOPTIONS, B
 import { BARCHARTOPTIONS, CHARTDATAFEEDBACK, CHARTLABELSFEEDBACK, 
   BARCHARTTOPTIONSFEEDB, BARCHARTDATACLASSMEDIA } from '../../mock-charts';
 import { Observable, of } from 'rxjs';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -57,7 +57,21 @@ export class ChartService {
     barChartOptions: BARCHARTTOPTIONS
   }
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+
+  getDataFromServer(): Observable<any>{
+    var idsAtendentes = [301,302];
+    //debugger;
+    const params = {
+      startDate: "2019-01-20T11:28:24.77Z",
+      endDate: "2019-02-20T11:28:24.77Z",
+      serviceIds: JSON.stringify(295),
+      attendantIds: JSON.stringify(idsAtendentes[1])
+    };
+
+    return this.httpClient.get("https://localhost:44330/api/providers/198/locations/278/dashboard",
+    {params});
+  }
 
   getChartData(): Observable<ChartData[]>{
     return of(CHARTDATA);
