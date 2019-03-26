@@ -1,9 +1,18 @@
 <section>
   <header>
-    <h1 class="title-section"> Dashboard </h1>
+    <h1 class="title-section"> Relatório </h1>
   </header>
 
-  <article>
+  <article class="flex-filter">
+    <div class="flex-filter-item">
 
+      <fz-filter-reports [eventFilters]="eventFilters" [eventToggleFilter]="toggleFilter" class="filter" [ngClass]="{ 'filter-expand' : displayFilter }"></fz-filter-reports>
+
+    </div>
+
+    <div class="flex-filter-item">
+
+
+    </div>
   </article>
 </section>

@@ -1,0 +1,17 @@
+<div class="filter-container">
+  <mat-icon matSuffix class="icon-close" (click)="close()">close</mat-icon>
+  <!-- <h1>{{'filters' | translate}}</h1> -->
+
+  <fz-checkbox [items]="optionsFilter"
+    [param]="filterParam"
+    [eventFilters]="eventFilters"
+    [changedFilter]="changedFilter"
+    [filter]="filter"></fz-checkbox>
+
+  <fz-checkbox [items]="optionsFilter2"
+    [param]="filterParam2"
+    [eventFilters]="eventFilters"
+    [changedFilter]="changedFilter"
+    [filter]="filter"></fz-checkbox>
+
+</div>

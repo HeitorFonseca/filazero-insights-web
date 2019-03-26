@@ -1,0 +1,173 @@
+@import 'src/styles/base'
+
++flex-filter
+
+header
+  color: $fz-color
+  text-align: center
+  width: 100%
+
+::ng-deep .disable-overflow
+  overflow: hidden
+
+.tickets-container
+  padding: 5px
+
+  .tickets-group
+    margin-bottom: 20px
+
+    &:last-child
+      margin-bottom: 0
+
+    .tickets-group-label
+      background: $fz-bg
+      color: #777
+      margin-bottom: 5px
+      /* does not work, some parent node is breaking it */
+      position: sticky
+      top: -1px
+      z-index: 1
+
+    .ticket
+      border-left: 10px solid #9b9f88
+      display: grid
+      grid-column-gap: 10px
+      grid-template-columns: 2fr 1fr
+      width: 100%
+      margin-bottom: 10px
+
+      &[data-status='confirmed']
+        border-left-color: #6497b1
+      &[data-status='checked']
+        border-left-color: #ffa700
+      &[data-status='called']
+        border-left-color: #32d8a2
+      &[data-status='started']
+        border-left-color: #32d8a2
+      &[data-status='completed']
+        border-left-color: #b3cde0
+      &[data-status='canceled']
+        border-left-color: #fe5757
+
+      &:hover
+        background-color: $color-lighter
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2)
+        top: -2px
+
+      *
+        margin: 0
+
+      >:nth-child(even)
+        border-left: 1px solid #ddd
+        text-align: right
+
+      .mat-card-title
+        font-size: 1.5em
+
+      .mat-card-subtitle,
+      .mat-card-content,
+        font-size: 0.875em
+
+.check-section
+  display: flex
+  flex-flow: column
+
+.check-margin
+  margin: 0 5px
+
+.side-container
+  height: 100%
+  background-color: $fz-bg
+
+  .icon-filter
+    text-align: right
+    display: none
+
+    button
+      margin: auto
+
+  .btn-back
+    border: none
+    background-color: transparent
+    display: none
+
+    .mat-icon
+      font-size: 32px
+
+  .mat-sidenav-content
+    height: 100%
+
+  .btn-filter
+    text-align: center
+
+    button
+      margin: auto
+
+.empty-state
+  text-align: center
+
+  p
+    margin: 110px 0
+    font-size: 25px
+
++spinner
+
+.spinner-section
+  margin: 500px
+
+.spinner-container
+  position: relative
+  z-index: 4
+  height: 100px
+  text-align: center
+
+  .end-scroll
+    margin-top: 0px
+    padding-top: 40px
+    display: block
+    text-align: center
+
+  button
+    margin-top: 25px
+
+.flex-filter
+  .emailNotConfirmed
+    width: 100%
+    padding-top: 15px
+
++spinner-button(20px, #ffffff)
+
+.fz-btn
+  width: 100%
+  font-size: 1em
+
++screen(map-get($screen, small))
+
+  .side-container
+
+    .mat-sidenav
+      width: 100%
+
+    .btn-back, .icon-filter
+      display: block
+
+  .btn-filter
+    margin-right: 32px
+
+    button
+      margin: auto
+      float: right
+
+  .tickets-container
+    font-size: 0.8em
+    margin-top: 20px
+
+  .filter
+    display: none
+
+    &.filter-expand
+      display: block
+
+  .flex-filter-item
+    border-left: none
+    width: 0
