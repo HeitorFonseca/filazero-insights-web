@@ -101,6 +101,7 @@ export class HomeComponent implements OnInit {
        item.chart.options.scales.xAxes[0].stacked
     );
     
+    
     for(let chart of performanceAtdCharts){
       chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
         var label = data.datasets[tooltipItem.datasetIndex].label || '';
