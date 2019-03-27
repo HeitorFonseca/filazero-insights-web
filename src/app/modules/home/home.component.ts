@@ -87,27 +87,21 @@ export class HomeComponent implements OnInit {
     this.getAggregatorFeedback();
     this.metricasOut = METRICASDIM.metricas;
     this.dimensoesOut = METRICASDIM.dimensoes;
-    /*this.chartsHTML = document.getElementsByClassName('trigger-charts');
-    for(var i=0;i<this.chartsHTML.length;i++){
-      this.chartsHTML[i].style.display = 'none';
-    }*/
+    
     this.getDataFromServer();
   }
 
   ngAfterViewInit(){
-    
     var _this = this;
-
+    
     var performanceAtdCharts = this.charts.toArray().filter(item =>
       //o gráfico de barra horizontal empilhada é o único
       //que deve-se fazer a conversão para porcentagem 
       item.chart.config.type=='horizontalBar' &&
-      item.chart.options.scales.xAxes[0].stacked
+       item.chart.options.scales.xAxes[0].stacked
     );
     
     for(let chart of performanceAtdCharts){
-      this.calculatePercentage(chart.datasets,chart.ctx.canvas.id);
-
       chart.chart.options.tooltips.callbacks.label = function(tooltipItem,data){
         var label = data.datasets[tooltipItem.datasetIndex].label || '';
         if (label) {
@@ -117,6 +111,7 @@ export class HomeComponent implements OnInit {
         label += arrayAuxOldData[tooltipItem.datasetIndex][tooltipItem.index];
         return label;
       }
+
       chart.chart.options.plugins = {
         datalabels:{
           formatter: function(value,context){
@@ -125,52 +120,35 @@ export class HomeComponent implements OnInit {
           }
         }
       };
-      chart.chart.update();
     }
    // console.log(this.auxOldChartType);
   }
 
   getDataFromServer(): void{
     this.chartService.getDataFromServer().subscribe(res=>{
-      //this.auxOldChartType = res;
-      //preenchimento de gráfico com média de tempo de espera e de atendimento de determinados serviços
-      
-      /*debugger;
-        for(var i=0;i<this.dataPerformance.length;i++){
-        var atual = this.dataPerformance[i];
-        atual.data=[];
-        if(atual.label.indexOf('espera')>-1){
-          atual.data.push(res.performanceWaitAvgMin);
-        }else{
-          atual.data.push(res.performanceAtdAvgMin);
-        } 
-      }*/
-      console.log(this.dataPerformance);
+       //prenchimento de gráfico de performance de atendimento por serviço
+       this.aggrePerfServico.barChartLabels = [];
+       this.dataPerfServico.forEach(dt=>{
+         dt.data = [];
+       });
+       for(let servico of res.dataPerformanceTimePerService){
+         this.aggrePerfServico.barChartLabels.push(servico.serviceName);
+         this.dataPerfServico.forEach(dt =>{
+           if(dt.label.indexOf('espera')>-1){
+             dt.data.push(servico.avgTimeWait);
+           }else{
+             dt.data.push(servico.avgTimeAtd);
+           }
+         });
+       }
+      //preenchimento de gráfico com média de tempo de espera e de atendimento de determinados serviços   
       for(let dt of this.dataPerformance){
-        dt.data = [];
+        //dt.data = [];
         if(dt.label.indexOf('espera')>-1){
           dt.data.push(res.performanceWaitAvgMin);
         }else{
           dt.data.push(res.performanceAtdAvgMin);
-        }
-      }
-      
-      console.log(this.dataPerformance);
-
-      //prenchimento de gráfico de performance de atendimento por serviço
-      this.aggrePerfServico.barChartLabels = [];
-      this.dataPerfServico.forEach(dt=>{
-        dt.data = [];
-      });
-      for(let servico of res.dataPerformanceTimePerService){
-        this.aggrePerfServico.barChartLabels.push(servico.serviceName);
-        this.dataPerfServico.forEach(dt =>{
-          if(dt.label.indexOf('espera')>-1){
-            dt.data.push(servico.avgTimeWait);
-          }else{
-            dt.data.push(servico.avgTimeAtd);
-          }
-        });
+        }        
       }
       //preenchimento de gráfico de classificação média e total por serviço
       this.dataClassMedia.forEach(dcm =>{
@@ -204,6 +182,29 @@ export class HomeComponent implements OnInit {
           }
         }
       }
+
+      for(let rushHour of res.dataScheduleAtdWeek){ 
+        var indiceDia = this.aggregator.barChartLabels.indexOf(rushHour.weekdayName);
+        
+        var dado = this.chartData.filter(cd => cd.label.indexOf(rushHour.hourIntervalAtdList.hourInterval)>-1);
+        for(var i=0; i < indiceDia; i++){
+          dado[0].data.push(0); //caso não tenha informações sobre os outros dias anteriores
+          //é necessário acrescentar 0s por conta da lógica de armazenar os dados
+        }
+        dado[0].data.push(rushHour.hourIntervalAtdList.countAtd);
+      }
+      
+      this.charts.forEach(child=>{
+        if(child.chart.config.type=='horizontalBar' && child.chart.options.scales.xAxes[0].stacked){
+          //console.log(child.chart.config.data.datasets);
+          if(child.chart.ctx.canvas.id.indexOf('Servi')>-1){
+            this.calculatePercentage(this.dataPerfServico,child.chart.ctx.canvas.id);
+          }else{
+            this.calculatePercentage(child.chart.config.data.datasets,child.chart.ctx.canvas.id);
+          }
+        }
+        child.chart.update();
+      });
     });
   }
 
@@ -291,30 +292,6 @@ export class HomeComponent implements OnInit {
           }
         }
       }*/
-    }else if(destino.indexOf("dimensoesIn")!=-1){
-      this.dimensoesIn = event.container.data;
-      var atendenteExiste = this.dimensoesIn.indexOf('Atendente')>-1;
-      if(this.dimensoesIn.indexOf('Serviço')>-1){
-        this.dataSource = SERVICOSTEMP;
-        if(this.columnsToDisplay.indexOf('servico')==-1)this.columnsToDisplay.push('servico');
-      }
-      if(atendenteExiste){
-        this.dataSource = ATENDENTESTEMP;
-        if(this.columnsToDisplay.indexOf('atendente')==-1) this.columnsToDisplay.push('atendente');
-      }//fazer método para simplificar e eliminar duplicação de código/lógica
-      
-    }else if(destino.indexOf("dimensoesOut")!=-1&&origem.indexOf("dimensoesIn")!=-1){
-      this.dimensoesIn = event.previousContainer.data;
-      
-      if(this.columnsToDisplay.indexOf('servico')!=-1 && this.dimensoesIn.indexOf('Serviço')<0){
-        var indexS = this.columnsToDisplay.indexOf('servico',0);
-        this.columnsToDisplay.splice(indexS,1); 
-        this.dataSource = this.columnsToDisplay.indexOf('atendente')!=-1 ? ATENDENTESTEMP : [];
-      }else if(this.columnsToDisplay.indexOf('atendente')!=-1 && this.dimensoesIn.indexOf('Atendente')<0){
-        this.dataSource = this.columnsToDisplay.indexOf('servico')!=-1 ? SERVICOSTEMP : [];
-        var indexA = this.columnsToDisplay.indexOf('atendente',0);
-        this.columnsToDisplay.splice(indexA,1);
-      }
     }
     /*
     //não é preciso mostrar os gráficos se não há filtros
@@ -365,7 +342,6 @@ export class HomeComponent implements OnInit {
   }
 
   calculatePercentage(datasets, chartID): void{
-    //debugger;
     var tempomedio1 = datasets[0].data;
     var tempomedio2 = datasets[1].data;
 
@@ -386,78 +362,4 @@ export class HomeComponent implements OnInit {
     datasets[1].data = tempomedio2;
   }
 
-  //eventos de clique para mudar tipo dos gráficos
-  changeToLineChart(event: MouseEvent){
-    console.log(event);
-    /*var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
-    var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
-    
-    var tipoGrafico = canvasAtt.chart.config.type+'';
-    if(tipoGrafico.toUpperCase().indexOf('BAR')>-1){
-      this.auxOldChartType = canvasAtt.chart.config.type;
-    }
-    canvasAtt.chart.config.type = 'line';
-    for(let cd of canvasAtt.chart.config.data.datasets){
-      //cd.fill = false;
-      cd.borderColor = 'rgba(77,116,234,1.0)';
-    }
-    //criada visualização em variáveis separadas pois a simples troca tornava a visualização
-    //um pouco mais difícil de enxergar
-    var grafico_horarios = canvasAtt.chart.config.options.title.text=="Horários de Pico";
-    if(grafico_horarios){
-      this.aggregator.barChartType = 'line';
-      this.chartData = CHARTDATAATDTIME;
-      canvasAtt.chart.config.options = BARCHARTATDTIMEOPTIONS;
-      canvasAtt.chart.config.type = this.aggregator.barChartType;
-      canvasAtt.chart.config.data.datasets = this.chartData;
-    }
-    canvasAtt.chart.update();
-    console.log(canvasAtt.chart.config);*/
-  }
-
-  changeToBarChart(event: MouseEvent){
-    console.log(event.srcElement);
-    
-    /*var idCanvas = event.path.find(divCanvas => divCanvas.classList[0]=='trigger-charts').childNodes[0].childNodes[1].id;
-    var canvasAtt = this.charts.toArray().find(chart => chart.cvs.id==idCanvas);
-    
-    if(this.auxOldChartType.indexOf('horizontal')<0){
-      canvasAtt.chart.config.type='bar';
-      //this.aggregator.barChartType = 'bar';
-    }else{
-      canvasAtt.chart.config.type='horizontalBar';
-      //this.aggregator.barChartType = 'horizontalBar';
-    }
-    var grafico_horarios = canvasAtt.chart.options.title.text=="Horários de Pico";
-    if(grafico_horarios){
-      this.getChartData();
-      this.getAggregatorChart();
-      canvasAtt.chart.options = this.aggregator.barChartOptions;
-      canvasAtt.chart.config.data.datasets = this.chartData;
-    }
-    for(let cd of canvasAtt.chart.config.data.datasets){
-      cd.borderColor = 'rgba(255,255,255,1.0)';
-      delete cd.type;
-      delete cd.fill;
-    }
-    
-    canvasAtt.chart.update();
-    console.log(canvasAtt.chart);*/
-  }
-
-  getTotalAgendados(){
-    return this.dataSource.map(s => s.agendados).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalCancelados(){
-    return this.dataSource.map(s => s.cancelados).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalConcluidos(){
-    return this.dataSource.map(s => s.concluidos).reduce((acc, value) => acc + value, 0);
-  }
-
-  getTotalNaoConcluidos(){
-    return this.dataSource.map(s => s.naoconcluidos).reduce((acc, value) => acc + value, 0);
-  }
 }

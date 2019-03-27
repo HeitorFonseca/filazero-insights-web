@@ -101,9 +101,9 @@ export const BARCHARTTESTDATA: ChartData[] = [
 ];
 
 export const BARCHARTPERFTOTALDATA: ChartData[] = [
-    {data: [15], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.2)',
+    {data: [], label: 'Tempo médio de espera',backgroundColor:'rgba(77,116,234,0.2)',
      borderColor: 'rgba(77,116,234,0.2)'},
-    {data: [18], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.2)',
+    {data: [], label: 'Tempo médio de atendimento',backgroundColor:'rgba(225,10,24,0.2)',
      borderColor: 'rgba(200,20,24,0.2)'}
 ];
 
@@ -317,7 +317,7 @@ export const BARCHARTATDOPTIONS = {
             offset: -40,
             rotation: -90,
             formatter: function(value,context){
-                return context.dataset.label;
+                return value>0 ? context.dataset.label: "";
             }
         }
     }
