@@ -17,7 +17,7 @@ import { AuthService } from './core/services/auth.service';
 import { AuthInterceptorService } from './core/services/auth-interceptor.service';
 import { AuthorizedGuard, AuthGuard } from './core/guards';
 
-import { HeaderComponent } from './layouts/';
+import { HeaderComponent, FooterComponent } from './layouts/';
 import { MaterialModule } from './utils/material.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -27,7 +27,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

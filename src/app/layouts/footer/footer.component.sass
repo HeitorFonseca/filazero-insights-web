@@ -1,0 +1,64 @@
+@import 'src/styles/base'
+
+$bg: #404040
+$fg: #ffffff
+$link: 0.85
+$sep: 0.4
+
+footer
+  background-color: $bg
+  color: $fg
+  display: flex
+  justify-content: space-around
+  align-items: center
+  height: $footer-size
+
+.icon-list
+  display: flex
+
+  >:not(:first-child)
+    margin-left: 1.2em
+
+.logo
+  opacity: $link
+
+  &:hover
+    opacity: 1
+
+  img
+    width: 110px
+
+.social-icon
+  display: inline-block
+  vertical-align: middle
+
+  i
+    font-size: 2em
+
+.text-list
+  font-size: 0.8em
+
+  >:not(:last-child)::after
+    content: '|'
+    color: mix($fg, black, $sep * 100)
+    margin: 0 0.5em
+
+a
+  color: mix($fg, black, $link * 100)
+
+  &:hover
+    color: $fg
+
++screen(map-get($screen, medium))
+  .icon-list
+    a
+      font-size: 0.7em
+
+  .logo
+    img
+      width: 90px
+
++screen(map-get($screen, small))
+  footer
+    flex-flow: column
+    justify-content: center
