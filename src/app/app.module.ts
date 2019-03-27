@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { StarRatingModule } from 'angular-star-rating';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { FilazeroModule } from './modules';
@@ -43,6 +44,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    ChartsModule
   ],
   exports: [
     MaterialModule

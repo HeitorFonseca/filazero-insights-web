@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { ChartsModule } from 'ng2-charts';
 
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { MaterialModule } from '../utils/material.module';
@@ -23,11 +24,13 @@ import { HomeComponent } from './home/home.component';
     MaterialModule,
     DragDropModule,
     NgbModule,
-    FilterModule
+    FilterModule,
+    ChartsModule
   ],
   declarations: [HomeComponent],
   exports: [
-    FilterModule
+    FilterModule,
+    ChartsModule
   ]
 })
 export class FilazeroModule { }

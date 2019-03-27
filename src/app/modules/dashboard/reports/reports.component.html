@@ -4,14 +4,54 @@
   </header>
 
   <article class="flex-filter">
-    <div class="flex-filter-item">
+    <div class="flex-filter-item" style="text-align: center">
 
       <fz-filter-reports [eventFilters]="eventFilters" [eventToggleFilter]="toggleFilter" class="filter" [ngClass]="{ 'filter-expand' : displayFilter }"></fz-filter-reports>
 
     </div>
 
     <div class="flex-filter-item">
+      <div class="row">
+        <div class="trigger-charts col-12">
+          <div id="charts">
+            <canvas id="horariosPico" baseChart [datasets]="chartData" [labels]="aggregator.barChartLabels" [options]="aggregator.barChartOptions"
+              [legend]="aggregator.barChartLegend" [chartType]="aggregator.barChartType" [colors]="aggregator.barChartColors"></canvas>
+          </div>
+        </div>
+      </div>
+      <!--gráficos de performance-->
+      <div class="row pt-3">
+        <div class="trigger-charts col-6">
+          <div>
+            <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels"
+              [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend" [chartType]="aggrePerfServico.barChartType"></canvas>
+          </div>
+        </div>
+        <div class="trigger-charts col-6">
+          <div>
+            <canvas baseChart id="perfTotal" [datasets]="dataPerformance" [options]="aggrePerformance.barChartOptions"
+              [legend]="aggrePerformance.barChartLegend" [chartType]="aggrePerformance.barChartType"></canvas>
+          </div>
+        </div>
+      </div>
 
+      <!--gráficos de avaliações-->
+      <div class="row">
+        <div class="trigger-charts col-6">
+          <div>
+            <canvas baseChart id="classMediaMes" [datasets]="dataFeedback" [labels]="aggreFeedback.barChartLabels"
+              [options]="aggreFeedback.barChartOptions" [legend]="aggreFeedback.barChartLegend" [chartType]="aggreFeedback.barChartType"
+              [colors]="aggreFeedback.barChartColors"></canvas>
+          </div>
+        </div>
+        <div class="trigger-charts col-6">
+          <div>
+            <canvas baseChart id="classMediaServico" [datasets]="dataClassMedia" [labels]="aggreClassMedia.barChartLabels"
+              [options]="aggreClassMedia.barChartOptions" [legend]="aggreClassMedia.barChartLegend" [chartType]="aggreClassMedia.barChartType"
+              [colors]="aggreClassMedia.barChartColors"></canvas>
+          </div>
+        </div>
+      </div>
 
     </div>
   </article>
