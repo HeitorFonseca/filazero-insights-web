@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +26,8 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     MaterialModule,
     FilterModule,
-    ChartsModule
+    ChartsModule,
+    NgbModule
   ],
   declarations: [
     ReportsComponent,

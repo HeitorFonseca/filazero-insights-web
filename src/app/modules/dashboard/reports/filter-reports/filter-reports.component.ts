@@ -1,13 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {NgbDate, NgbDateStruct, NgbDatepickerI18n, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { Validators, FormControl } from '@angular/forms';
 
 import { FilterService } from '../../../../core/fz-components/filter/filter.service';
 import { FilterParam } from '../../../../core/fz-components/filter/filter.model';
+import { I18n, CustomDatepickerI18n } from '../../../../utils/date-picker';
 
 
 @Component({
   selector: 'fz-filter-reports',
   templateUrl: './filter-reports.component.html',
-  styleUrls: ['./filter-reports.component.sass']
+  styleUrls: ['./filter-reports.component.sass'],
+  providers: [
+    I18n,
+    {
+      provide: NgbDatepickerI18n,
+      useClass: CustomDatepickerI18n
+    }
+  ]
 })
 export class FilterReportsComponent implements OnInit {
 
@@ -15,6 +25,13 @@ export class FilterReportsComponent implements OnInit {
   @Input() eventToggleFilter: EventEmitter<boolean>;
   @Output() changedFilter: EventEmitter<FilterParam> = new EventEmitter<FilterParam>();
   @Output() filter: {};
+
+  hoveredDate: NgbDate;
+
+  fromDate: NgbDate;
+  toDate: NgbDate;
+
+  selected: NgbDateStruct;
 
   filterParam = new FilterParam(
     'Serviços',
@@ -39,8 +56,12 @@ export class FilterReportsComponent implements OnInit {
   ];
 
   constructor(
-    private _filterService: FilterService
-  ) { }
+    private _filterService: FilterService,
+    calendar: NgbCalendar
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit() {
     this.changedFilter
@@ -65,6 +86,41 @@ export class FilterReportsComponent implements OnInit {
 
   close(): void {
     this.eventToggleFilter.emit(false);
+  }
+
+  selectDay(date: NgbDateStruct): boolean {
+    const selected = this.selected;
+    if (selected) {
+      if (selected.day === date.day &&
+        selected.month === date.month &&
+        selected.year === date.year) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
 
 }
