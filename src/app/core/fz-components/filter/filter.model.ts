@@ -3,6 +3,7 @@ export class FilterParam {
 
   constructor(
     public title: string,
-    public key: string
+    public key: string,
+    public isChecked: boolean
   ) { }
 }

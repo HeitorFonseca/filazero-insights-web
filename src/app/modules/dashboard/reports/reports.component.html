@@ -6,7 +6,7 @@
   <article class="flex-filter">
     <div class="flex-filter-item" style="text-align: center">
 
-      <fz-filter-reports [eventFilters]="eventFilters" [eventToggleFilter]="toggleFilter" class="filter" [ngClass]="{ 'filter-expand' : displayFilter }"></fz-filter-reports>
+      <fz-filter-reports (emitDates)="recebeDatas($event)" (emitFilter)="recebeFiltro($event)" [eventFilters]="eventFilters" [eventToggleFilter]="toggleFilter" class="filter" [ngClass]="{ 'filter-expand' : displayFilter }"></fz-filter-reports>
 
     </div>
 
@@ -19,18 +19,18 @@
           </div>
         </div>
       </div>
-      <!--gráficos de performance-->
+      <!--gráficos de performance (emitFilter)="recebeFiltro($event)"-->
       <div class="row pt-3">
-        <div class="trigger-charts col-6">
-          <div>
-            <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels"
-              [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend" [chartType]="aggrePerfServico.barChartType"></canvas>
-          </div>
-        </div>
         <div class="trigger-charts col-6">
           <div>
             <canvas baseChart id="perfTotal" [datasets]="dataPerformance" [options]="aggrePerformance.barChartOptions"
               [legend]="aggrePerformance.barChartLegend" [chartType]="aggrePerformance.barChartType"></canvas>
+          </div>
+        </div>
+        <div class="trigger-charts col-6">
+          <div>
+            <canvas baseChart id="perfServico" [datasets]="dataPerfServico" [labels]="aggrePerfServico.barChartLabels"
+              [options]="aggrePerfServico.barChartOptions" [legend]="aggrePerfServico.barChartLegend" [chartType]="aggrePerfServico.barChartType"></canvas>
           </div>
         </div>
       </div>

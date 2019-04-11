@@ -14,7 +14,7 @@ import { ReportsComponent } from './reports';
 import { FilterReportsComponent } from './reports/filter-reports/filter-reports.component'
 
 import { ChartsModule } from 'ng2-charts';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -27,7 +27,8 @@ import { ChartsModule } from 'ng2-charts';
     MaterialModule,
     FilterModule,
     ChartsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   declarations: [
     ReportsComponent,

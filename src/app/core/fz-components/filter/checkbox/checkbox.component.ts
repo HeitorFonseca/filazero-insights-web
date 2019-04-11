@@ -17,6 +17,7 @@ export class CheckboxComponent {
 
   toggleFilter(item: any): void {
     this.param.filterItem = item;
+    this.param.isChecked = (this.filter[this.param.key].indexOf(item) <= -1)
     this.changedFilter.emit(this.param);
     this.eventFilters.emit(this.filter);
   }
