@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { ChartService } from '../../../shared/services/chart.service';
 import { ReportsService } from '../../../shared/services/reports.service';
-import { FilterReportsComponent } from './filter-reports/filter-reports.component';
+import { UserPreferencesService } from '../../../shared/services/user-preferences.service';
 import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-reports',
@@ -38,11 +38,8 @@ export class ReportsComponent implements OnInit{
   oldDataChart = [[],[]];
   oldDataChart2 = [[],[]];
 
-  constructor(private _chartService: ChartService, private _reportService: ReportsService) { }
-
-  ngOnInit() {
-
-    Chart.pluginService.register(ChartDataLabels);
+  constructor(private _chartService: ChartService,
+    private _reportService: ReportsService) { 
 
     this.getChartData();
     this.getAggregatorChart();
@@ -55,7 +52,32 @@ export class ReportsComponent implements OnInit{
     this.getClassMediaChartData();
     this.getFeedbackChartData();
     this.getAggregatorFeedback();
+  }
 
+  ngOnInit() {
+
+    Chart.pluginService.register(ChartDataLabels);
+
+    /* zerando os dados para deixar de guardar informações de outras requisições à API*/
+    this.chartData.forEach(cd => {
+      cd.data = [0,0,0,0,0,0,0];
+    });
+    this.dataClassMedia.forEach(dcm=>{
+      dcm.data = [];
+    });
+    this.dataFeedback.forEach(df=>{
+      df.data = [];
+    });
+    this.dataPerfServico.forEach(dps =>{
+      dps.data = [];
+    });
+    this.dataPerformance.forEach(dps =>{
+      dps.data = [];
+    });
+    //limpando dados também de categorias(labels) de alguns gráficos
+    this.aggreClassMedia.barChartLabels = [];
+    this.aggreFeedback.barChartLabels = [];
+    this.aggrePerfServico.barChartLabels = [];
   }
 
   chamaApiFiltro(filtros, fromDate, toDate){
@@ -152,7 +174,7 @@ export class ReportsComponent implements OnInit{
     var __this = this;
 
     for(let cd of __this.chartData){
-      cd.data = [0,0,0,0,0,0];
+      cd.data = [0,0,0,0,0,0,0];
     }
 
     this.aggreFeedback.barChartLabels = [];

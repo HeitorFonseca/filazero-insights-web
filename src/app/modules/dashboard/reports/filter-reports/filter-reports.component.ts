@@ -7,7 +7,7 @@ import { FilterParam } from '../../../../core/fz-components/filter/filter.model'
 import { I18n, CustomDatepickerI18n } from '../../../../utils/date-picker';
 
 import { ReportsService } from '../../../../shared/services/reports.service';
-
+import { UserPreferencesService } from '../../../../shared/services/user-preferences.service';
 @Component({
   selector: 'fz-filter-reports',
   templateUrl: './filter-reports.component.html',
@@ -63,10 +63,11 @@ export class FilterReportsComponent implements OnInit{
   constructor(
     private _filterService: FilterService,
     calendar: NgbCalendar,
-    private _reportsService: ReportsService
+    private _reportsService: ReportsService,
+    private _userPreferencesService: UserPreferencesService
   ) {
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.fromDate = calendar.getPrev(calendar.getToday(), 'd', 30);
+    this.toDate = calendar.getToday();
   }
 
   ngOnInit() {
@@ -85,15 +86,6 @@ export class FilterReportsComponent implements OnInit{
     this.resetFilter();
     this.getServicesResources();
   }
-
-  /*ngAfterViewInit(){
-    var monthView = document.getElementsByTagName('ngb-datepicker-month-view')[0];
-    monthView.style.width = 'inherit';
-    var dpweek = document.getElementsByClassName('ngb-dp-week ngb-dp-weekdays')[0];
-    dpweek.style.width = "inherit";
-    var dpmonth = document.getElementsByClassName('ngb-dp-month ng-star-inserted')[0];
-    dpmonth.style.width = '-webkit-fill-available';
-  }*/
 
   toggleFilter(key: string, value: object): void {
     this._filterService.toggleFilter(key, value, this.filter);

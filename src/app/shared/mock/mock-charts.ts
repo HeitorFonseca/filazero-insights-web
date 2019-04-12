@@ -191,7 +191,7 @@ export const CHARTDATAATD: ChartData[] = [
     {data: [], label: '18-19h', backgroundColor: 'rgba(77,116,234,1.0)',
      borderColor: 'rgba(255,255,255,1.0)', yAxisID:'atd-12'}
 ];
-export const BARCHARTLABELSATD = ['Segunda-feira', 'Terça-feira', 'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+export const BARCHARTLABELSATD = ['Segunda-feira', 'Terça-feira', 'Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'];
 
 export const BARCHARTATDOPTIONS = {
     scaleShowVerticalLines: false,

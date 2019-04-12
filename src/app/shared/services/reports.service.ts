@@ -2,21 +2,33 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportsService {
   API_URL: string = environment.API_URL;
-  constructor(private http: HttpClient) { }
+
+  private location;
+  private provider;
+
+  constructor(private http: HttpClient,
+    private _userPreferencesService: UserPreferencesService) { 
+    }
 
   getServicesResources(){
-    return this.http.get(`${this.API_URL}api/providers/198/locations/278/servicesResources`);
+    this.retrieveInformation();
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/servicesResources`);
   }
 
   getDataFromServer(params): Observable<any>{
-    console.log("params=", params); 
+    this.retrieveInformation();
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard`,{params});
+  }
 
-    return this.http.get(`${this.API_URL}api/providers/198/locations/278/dashboard`,{params});
+  retrieveInformation(){
+    this.location = this._userPreferencesService.get('current-location');
+    this.provider = this._userPreferencesService.get('current-provider');
   }
 }
