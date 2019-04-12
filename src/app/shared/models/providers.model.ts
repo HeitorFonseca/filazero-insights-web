@@ -1,3 +1,5 @@
+import { Location } from "./location.model"
+
 export class Providers {
   public id: number;
   public name: string;
@@ -5,4 +7,6 @@ export class Providers {
   public category: string;
   public isDefault: boolean;
   public slug: string;
+
+  public locations: Array<Location>;
 }

@@ -1,13 +1,33 @@
 <section>
-    <header>
-      <h1 class="title-section">{{'title.company' | translate }}</h1>
-    </header>
-    <article>
-      <div *ngFor = "let provider of providers" (click)="selectProvider(provider)">
-        <div> {{provider.name}} </div>
+  <header>
+    <h1 class="title-section">{{'title.company' | translate }}</h1>
+  </header>
+  <article>
+
+    <div id="accordion">
+
+      <div class="card provider-cards" *ngFor="let provider of providers; let i = index"
+        (click)="selectProvider(provider)">
+
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link card-head-name" data-toggle="collapse" [attr.data-target]="'#prov_' + i" aria-expanded="true"
+              aria-controls="collapseOne">
+              {{ provider.name }}
+            </button>
+          </h5>
+        </div>
+
+
+        <div id="prov_{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+
+          <span class="spinner" *ngIf="isLoading"></span>
+          <div class="card-body" *ngFor="let location of provider.locations">
+            {{ location.name }}
+          </div>
+        </div>
+
       </div>
-    </article>
+    </div>
+  </article>
 </section>
-
-
-

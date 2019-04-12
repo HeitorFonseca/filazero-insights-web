@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProvidersService } from '../../shared/services/providers.service'
 import { finalize } from '../../../../node_modules/rxjs/operators';
 
+import { ProvidersService } from '../../shared/services/providers.service'
+import { LocationService } from '../../shared/services/location.service'
 import { Providers } from '../../shared/models/providers.model';
 
 @Component({
@@ -14,7 +15,10 @@ export class HomeComponent implements OnInit {
   isLoading = false;
   providers: Array<Providers> = [];
 
-  constructor(private readonly _providersService: ProvidersService) { }
+  constructor(
+    private readonly _providersService: ProvidersService,
+    private readonly _locationService: LocationService)
+    { }
 
   ngOnInit() {
 
@@ -28,6 +32,21 @@ export class HomeComponent implements OnInit {
   }
 
   selectProvider(provider) {
+
+    this.isLoading = true;
+
+    this._locationService.getLocations(provider.id).pipe(finalize(()=> this.isLoading = false))
+    .subscribe((response) => {
+
+      this.providers.find(a => a.id == provider.id).locations = response;
+
+
+      // for (var i = 0; i < this.providers.length; i++) {
+      //   if (this.providers[i].id == provider.id) {
+      //     this.providers[i].locations = response;
+      //   }
+      // }
+    });
 
     console.log(provider);
   }
