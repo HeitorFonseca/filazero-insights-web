@@ -33,6 +33,7 @@ export class ReportsComponent implements OnInit{
   public aggreClassMedia;
   public aggreFeedback;
 
+  public labels = {}; //não usado nos gráficos, e sim nos cards
   //para guardar valores originais dos dados de performance de atendimento
   //e serem exibidos no tooltip
   oldDataChart = [[],[]];
@@ -113,8 +114,13 @@ export class ReportsComponent implements OnInit{
         serviceIds: s1,
         attendantIds: a1
       }
-      
-      this.getDataReports(params);
+      //cada gráfico tem uma chamada separada, para não haver sobrecarga de queries em uma chamada única
+      this.getDataPerformanceTotal(params);
+      this.getDataPerfomancePerService(params);
+      this.getDataAvgRate(params);
+      this.getDataHourRush(params);
+      this.getDataAttendances(params);
+      this.getDataClassMediaReports(params);
     }
   }
 
@@ -170,62 +176,90 @@ export class ReportsComponent implements OnInit{
     this._chartService.getAggregatorClassMedia().subscribe(aggregator => this.aggreClassMedia = aggregator);
   }
 
-  getDataReports(params){
+  async getDataAttendances(params){
+    let data = await this._reportService.getAttendancesFromServer(params);
     var __this = this;
-
-    for(let cd of __this.chartData){
-      cd.data = [0,0,0,0,0,0,0];
-    }
-
-    this.aggreFeedback.barChartLabels = [];
-    this.dataFeedback.forEach(dfb =>{
-      dfb.data = [];
-    });
-
-    this._reportService.getDataFromServer(params).subscribe(res =>{
-      if(res['responseData'] && res['responseData']==null)
-        return;
-
-      __this.aggrePerfServico.barChartLabels = [];
-      
-      for(let dt of __this.dataPerfServico){
-        dt.data = [];
+    data.subscribe(dados =>{
+      __this.labels['agendados'] = dados.totalAgendados;
+      __this.labels['concluidos'] = dados.totalConcluidos;
+      __this.labels['naoConcluidos'] = dados.totalNaoConcluidos;
+      __this.labels['avaliacoes'] = {
+        media: dados.mediaAvaliacoes,
+        total: dados.totalAvaliacoes
       }
+    });
+  }
 
-      for(let servico of res.dataPerformanceTimePerService){
+  async getDataPerformanceTotal(params){
+    for (let asd of this.dataPerformance) {
+      asd.data = [];
+    }
+    this.oldDataChart2 = [[],[]];
+    var __this = this;
+    let dados = await this._reportService.getDataPerformFromServer(params);
+    dados.subscribe(data =>{
+      //preenchimento de gráfico com média de tempo de espera e de atendimento de determinados serviços   
+      __this.calculaPorcentagemTeste(Math.ceil(data.performanceWaitAvgMin),
+        Math.ceil(data.performanceAtdAvgMin), 'Total', __this.dataPerformance);
+        
+      var chartPerformanceTotal = __this.charts.toArray().find(child => 
+        child.chart.ctx.canvas.id.indexOf('Total')>-1 && child.chart.config.type=='horizontalBar' &&
+        child.chart.options.scales.xAxes[0].stacked);
+      if(chartPerformanceTotal!=undefined){
+        chartPerformanceTotal.chart.options.tooltips.callbacks.title=function(tooltipItem, data){
+          return '';
+        }
+        chartPerformanceTotal.chart.config.data.datasets = chartPerformanceTotal.datasets;
+        __this.customTooltipPlugins(__this.oldDataChart2,__this.aggrePerformance);
+        chartPerformanceTotal.chart.options.tooltips.callbacks.label = __this.aggrePerformance.barChartOptions.tooltips.callbacks.label;
+        chartPerformanceTotal.chart.options.plugins.datalabels = __this.aggrePerformance.barChartOptions.plugins.datalabels
+
+        chartPerformanceTotal.chart.update();
+      }
+    });
+  }
+
+  async getDataPerfomancePerService(params){
+    this.aggrePerfServico.barChartLabels = [];
+    for(let dt of this.dataPerfServico){
+      dt.data = [];
+    }
+    this.oldDataChart = [[],[]];
+    var __this = this;
+    let dados = await this._reportService.getDataPerformPerServiceFromServer(params);
+    dados.subscribe(data => {
+      for(let servico of data.dataPerformanceTimePerService){
         __this.aggrePerfServico.barChartLabels.push(servico.serviceName);
         __this.calculaPorcentagemTeste(Math.ceil(servico.avgTimeWait),Math.ceil(servico.avgTimeAtd),
           'Servico',__this.dataPerfServico);      
       }
-      
-      for (let asd of __this.dataPerformance) {
-        asd.data = [];
-      }
       __this.customTooltipPlugins(__this.oldDataChart,__this.aggrePerfServico);
-      //preenchimento de gráfico com média de tempo de espera e de atendimento de determinados serviços   
-      __this.calculaPorcentagemTeste(Math.ceil(res.performanceWaitAvgMin),
-        Math.ceil(res.performanceAtdAvgMin), 'Total', __this.dataPerformance);
 
-      //preenchimento de gráfico de classificação média e total por serviço
-      __this.dataClassMedia.forEach(dcm =>{
-        dcm.data = [];
-      });
+      var performanceSrvcChart = __this.charts.toArray().find(item =>
+        //o gráfico de barra horizontal empilhada é o único
+        //que deve-se fazer a conversão para porcentagem 
+        item.chart.config.type=='horizontalBar' &&
+        item.chart.options.scales.xAxes[0].stacked &&
+        item.chart.ctx.canvas.id.indexOf('perfServico')>-1
+      );
 
-      __this.aggreClassMedia.barChartLabels = [];
-
-      for(let servico of res.dataFeedbackPerService){
-        __this.aggreClassMedia.barChartLabels.push(servico.serviceName);
-        __this.dataClassMedia.forEach(dcm =>{
-          if(dcm.label.indexOf('Classi')>-1){
-            dcm.data.push(servico.averageRate);
-          }else{
-            dcm.data.push(servico.totalRatings);
-          }
-        });
+      if(performanceSrvcChart!=undefined){
+        performanceSrvcChart.chart.config.data.datasets = performanceSrvcChart.datasets;
+        performanceSrvcChart.chart.options.tooltips.callbacks.label = __this.aggrePerfServico.barChartOptions.tooltips.callbacks.label;
+        performanceSrvcChart.chart.options.plugins.datalabels = __this.aggrePerfServico.barChartOptions.plugins.datalabels
+        performanceSrvcChart.chart.update();
       }
+    });
+  }
 
-      //preenchimento de gráfico de feedbacks durante os meses de acordo com intervalo de tempo fornecido
-      //console.log(res.dataAvgRatePerMonth);
+  async getDataAvgRate(params){
+    this.aggreFeedback.barChartLabels = [];
+    this.dataFeedback.forEach(dfb =>{
+      dfb.data = [];
+    });
+    var __this = this;
+    let data = await this._reportService.getDataAvgRateFromServer(params);
+    data.subscribe(res => {
       for(let mes of res.dataAvgRatePerMonth){
         __this.aggreFeedback.barChartLabels.push(mes.monthShort);
         for(let dfb of __this.dataFeedback){
@@ -252,11 +286,26 @@ export class ReportsComponent implements OnInit{
         }
       };
       
+      var chart = __this.charts.toArray().find(el => el.chart.ctx.canvas.id.indexOf('classMediaMes')>-1);
+      if(chart != undefined){        
+        chart.chart.update();
+      }
+    });  
+  }
+
+  async getDataHourRush(params){
+    for(let cd of this.chartData){
+      cd.data = [0,0,0,0,0,0,0];
+    }
+    var __this = this;
+
+    let data = await this._reportService.getDataRushHourFromServer(params);
+    data.subscribe(res =>{
       __this.chartData.forEach(dados =>{
         var dias = res.dataScheduleAtdWeek.filter(el => 
           el.hourIntervalsAtdList
           .find(h=>dados.label.indexOf(h.hourInterval.substring(0,h.hourInterval.indexOf('-')+1))==0));
-
+  
         if(dias.length>0){
           for(let dia of dias){
             dados.data[__this.aggregator.barChartLabels.indexOf(dia.weekdayName)] +=
@@ -264,34 +313,43 @@ export class ReportsComponent implements OnInit{
           }
         }  
       });
-      
-      __this.charts.forEach(child=>{
-        if(child.chart.ctx.canvas.id=='horariosPico'){
-          child.chart.datasets = __this.chartData;
-          child.chart.config.data.datasets = __this.chartData;
-        }
-        child.chart.update();
+
+      var chart = __this.charts.toArray().find(el => el.chart.ctx.canvas.id.indexOf('horariosPico')>-1);
+      if(chart!=undefined){
+        chart.chart.datasets = __this.chartData;
+        chart.chart.config.data.datasets = __this.chartData;
+        chart.chart.update();
+      }
+    });
+  }
+
+  async getDataClassMediaReports(params){
+    var __this = this;
+
+    this._reportService.getDataFromServer(params).subscribe(res =>{
+      if(res['responseData'] && res['responseData']==null)
+        return;
+
+      //preenchimento de gráfico de classificação média e total por serviço
+      __this.dataClassMedia.forEach(dcm =>{
+        dcm.data = [];
       });
 
-      var performanceAtdCharts = this.charts.toArray().filter(item =>
-        //o gráfico de barra horizontal empilhada é o único
-        //que deve-se fazer a conversão para porcentagem 
-        item.chart.config.type=='horizontalBar' &&
-        item.chart.options.scales.xAxes[0].stacked
-      );
+      __this.aggreClassMedia.barChartLabels = [];
 
-      for(let chart of performanceAtdCharts){
-                
-        if(chart.chart.ctx.canvas.id.indexOf('Total')>-1){
-          chart.chart.options.tooltips.callbacks.title=function(tooltipItem, data){
-            return '';
+      for(let servico of res.dataFeedbackPerService){
+        __this.aggreClassMedia.barChartLabels.push(servico.serviceName);
+        __this.dataClassMedia.forEach(dcm =>{
+          if(dcm.label.indexOf('Classi')>-1){
+            dcm.data.push(servico.averageRate);
+          }else{
+            dcm.data.push(servico.totalRatings);
           }
-          chart.chart.config.data.datasets = chart.datasets;
-          __this.customTooltipPlugins(__this.oldDataChart2,__this.aggrePerformance);
-          chart.chart.options.tooltips.callbacks.label = __this.aggrePerformance.barChartOptions.tooltips.callbacks.label;
-          chart.chart.options.plugins.datalabels = __this.aggrePerformance.barChartOptions.plugins.datalabels
-        }
-
+        });
+      }
+      
+      var chart = __this.charts.toArray().find(el => el.chart.ctx.canvas.id.indexOf('classMediaServico')>-1);
+      if(chart!=undefined){
         chart.chart.update();
       }
     });

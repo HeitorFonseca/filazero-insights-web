@@ -19,12 +19,31 @@ export class ReportsService {
 
   getServicesResources(){
     this.retrieveInformation();
-    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/servicesResources`);
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/servicesResources`);
   }
 
   getDataFromServer(params): Observable<any>{
-    this.retrieveInformation();
-    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard`,{params});
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/classMedia`,{params});
+  }
+
+  getDataPerformFromServer(params): Observable<any>{
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/performTotal`,{params});
+  }
+
+  getDataPerformPerServiceFromServer(params): Observable<any>{
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/performSrvc`,{params});
+  }
+
+  getDataAvgRateFromServer(params): Observable<any>{
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/avgRate`,{params});
+  }
+
+  getDataRushHourFromServer(params): Observable<any>{
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/rushHour`,{params});
+  }
+
+  getAttendancesFromServer(params): Observable<any>{
+    return this.http.get(`${this.API_URL}api/providers/${this.provider.id}/locations/${this.location.id}/dashboard/attendances`,{params});
   }
 
   retrieveInformation(){

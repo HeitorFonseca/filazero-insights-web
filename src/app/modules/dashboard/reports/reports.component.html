@@ -11,6 +11,32 @@
     </div>
 
     <div class="flex-filter-item">
+      <div class="row" id="labels-atnd">
+          <div class="card col-3">
+            <div class="card-body" *ngIf="labels.agendados">
+              <h5 class="card-title">{{labels.agendados}}</h5>
+              <h6 class="card-subtitle">Agendamentos</h6>
+            </div>
+          </div>
+          <div class="card col-3">
+            <div class="card-body" *ngIf="labels.concluidos">
+              <h5 class="card-title">{{labels.concluidos}}</h5>
+              <h6 class="card-subtitle">Concluídos</h6>
+            </div>
+          </div>
+          <div class="card col-3">
+            <div class="card-body" *ngIf="labels.naoConcluidos">
+              <h5 class="card-title">{{labels.naoConcluidos}}</h5>
+              <h6 class="card-subtitle">Não Concluídos</h6>
+            </div>
+          </div>
+          <div class="card col-3">
+            <div class="card-body" *ngIf="labels.avaliacoes">
+              <h5 class="card-title">{{labels.avaliacoes.media}} <!--ver como inserir ícone--></h5>
+              <h6 class="card-subtitle">{{labels.avaliacoes.total}} Avaliações</h6>
+            </div>
+          </div>
+      </div>
       <div class="row">
         <div class="trigger-charts col-12">
           <div id="charts">
@@ -19,7 +45,7 @@
           </div>
         </div>
       </div>
-      <!--gráficos de performance (emitFilter)="recebeFiltro($event)"-->
+      <!--gráficos de performance-->
       <div class="row pt-3">
         <div class="trigger-charts col-6">
           <div>
